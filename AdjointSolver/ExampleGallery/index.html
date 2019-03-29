@@ -754,11 +754,11 @@ post-processing. The <code>digest</code> file reports the same
 data in a more human-readable format.  The <code>legend</code>
 file contains information helping to interpret the content
 of the other files.</p>
-<p>!!! note "Working directories in <code>ParallelDesignTester</code> runs
-    <code>ParallelDesignTester</code> creates and changes to a new 
-    timestamped working directory for each pool of parallel
-    batch jobs; look for your output files in
-    subdirectory called something like <code>HoleyWaveguide_0323.022256,</code></p>
+<details class="warning" open="open"><summary>Working directories in <code>ParallelDesignTester</code> runs</summary><p><code>ParallelDesignTester</code> creates and changes to a new 
+ timestamped working directory for each pool of parallel
+ batch jobs; look for your output files in
+ subdirectory called something like <code>HoleyWaveguide_0323.022256,</code></p>
+</details>
 <p>For the case at hand, we want to <strong>(a)</strong> concatenate all of the
 <code>.out</code> files into an omnibus data file, <strong>(b)</strong> sort by the 
 design-variable values reported on specific columns, then
@@ -766,7 +766,7 @@ design-variable values reported on specific columns, then
 value, adjoint gradient components, and finite-difference derivatives, 
 each of which appear in their own specific columns)
 versus design variable.</p>
-<p>![HoleyWaveguideAdjointVsFDResults][HoleyWaveguide_AdjointVsFD.png]</p>
+<p>![HoleyWaveguideAdjointVsFDResults][images/HoleyWaveguide_AdjointVsFD.png]</p>
 <p>We see that <span><span class="MathJax_Preview">\epsilon\sup{hole}</span><script type="math/tex">\epsilon\sup{hole}</script></span> derivatives computed by
 adjoints agree well with numerical finite-difference data.</p>
                 

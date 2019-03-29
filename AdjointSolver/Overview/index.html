@@ -928,7 +928,7 @@ calling its <code>run()</code> method:</p>
 <p>The actual calculations that may be run in this way
 range from a single non-iterative computation of the objective
 function and (optionally) its gradient at a given set of design-variable
-values, to <a href="./#the-cross-router">full-blown iterative design optimization</a></p>
+values, to <a href="../ExampleGallery/#full-automated-optimization-of-a-cross-router-device">full-blown iterative design optimization</a>.</p>
 <p>Here, in their entirety, are the python scripts implementing the 4 examples
 described above. (These may also be found in the <code>python/examples/adjoint_optimization</code>
 subdirectory of your <span class=SC>meep</span> installation.)</p>
@@ -1085,9 +1085,7 @@ subdirectory of your <span class=SC>meep</span> installation.)</p>
 
 </details>
 <hr />
-<div class="admonition example">
-<p class="admonition-title"><code>HoleCloak.py</code></p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<details class="example"><summary><code>HoleCloak.py</code></summary><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
@@ -1250,10 +1248,8 @@ subdirectory of your <span class=SC>meep</span> installation.)</p>
     <span class="n">opt_prob</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
-</div>
-<div class="admonition example">
-<p class="admonition-title"><code>CrossRouter.py</code></p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</details>
+<details class="example"><summary><code>CrossRouter.py</code></summary><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
 
 <span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">FluxLine</span><span class="p">,</span>
@@ -1422,10 +1418,8 @@ subdirectory of your <span class=SC>meep</span> installation.)</p>
     <span class="n">op</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
-</div>
-<div class="admonition example">
-<p class="admonition-title"><code>AsmmetricSplitter.py</code></p>
-</div>
+</details>
+<details class="example"><summary><code>AsmmetricSplitter.py</code></summary></details>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
 
