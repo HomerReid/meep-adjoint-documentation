@@ -1,0 +1,1080 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="author" content="MEEP Developers">
+      
+      
+        <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-components-1.10.11">
+    
+    
+      
+        <title>Reference Manual - MEEP Documentation</title>
+      
+    
+    
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application-2cd7d9ab0f.css">
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/material-components-web.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/mdc-web.css">
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Ubuntu+Mono">
+        <style>body,input{font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../meep_documentation.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js"></script>
+    
+  </head>
+  
+  
+  
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      
+        <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink md-flex__cell--vmiddle">
+        <a href="../.." title="MEEP Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/images/logo_white.png" width="36" height="36">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            MEEP Documentation -
+            
+              
+                <span class="md-header-nav__parent">
+                  Adjoint Module for Automated Design Optimization
+                </span>
+              
+            
+            Reference Manual
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="" data-md-lang-tokenizer="[\s\-]+">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/NanoComp/meep/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+      
+    </div>
+  </nav>
+</header>
+      
+    
+    <div class="md-container">
+      
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <div class="md-nav__button md-logo">
+      
+        <i class="md-icon md-icon--home"></i>
+      
+    </div>
+    MEEP Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/NanoComp/meep/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Adjoint Module" class="md-nav__link">
+      Adjoint Module
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Adjoint Module for Automated Design Optimization
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Adjoint Module for Automated Design Optimization
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Overview/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Reference Manual
+      </label>
+    
+    <a href="./" title="Reference Manual" class="md-nav__link md-nav__link--active">
+      Reference Manual
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title md-nav__toc" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-defining-your-problem-writing-a-python-script-for-mpadjoint" title="1. Defining your problem: Writing a python script for mp.adjoint" class="md-nav__link">
+    1. Defining your problem: Writing a python script for mp.adjoint
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-the-optimizationproblem-abstract-base-class" title="1a. The OptimizationProblem abstract base class" class="md-nav__link">
+    1a. The OptimizationProblem abstract base class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1b-mandatory-class-method-overrides" title="1b. Mandatory class-method overrides" class="md-nav__link">
+    1b. Mandatory class-method overrides
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" title="---" class="md-nav__link">
+    ---
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1c-optional-class-method-override" title="1c. Optional class-method override" class="md-nav__link">
+    1c. Optional class-method override
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-_1" title="---" class="md-nav__link">
+    ---
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dft-cells" title="DFT cells" class="md-nav__link">
+    DFT cells
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objective-function-specifications" title="Objective-function specifications" class="md-nav__link">
+    Objective-function specifications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-reviewing-your-problem-visualization-and-single-point-calculations" title="2. Reviewing your problem: Visualization and single-point calculations" class="md-nav__link">
+    2. Reviewing your problem: Visualization and single-point calculations
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2a-visualizing-your-geometry" title="2a. Visualizing your geometry" class="md-nav__link">
+    2a. Visualizing your geometry
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2b-evaluating-the-objective-function-value-and-gradient-at-a-single-design-point" title="2b. Evaluating the objective function value and gradient at a single design point" class="md-nav__link">
+    2b. Evaluating the objective function value and gradient at a single design point
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jjparseradd_argument-to-define-new-arguments" title="jjparser.add_argument to define new arguments" class="md-nav__link">
+    jjparser.add_argument to define new arguments
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2c-testing-gradient-components-by-finite-differencing" title="2c. Testing gradient components by finite-differencing" class="md-nav__link">
+    2c. Testing gradient components by finite-differencing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3d-running-many-single-point-calculations-in-parallel" title="3d. Running many single-point calculations in parallel:" class="md-nav__link">
+    3d. Running many single-point calculations in parallel:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-_2" title="---" class="md-nav__link">
+    ---
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-solving-your-problem-launching-an-iterative-design-optimization" title="3. Solving your problem: Launching an iterative design optimization" class="md-nav__link">
+    3. Solving your problem: Launching an iterative design optimization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3a-run-your-script-with-optimize" title="3a. Run your script with --optimize" class="md-nav__link">
+    3a. Run your script with --optimize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3b-options-controlling-the-optimization-process" title="3b  Options controlling the optimization process" class="md-nav__link">
+    3b  Options controlling the optimization process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-built-in-command-line-options" title="4. Built-in command-line options" class="md-nav__link">
+    4. Built-in command-line options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options-affecting-meep-timestepping" title="Options affecting meep timestepping" class="md-nav__link">
+    Options affecting meep timestepping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ExampleGallery/" title="Example Gallery" class="md-nav__link">
+      Example Gallery
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Visualization/" title="Visualization" class="md-nav__link">
+      Visualization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AdjointImplementationNotes/" title="Implementation Notes" class="md-nav__link">
+      Implementation Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title md-nav__toc" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-defining-your-problem-writing-a-python-script-for-mpadjoint" title="1. Defining your problem: Writing a python script for mp.adjoint" class="md-nav__link">
+    1. Defining your problem: Writing a python script for mp.adjoint
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-the-optimizationproblem-abstract-base-class" title="1a. The OptimizationProblem abstract base class" class="md-nav__link">
+    1a. The OptimizationProblem abstract base class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1b-mandatory-class-method-overrides" title="1b. Mandatory class-method overrides" class="md-nav__link">
+    1b. Mandatory class-method overrides
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" title="---" class="md-nav__link">
+    ---
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1c-optional-class-method-override" title="1c. Optional class-method override" class="md-nav__link">
+    1c. Optional class-method override
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-_1" title="---" class="md-nav__link">
+    ---
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dft-cells" title="DFT cells" class="md-nav__link">
+    DFT cells
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objective-function-specifications" title="Objective-function specifications" class="md-nav__link">
+    Objective-function specifications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-reviewing-your-problem-visualization-and-single-point-calculations" title="2. Reviewing your problem: Visualization and single-point calculations" class="md-nav__link">
+    2. Reviewing your problem: Visualization and single-point calculations
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2a-visualizing-your-geometry" title="2a. Visualizing your geometry" class="md-nav__link">
+    2a. Visualizing your geometry
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2b-evaluating-the-objective-function-value-and-gradient-at-a-single-design-point" title="2b. Evaluating the objective function value and gradient at a single design point" class="md-nav__link">
+    2b. Evaluating the objective function value and gradient at a single design point
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jjparseradd_argument-to-define-new-arguments" title="jjparser.add_argument to define new arguments" class="md-nav__link">
+    jjparser.add_argument to define new arguments
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2c-testing-gradient-components-by-finite-differencing" title="2c. Testing gradient components by finite-differencing" class="md-nav__link">
+    2c. Testing gradient components by finite-differencing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3d-running-many-single-point-calculations-in-parallel" title="3d. Running many single-point calculations in parallel:" class="md-nav__link">
+    3d. Running many single-point calculations in parallel:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-_2" title="---" class="md-nav__link">
+    ---
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-solving-your-problem-launching-an-iterative-design-optimization" title="3. Solving your problem: Launching an iterative design optimization" class="md-nav__link">
+    3. Solving your problem: Launching an iterative design optimization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3a-run-your-script-with-optimize" title="3a. Run your script with --optimize" class="md-nav__link">
+    3a. Run your script with --optimize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3b-options-controlling-the-optimization-process" title="3b  Options controlling the optimization process" class="md-nav__link">
+    3b  Options controlling the optimization process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-built-in-command-line-options" title="4. Built-in command-line options" class="md-nav__link">
+    4. Built-in command-line options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options-affecting-meep-timestepping" title="Options affecting meep timestepping" class="md-nav__link">
+    Options affecting meep timestepping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div id="article-content" class="md-content"> 
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/NanoComp/meep/blob/master/doc/docs/AdjointSolver/ReferenceManual.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                
+                <!----------------------------------------------------->
+
+<!- LaTeX macros used only for adjoint documentation  ->
+<!----------------------------------------------------->
+$$
+   \newcommand{\vb}{\mathbf}
+   \newcommand{\wt}{\widetilde}
+   \newcommand{\mc}{\mathcal}
+   \newcommand{\bmc}[1]{\boldsymbol{\mathcal{#1}}}
+   \newcommand{\sup}[1]{^{\text{#1}}}
+   \newcommand{\sups}[1]{^{\text{#1}}}
+   \newcommand{\sub}[1]{_{\text{#1}}}
+   \newcommand{\subs}[1]{_{\text{#1}}}
+   \newcommand{\pard}[2]{\frac{\partial #1}{\partial #2}}
+   \newcommand{\VMV}[3]{ \Big\langle #1 \Big| #2 \Big| #3 \Big\rangle}
+$$
+
+<style>
+.superfences-tabs {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.superfences-tabs .highlight {
+  background: #ddd;
+}
+
+.superfences-tabs .superfences-content {
+  display: none;
+  order: 99;
+  width: 100%;
+}
+
+.superfences-tabs label {
+  width: auto;
+  margin: 0 0.5em;
+  padding: 0.25em;
+  font-size: 120%;
+  cursor: pointer;
+}
+
+.superfences-tabs input {
+  position: absolute;
+  opacity: 0;
+}
+
+.superfences-tabs input:nth-child(n+1) {
+  color: #333333;
+}
+
+.superfences-tabs input:nth-child(n+1):checked + label {
+    color: #FF5252;
+}
+
+.superfences-tabs input:nth-child(n+1):checked + label + .superfences-content {
+    display: block;
+}
+</style>
+
+<hr />
+<h1 id="design-optimization-with-the-meep-adjoint-solver-a-reference-manual">Design optimization with the <span class=SC>meep</span> adjoint solver: A reference manual<a class="headerlink" href="#design-optimization-with-the-meep-adjoint-solver-a-reference-manual" title="Permanent link">&para;</a></h1>
+<hr />
+<p>As described in the <a href="../Overview/">Overview</a>, the first step in
+using <code>mp.adjoint</code> is to write a python script implementing
+a subclass of the <code>OptimizationProblem</code> abstract base class
+defined by <code>mp.adjoint</code>. Once that's ready, you can run
+your script with command-line options instructing <code>mp.adjoint</code>
+to carry out various calculations; these may be <em>single-point</em>
+calculations, in which the geometry is fixed at given set
+of values you specify for the design variables (thus defining
+a single point in the space of possible input), or full-blown
+<em>iterative optimizations</em> in which <code>mp.adjoint</code> automatically
+evolves the design variables toward the values that optimize
+your objective. </p>
+<blockquote>
+<p><img alt="🔖" class="gemoji summary" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong><span class=SC>table of contents</span></strong></p>
+<ol>
+<li>
+<p><strong>Defining your problem</strong>: Writing a python script for <code>mp.adjoint</code></p>
+<p>a. The <code>OptimizationProblem</code> abstract base class</p>
+<p>b. Mandatory class-method overrides: <code>init_problem</code> and <code>create_sim</code></p>
+<p>c. Optional class-method override: <code>add_args</code></p>
+</li>
+<li>
+<p><em>Reviewing your problem</em>: Visualization and single-point calculations</p>
+<p>a. Visualizing your geometry</p>
+<p>b. Evaluating the objective function value and gradient at a single
+   design point</p>
+<p>c. Testing gradient components by finite-differencing</p>
+<p>d. Running many single-point calculations in parallel:
+   <code>ParallelDesignTester</code></p>
+</li>
+<li>
+<p><em>Solving your problem</em>: Launching an iterative design optimization</p>
+<p>a. Run your script with <code>--optimize</code></p>
+<p>b. Options controlling the optimization process</p>
+</li>
+</ol>
+<p><a href="#4-built-in-command-line-options">4. Built-in command-line options</a></p>
+</blockquote>
+<h2 id="1-defining-your-problem-writing-a-python-script-for-mpadjoint">1. Defining your problem: Writing a python script for <code>mp.adjoint</code><a class="headerlink" href="#1-defining-your-problem-writing-a-python-script-for-mpadjoint" title="Permanent link">&para;</a></h2>
+<h3 id="1a-the-optimizationproblem-abstract-base-class">1a. The <code>OptimizationProblem</code> abstract base class<a class="headerlink" href="#1a-the-optimizationproblem-abstract-base-class" title="Permanent link">&para;</a></h3>
+<p>As described in the <a href="../Overview/">Overview</a>, the python script
+that drives your <code>mp.adjoint</code> session implements a subclass
+of the <code>OptimizationProblem</code> base class defined by <code>mp.adjoint.</code>
+This is a high-level abstraction of the design-automation 
+process; the base class knows how to do various general things
+involving <span class=SC>meep</span> geometries and objective
+functions, but is lacking crucial information from you, 
+without which it can't do anything on its own.
+That is to say, <code>OptimizationProblem</code> is an
+<a href="https://docs.python.org/3/library/abc.html">abstract base class</a>
+with two pure virtual methods that your derived class
+must override to describe the specifics of your design problem.</p>
+<h3 id="1b-mandatory-class-method-overrides">1b. Mandatory class-method overrides<a class="headerlink" href="#1b-mandatory-class-method-overrides" title="Permanent link">&para;</a></h3>
+<p>More specifically, your subclass of <code>OptimizationProblem</code>
+must furnish implementations of the following two pure virtual
+methods left unimplemented in the base class. (Click the header
+bars to unfold the description of each item.)</p>
+<details class="summary"><summary><code>init_problem</code>: One-time initialization</summary><p>Your <code>init_problem</code> routine will be called once, at the beginning of a <code>mp.adjoint</code>
+session; think of it as the class constructor. (Indeed, it is called from the
+parent class constructor.) 
+It has two purposes: <strong>(a)</strong> to give you a chance to complete any one-time initialization
+tasks you need to do, and <strong>(b)</strong> to communication to the base class the
+[d</p>
+</details>
+<p>[CommonElementsOfOptimizationGeometries]</p>
+<p>in which you initialize
+    any problem-specific (but design-independent, i.e. not dependent on particular
+    values of the design variables) initialization needed for your geometry
+    and return some pieces of design-independent data needed by the base class.    </p>
+<div class="highlight"><pre><span></span>- **Calling convention:** `def init_problem(self,args)`
+
+    - `args`: Structure containing values of all command-line options.
+
+- **Return values:**
+    The routine should return a 5-tuple
+   ```py3 fstr, objective_regions, extra_regions, design_region, basis```
+   information
+</pre></div>
+
+<hr />
+<details class="summary"><summary><code>create_sim</code>: Instantiating a geometry with given design variables</summary><p>Your <code>create_sim</code> routine will be called each time <code>mp.adjoint</code> needs to
+compute your objective function for a particular set of design-variable
+values.</p>
+</details>
+<h2 id="-">---<a class="headerlink" href="#-" title="Permanent link">&para;</a></h2>
+<h3 id="1c-optional-class-method-override">1c. Optional class-method override<a class="headerlink" href="#1c-optional-class-method-override" title="Permanent link">&para;</a></h3>
+<p>???  summary "<code>add_args</code>: Configure problem-specific command-line arguments
+     The <code>OptimizationProblem</code> base class defines a
+     <a href="#4-built-in-command-line-options">large number of general-purpose command-line options</a>,
+     with judiciously chosen default values, to control <code>mp.adjoint</code> calculations. 
+     In many cases you will want <strong>(1)</strong> to reconfigure the default values as
+     appropriate for your problem, <strong>(2)</strong> to add additional options relevant to
+     your specific geometry. Your subclass can do both of these things by overriding
+     the <code>add_args</code> class method, which will be called just before the actual
+     command-line arguments are parsed.</p>
+<div class="highlight"><pre><span></span> **Prototype:**  `init_args(self,parser)`
+     -- `parser`: [`argparse`](https://docs.python.org/3/library/argparse.html)
+                  structure that has been initialized with
+                  [all built-in `mp.adjoint` options](#4-built-in-command-line-options)
+                  and their default values.
+                  You may call `parser.set_defaults` to change the default values of
+                  built-in options and `parser.add_argument` to add new options.
+                  (The actual values specified for all arguments are made available
+                   to you via the `args` parameter passed to your `init_problem`
+                   routine.)
+
+ **Return values:**  None.
+</pre></div>
+
+<h2 id="-_1">---<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h2>
+<h3 id="dft-cells">DFT cells<a class="headerlink" href="#dft-cells" title="Permanent link">&para;</a></h3>
+<h3 id="objective-function-specifications">Objective-function specifications<a class="headerlink" href="#objective-function-specifications" title="Permanent link">&para;</a></h3>
+<p>Your objective function is specified by the string <code>fstr</code> that you return as
+the first element in the 5-tuple return value of <code>init_problem.</code></p>
+<p>Your objective function will depend on one or more objective quantities,
+such as power fluxes or eigenmode expansion coefficients, associated
+with specific objective regions in your geometry. <code>mp.adjoint</code> defines
+a convention for assigning a unique character string to each 
+objective function in your geometry. Your <code>fstr</code> should use
+these labels to refer to the objective quantities on which it
+depends.</p>
+<blockquote>
+<p><img alt="🔖" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong>Naming convention for objective quantities</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">Quantity</th>
+<th align="left">Label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Power flux through flux region <code>r</code></td>
+<td align="left"><code>S_r</code></td>
+</tr>
+<tr>
+<td align="center">Expansion coefficient for forward-travelling eigenmode <em>n</em> at flux region <code>r</code></td>
+<td align="left"><code>Pn_r</code></td>
+</tr>
+<tr>
+<td align="center">Expansion coefficient for backward-travelling eigenmode <em>n</em> at flux region <code>r</code></td>
+<td align="left"><code>Mn_r</code></td>
+</tr>
+</tbody>
+</table>
+<p>Note that the flux-region label <code>r</code> may be a character string like <code>east</code> if your <code>init_problem</code> 
+  method assigned a name to the <code>DFTCell</code> for that region. Otherwise, <code>r</code> is an integer-valued
+  index corresponding to the zero-based index of the DFT cell in the <code>objective_regions</code> list
+  returned by your <code>init_problem</code>.</p>
+</blockquote>
+<h3 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>Expansion bases </p>
+<h2 id="2-reviewing-your-problem-visualization-and-single-point-calculations">2. <em>Reviewing your problem</em>: Visualization and single-point calculations<a class="headerlink" href="#2-reviewing-your-problem-visualization-and-single-point-calculations" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="2a-visualizing-your-geometry">2a. Visualizing your geometry<a class="headerlink" href="#2a-visualizing-your-geometry" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="2b-evaluating-the-objective-function-value-and-gradient-at-a-single-design-point">2b. Evaluating the objective function value and gradient at a single design point<a class="headerlink" href="#2b-evaluating-the-objective-function-value-and-gradient-at-a-single-design-point" title="Permanent link">&para;</a></h3>
+<h2 id="jjparseradd_argument-to-define-new-arguments">jj<code>parser.add_argument</code> to define new arguments<a class="headerlink" href="#jjparseradd_argument-to-define-new-arguments" title="Permanent link">&para;</a></h2>
+<h3 id="2c-testing-gradient-components-by-finite-differencing">2c. Testing gradient components by finite-differencing<a class="headerlink" href="#2c-testing-gradient-components-by-finite-differencing" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="3d-running-many-single-point-calculations-in-parallel">3d. Running many single-point calculations in parallel:<a class="headerlink" href="#3d-running-many-single-point-calculations-in-parallel" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span>     `ParallelDesignTester`
+</pre></div>
+
+<h2 id="-_2">---<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h2>
+<h3 id="3-solving-your-problem-launching-an-iterative-design-optimization">3. <em>Solving your problem</em>: Launching an iterative design optimization<a class="headerlink" href="#3-solving-your-problem-launching-an-iterative-design-optimization" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="3a-run-your-script-with-optimize">3a. Run your script with <code>--optimize</code><a class="headerlink" href="#3a-run-your-script-with-optimize" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="3b-options-controlling-the-optimization-process">3b  Options controlling the optimization process<a class="headerlink" href="#3b-options-controlling-the-optimization-process" title="Permanent link">&para;</a></h3>
+<h2 id="4-built-in-command-line-options">4. Built-in command-line options<a class="headerlink" href="#4-built-in-command-line-options" title="Permanent link">&para;</a></h2>
+<p>The following command-line options are defined by the <code>OptimizationProblem</code>
+base class and are available in all <code>mp.adjoint</code> sessions.
+As described</p>
+<h3 id="options-affecting-meep-timestepping">Options affecting <span class=SC>meep</span> timestepping<a class="headerlink" href="#options-affecting-meep-timestepping" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="highlight"><span class="o">--</span><span class="n">res</span></code></td>
+<td></td>
+</tr>
+<tr>
+<td>Hello this it the description of that last argument</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="highlight"><span class="o">--</span><span class="n">label_source_regions</span></code></td>
+<td></td>
+</tr>
+<tr>
+<td>and similarly right here foryaf</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Overview/" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Overview
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../ExampleGallery/" title="Example Gallery" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Example Gallery
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://yakworks.github.io/mkdocs-material-components/" title="Material Components for MkDocs">
+          Material Components for MkDocs</a>
+      </div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application-68832431b5.js"></script>
+      
+      
+      <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+      <script>window.mdc.autoInit()</script>
+      <script src="../../assets/javascripts/headroom.min.js"></script>
+      <script src="../../assets/javascripts/jQuery.headroom.min.js"></script>
+      <script src="../../assets/javascripts/jq-mdc-web.js"></script>
+      <script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+      <script>app.initialize({version:"0.16.3",url:{base:"../.."}})</script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+    
+    
+  </body>
+</html>

@@ -1,0 +1,1727 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="author" content="MEEP Developers">
+      
+      
+        <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-components-1.10.11">
+    
+    
+      
+        <title>Overview - MEEP Documentation</title>
+      
+    
+    
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application-2cd7d9ab0f.css">
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/material-components-web.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/mdc-web.css">
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Ubuntu+Mono">
+        <style>body,input{font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../meep_documentation.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js"></script>
+    
+  </head>
+  
+  
+  
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      
+        <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink md-flex__cell--vmiddle">
+        <a href="../.." title="MEEP Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/images/logo_white.png" width="36" height="36">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            MEEP Documentation -
+            
+              
+                <span class="md-header-nav__parent">
+                  Adjoint Module for Automated Design Optimization
+                </span>
+              
+            
+            Overview
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="" data-md-lang-tokenizer="[\s\-]+">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/NanoComp/meep/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+      
+    </div>
+  </nav>
+</header>
+      
+    
+    <div class="md-container">
+      
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <div class="md-nav__button md-logo">
+      
+        <i class="md-icon md-icon--home"></i>
+      
+    </div>
+    MEEP Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/NanoComp/meep/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Adjoint Module" class="md-nav__link">
+      Adjoint Module
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Adjoint Module for Automated Design Optimization
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Adjoint Module for Automated Design Optimization
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Overview
+      </label>
+    
+    <a href="./" title="Overview" class="md-nav__link md-nav__link--active">
+      Overview
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title md-nav__toc" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-adjoint-based-optimization" title="Overview: Adjoint-based optimization" class="md-nav__link">
+    Overview: Adjoint-based optimization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples-of-optimization-problems" title="Examples of optimization problems" class="md-nav__link">
+    Examples of optimization problems
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-holey-waveguide" title="The Holey Waveguide" class="md-nav__link">
+    The Holey Waveguide
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hole-cloak" title="The Hole Cloak" class="md-nav__link">
+    The Hole Cloak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-cross-router" title="The cross-router" class="md-nav__link">
+    The cross-router
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-asymmetric-splitter" title="The asymmetric splitter" class="md-nav__link">
+    The asymmetric splitter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-elements-of-optimization-geometries-objective-regions-objective-functions-design-regions-basis-sets" title="Common elements of optimization geometries: Objective regions, objective functions, design regions, basis sets" class="md-nav__link">
+    Common elements of optimization geometries: Objective regions, objective functions, design regions, basis sets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanics-of-meep-design-optimization" title="Mechanics of meep design optimization" class="md-nav__link">
+    Mechanics of meep design optimization
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReferenceManual/" title="Reference Manual" class="md-nav__link">
+      Reference Manual
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ExampleGallery/" title="Example Gallery" class="md-nav__link">
+      Example Gallery
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Visualization/" title="Visualization" class="md-nav__link">
+      Visualization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AdjointImplementationNotes/" title="Implementation Notes" class="md-nav__link">
+      Implementation Notes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title md-nav__toc" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-adjoint-based-optimization" title="Overview: Adjoint-based optimization" class="md-nav__link">
+    Overview: Adjoint-based optimization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples-of-optimization-problems" title="Examples of optimization problems" class="md-nav__link">
+    Examples of optimization problems
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-holey-waveguide" title="The Holey Waveguide" class="md-nav__link">
+    The Holey Waveguide
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hole-cloak" title="The Hole Cloak" class="md-nav__link">
+    The Hole Cloak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-cross-router" title="The cross-router" class="md-nav__link">
+    The cross-router
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-asymmetric-splitter" title="The asymmetric splitter" class="md-nav__link">
+    The asymmetric splitter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-elements-of-optimization-geometries-objective-regions-objective-functions-design-regions-basis-sets" title="Common elements of optimization geometries: Objective regions, objective functions, design regions, basis sets" class="md-nav__link">
+    Common elements of optimization geometries: Objective regions, objective functions, design regions, basis sets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanics-of-meep-design-optimization" title="Mechanics of meep design optimization" class="md-nav__link">
+    Mechanics of meep design optimization
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div id="article-content" class="md-content"> 
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/NanoComp/meep/blob/master/doc/docs/AdjointSolver/Overview.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                
+                <!----------------------------------------------------->
+
+<!- LaTeX macros used only for adjoint documentation  ->
+<!----------------------------------------------------->
+$$
+   \newcommand{\vb}{\mathbf}
+   \newcommand{\wt}{\widetilde}
+   \newcommand{\mc}{\mathcal}
+   \newcommand{\bmc}[1]{\boldsymbol{\mathcal{#1}}}
+   \newcommand{\sup}[1]{^{\text{#1}}}
+   \newcommand{\sups}[1]{^{\text{#1}}}
+   \newcommand{\sub}[1]{_{\text{#1}}}
+   \newcommand{\subs}[1]{_{\text{#1}}}
+   \newcommand{\pard}[2]{\frac{\partial #1}{\partial #2}}
+   \newcommand{\VMV}[3]{ \Big\langle #1 \Big| #2 \Big| #3 \Big\rangle}
+$$
+
+<style>
+.superfences-tabs {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.superfences-tabs .highlight {
+  background: #ddd;
+}
+
+.superfences-tabs .superfences-content {
+  display: none;
+  order: 99;
+  width: 100%;
+}
+
+.superfences-tabs label {
+  width: auto;
+  margin: 0 0.5em;
+  padding: 0.25em;
+  font-size: 120%;
+  cursor: pointer;
+}
+
+.superfences-tabs input {
+  position: absolute;
+  opacity: 0;
+}
+
+.superfences-tabs input:nth-child(n+1) {
+  color: #333333;
+}
+
+.superfences-tabs input:nth-child(n+1):checked + label {
+    color: #FF5252;
+}
+
+.superfences-tabs input:nth-child(n+1):checked + label + .superfences-content {
+    display: block;
+}
+</style>
+
+<hr />
+<h1 id="meepadjoint-adjoint-sensitivity-analysis-for-automated-design-optimization"><code class="highlight"><span class="n">meep</span><span class="o">.</span><span class="n">adjoint</span><span class="p">:</span></code> Adjoint sensitivity analysis for automated design optimization<a class="headerlink" href="#meepadjoint-adjoint-sensitivity-analysis-for-automated-design-optimization" title="Permanent link">&para;</a></h1>
+<hr />
+<p>This section of the <span class=SC>meep</span> documentation
+covers <code class="highlight"><span class="n">meep</span><span class="o">.</span><span class="n">adjoint</span><span class="p">,</span></code> a submodule of the <span class=SC>meep</span> python module
+that implements an <a href="https://en.wikipedia.org/wiki/Adjoint_state_method"><em>adjoint-based sensitivity solver</em></a>
+to facilitate automated design optimization via derivative-based numerical optimizers.</p>
+<blockquote>
+<p><img alt="🔖" class="gemoji tocfloat summary" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong><span class=SC>table of contents</span></strong></p>
+<p>The <code>meep.adjoint</code> documentation is divided into a number of subsections:</p>
+<ul>
+<li>
+<p>This <strong>Overview</strong> page reviews some basic facts about adjoints and optimizers,
+  outlines the steps needed to prepare a <span class=SC>meep</span>
+  geometry for optimization, and sketches the mechanics of
+  the <code>meep.adjoint</code> design process.
+  (This page is designed to be a gentle introduction for the
+  adjoint neophyte; experts may want only to skim it before
+  skipping to the next section.)</p>
+</li>
+<li>
+<p>The <a href="../ReferenceManual/"><strong>Reference Manual</strong></a> fills in the details of 
+  the topics outlined on this page, spelling out exactly how to
+  write the python script that will drive your optimization
+  session.</p>
+</li>
+<li>
+<p>The <a href="../ExampleGallery/"><strong>Example Gallery</strong></a> presents a number
+  of worked examples that illustrate how <code>meep.adjoint</code> tackles
+  practical problems in various settings.</p>
+</li>
+<li>
+<p>The <a href="../AdjointImplementationNotes/"><strong>Implementation Notes</strong></a> page
+  offers a glimpse of what's behind the hood---the physical 
+   and mathematical basis of the adjoint method and how they
+  are implemented by <code>meep.adjoint.</code> An understanding of this 
+  content is not strictly necessary to use the solver, but may
+  help you get more out of the process.</p>
+</li>
+<li>
+<p>Although logically independent of the adjoint solver,
+  the <a href="../Visualization/"><strong>Visualization</strong></a> package bundled
+ with the <code>meep.adjoint</code> module offers several general-purpose
+  utilities for convenient visualization of various aspects
+ of <span class=SC>meep</span> calculations, which are
+ useful in <em>any</em> meep calculation whether adjoint-related
+ or not.</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="overview-adjoint-based-optimization">Overview: Adjoint-based optimization<a class="headerlink" href="#overview-adjoint-based-optimization" title="Permanent link">&para;</a></h2>
+<p>A common task in electromagnetic engineering is to custom-tune the design
+of some component of a system---a waveguide taper, a power splitter,
+an input coupler, an antenna, etc.---to optimize the performance of the system
+as defined by some problem-specific metric. For our purposes,
+a "design" will consist of a specification of the spatially-varying
+scalar permittivity <span><span class="MathJax_Preview">\epsilon(\mathbf x)</span><script type="math/tex">\epsilon(\mathbf x)</script></span> in some subregion
+of a <span class=SC>meep</span> geometry, and the performance metric
+will be a physical quantity computed from frequency-domain
+fields---a <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_fluxes">power flux</a>,
+an <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#dft_energy">energy density</a>,
+an
+<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_eigenmode_coefficients">eigenmode expansion coefficient</a>,
+or perhaps some mathematical function of one or more of these
+quantities. We will shortly present a smorgasbord of examples; for now,
+perhaps a good one to have in mind is the
+<a href="#HoleCloak">hole cloak </a> discussed below, in which a
+chunk of material has been removed from an otherwise perfect waveguide
+section, ruining the otherwise perfectly unidirectional (no scattering or reflection)
+flow of power from a source at one end of the guide to a sink at the other;
+our task is to tweak the permittivity in an annular region
+surrounding the defect (the <em>cloak</em>) so as to restore 
+as much as possible the reflectionless transfer of power 
+across the waveguide---thus hiding or "cloaking"
+the presence of defect from external detection.</p>
+<p>Now, given a candidate design
+<span><span class="MathJax_Preview">\epsilon\sup{trial}(\mathbf{x})</span><script type="math/tex">\epsilon\sup{trial}(\mathbf{x})</script></span>, it's easy enough to see
+how we can use <span class=SC>meep</span> to evaluate
+its performance---just create a
+<span class=SC>meep</span> geometry with <span><span class="MathJax_Preview">\epsilon\sup{trial}</span><script type="math/tex">\epsilon\sup{trial}</script></span> as a
+<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#eps_func">spatially-varying permittivity function</a>,
+in the design region,
+add <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#FluxSpectra">DFT cells</a>
+to tabulate the frequency-domain Poynting flux entering and departing
+the cloak region,
+<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#run-functions">timestep</a> until
+the DFTs converge, then use post-processing routines like
+<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_fluxes"><code class="highlight"><span class="n">get_fluxes</span><span class="p">(</span><span class="s1">&#39;)</span></code></a>
+or perhaps
+<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_eigenmode_coefficients"><code class="highlight"><span class="n">get_eigenmode_coefficients</span><span class="p">()</span></code></a>
+to get the quantities needed to evaluate the performance of the device.
+Thus, for the cost of one full <span class=SC>meep</span> timestepping
+run we obtain the value of our objective function at one point
+in the parameter space of possible inputs. </p>
+<p>But <em>now</em> what do we do?! The difficulty is that the computation
+izinust described furnishes only the <em>value</em> of the objective function
+for a given input, not its <em>derivatives</em> with respect to the
+design variables---and thus yields zero insight into how we should
+tweak the design to improve performance.
+In simple cases we might hope to proceed on the basis of physical
+intuition, while
+for small problems with just a few parameters we might try our luck with a
+<a href="https://en.wikipedia.org/wiki/Derivative-free_optimization">derivative-free optimization algorithm</a>;
+however, both of these approaches will run out of steam long before
+we scale up to 
+the full complexity of a practical problem with thousands
+of degrees of freedom.
+Alternatively, we could get approximate derivative information by brute-force
+finite-differencing---slightly tweaking one design variable, repeating 
+the full timestepping run, and asking how the results changed---but 
+proceeding this way to compute derivatives with respect to all <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span> 
+design variables would require fully <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span> separate timestepping runs;
+for the problem sizes we have in mind, this would make calculating the 
+objective-function gradient
+<em>several thousand times</em> more costly than calculating its value.
+So we face a dilemma: How can we obtain the derivative information
+necessary for effective optimization in a reasonable amount of time?
+This is where adjoints come to the rescue.</p>
+<p>The <em>adjoint method</em> of sensitivity analysis is a technique in which
+we exploit certain facts about the physics of a problem and the
+consequent mathematical structure---specifically, in this case, the
+linearity and reciprocity of Maxwell's equations---to rearrange the
+calculation of derivatives in a way that yields an <em>enormous</em> speedup
+over the brute-force finite-difference approach. More specifically,
+after we have computed the objective-function value by doing
+the full <span class=SC>meep</span> timestepping run mentioned
+above---the "forward" run in adjoint-method parlance---we can magically
+compute its derivatives with respect to <em>all</em> design variables by doing
+just <em>one</em> additional timestepping run with a funny-looking choice
+of sources and outputs (the "adjoint" run).
+Thus, whereas gradient computation via finite-differencing is at least <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>
+times more expensive than computing the objective function value,
+with adjoints we get both value and gradient for roughly just <em>twice</em> the
+cost of the value alone. Such a bargain! At this modest cost, derivative-based 
+optimization becomes entirely feasible.</p>
+<blockquote>
+<p><img alt="📝" class="gemoji center pct80" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4dd.png" title=":memo:" /> <strong>More general materials</strong>
+    Although for simplicity we focus here on case of isotropic,
+    non-magnetic materials, the adjoint solver is also capable
+    of optimizing geometries involving permeable (<span><span class="MathJax_Preview">\mu\ne 1</span><script type="math/tex">\mu\ne 1</script></span>) and
+    anisotropic (tensor-valued <span><span class="MathJax_Preview">\boldsymbol{\epsilon},\boldsymbol{\mu}</span><script type="math/tex">\boldsymbol{\epsilon},\boldsymbol{\mu}</script></span>) media.</p>
+</blockquote>
+<hr />
+<h2 id="examples-of-optimization-problems">Examples of optimization problems<a class="headerlink" href="#examples-of-optimization-problems" title="Permanent link">&para;</a></h2>
+<p>Throughout the <code>meep.adjoint</code> documentation we will refer to a running collection of 
+simple optimization problems to illustrate the mechanics of optimization,
+among which are the following; click the geometry images to view 
+in higher resolution.   </p>
+<hr />
+<h3 id="the-holey-waveguide">The Holey Waveguide<a class="headerlink" href="#the-holey-waveguide" title="Permanent link">&para;</a></h3>
+<p>By way of warm-up, a useful toy version of an optimization problem
+is an otherwise pristine length of dielectric slab waveguide in
+which a careless technician has torn a circular <code>hole</code> of variable
+permittivity <span><span class="MathJax_Preview">\epsilon\sup{hole}</span><script type="math/tex">\epsilon\sup{hole}</script></span>.     </p>
+<blockquote>
+<p><img alt="🔖" class="gemoji center" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /></p>
+<p><img alt="zoomify" src="../images/HoleyWaveguideGeometry.png" /></p>
+</blockquote>
+<p>Incident power from an
+<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#eigenmodesource">eigenmode source</a> (cyan line in figure)
+travels leftward through the waveguide, but is partially 
+reflected by the hole, resulting in less than 100% power
+the waveguide output (as may be 
+characterized in <span class=SC>meep</span>
+by observing power flux and/or
+eigenmode expansion coefficients at the two 
+flux monitors, labeled <code>east</code> and <code>west</code>).
+Our objective is to tweak the value of
+<span><span class="MathJax_Preview">\epsilon\sup{hole}</span><script type="math/tex">\epsilon\sup{hole}</script></span> to maximize transmission
+as assessed by one of these metrics.
+The simplicity of this model makes it a useful
+initial warm-up and sanity check for making sure we know
+what we are doing in design optimization; for example, 
+<a href="../ExampleGallery/#numerical-validation-of-adjoint-gradients">in this worked example</a>
+we use it to confirm the numerical accuracy of
+adjoint-based gradients computed by <code>mp.adjoint</code></p>
+<hr />
+<h3 id="the-hole-cloak">The Hole Cloak<a class="headerlink" href="#the-hole-cloak" title="Permanent link">&para;</a></h3>
+<p>We obtain a more challenging variant of the holey-waveguide problem
+be supposing that the material in the hole region is <em>not</em> a
+tunable design parameter---it is fixed at vacuum, say, or 
+perfect metal---but that we <em>are</em> allowed to vary the permittivity
+in an annular region surrounding the hole in such a way
+as to mimic the effect of filling in the hole, i.e. of hiding
+or "cloaking" the hole  as much as  possible from external 
+ detection.</p>
+<blockquote>
+<p><img alt="🔖" class="gemoji center" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /></p>
+<p><img alt="zoomify" src="../images/HoleCloakBGeometry.png" /></p>
+</blockquote>
+<p>For the hole-cloak optimization, the objective function
+will most likely the same as that considered above---namely,
+to maximize the Poynting flux through the flux monitor
+labeled <code>east</code> (a quantity we label <span><span class="MathJax_Preview">S\subs{east}</span><script type="math/tex">S\subs{east}</script></span>)
+ or perhaps to maximize the overlap coefficient
+between the actual fields passing through monitor
+<code>east</code> and the fields of (say)
+the <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>th forward- or backward-traveling eigenmode
+of the waveguide (which we label <span><span class="MathJax_Preview">\{P,M\}_{n,\text{east}}</span><script type="math/tex">\{P,M\}_{n,\text{east}}</script></span>
+with <span><span class="MathJax_Preview">P,M</span><script type="math/tex">P,M</script></span> standing for "plus and minus.")
+On the other hand, the design space here is more 
+complicated than for the simple hole, consisting
+of all possible scalar functions <span><span class="MathJax_Preview">\epsilon(r,\theta)</span><script type="math/tex">\epsilon(r,\theta)</script></span> 
+defined on the annular cloak region.</p>
+<hr />
+<h3 id="the-cross-router">The cross-router<a class="headerlink" href="#the-cross-router" title="Permanent link">&para;</a></h3>
+<p>A different flavor of waveguide-optimization problem arises when we
+consider the <em>routing</em> of signals from given inputs to 
+given destinations. One example is the <em>cross-router</em>, involving
+an intersection between <span><span class="MathJax_Preview">x-</span><script type="math/tex">x-</script></span>directed and <span><span class="MathJax_Preview">y-</span><script type="math/tex">y-</script></span>directed waveguides,
+with center region of variable permittivity that we may
+tweak to control the routing of power through it.</p>
+<blockquote>
+<p><img alt="🔖" class="gemoji center" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /></p>
+<p><img alt="zoomify" src="../images/RouterGeometry_Iter0.png" /></p>
+</blockquote>
+<p>Whereas in the previous examples there was more or less
+only one reasonable design objective one might realistically
+want to optimize,
+for a problem like this there are many possibilities.
+For example, given fixed input power supplied by an eigenmode
+source on the "western" branch (cyan line),
+we might be less interested in the absolute output
+power at any port and more concerned with 
+achieving maximal <em>equality</em> of output 
+power among the north, south, and east outputs,
+whereupon we might minimize an objective function of
+the form
+$$f\sub{obj}  =
+   \Big( S\sub{north} - S\sub{south}\Big)^2
+  +\Big( S\sub{north} - S\sub{east}\Big)^2
+ + \Big( S\sub{east} - S\sub{south}\Big)^2
+$$
+(or a similar functional form involving eigenmode 
+coefficients).
+Alternatively, perhaps we don't care what happens in
+the southern branch, but we really want the fields 
+traveling past the <code>north</code> monitor 
+to have twice as much
+overlap with the forward-traveling 3<sup>rd</sup> eigenmode of that
+waveguide 
+as the <code>east</code> fields have with their backward-traveling
+2<sup>nd</sup> eigenmode:</p>
+<div>
+<div class="MathJax_Preview"> f\sub{obj} \equiv \Big( P\sub{3,north} - 2M\sub{2,east}\Big)^2</div>
+<script type="math/tex; mode=display"> f\sub{obj} \equiv \Big( P\sub{3,north} - 2M\sub{2,east}\Big)^2</script>
+</div>
+<p>The point is that the definition of an optimization problem
+involves not only a set of physical quantities  (power fluxes, eigenmode coefficients,
+etc.) that we compute from <span class=SC>meep</span> calculations,
+but also a rule (the objective function <span><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span>) for crunching those 
+numbers in some specific way to define a single scalar figure of merit. </p>
+<p>In  <code>mp.adjoint</code> we use the collective term <em>objective quantities</em>
+for the power fluxes, eigenmode coefficients, and other physical quantities
+needed to compute the objective function.
+Similarly, the special geometric subregions of 
+<span class=SC>meep</span> geometries with
+which objective quantities are associated---the
+cross-sectional flux planes of <code>DFTFlux</code> cells or 
+field-energy boxes of <code>DFTField</code> cells----are known as <em>objective regions.</em></p>
+<p>The [Example Gallery][ExampleGallery.md] includes a worked example
+of a full successful iterative optimization in which
+<code>mp.adjoint</code> begins with the design shown above and thoroughly rejiggers
+it over the course of 50 iterations to yield a device
+that efficiently routs power around a 90&degree; bend
+from the eigenmode source (cyan line above)
+to the 'north' output port.</p>
+<hr />
+<h3 id="the-asymmetric-splitter">The asymmetric splitter<a class="headerlink" href="#the-asymmetric-splitter" title="Permanent link">&para;</a></h3>
+<p>A <code>splitter</code> seeks to divide incoming power from one source
+in some specific way among two or more destinations.,
+We will consider an asymmetric splitter in which power
+arriving from a single incoming waveguide is to be routed
+into two outgoing waveguides by varying the design of the 
+central coupler region:</p>
+<blockquote>
+<p><img alt="🔖" class="gemoji center" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /></p>
+<p><img alt="zoomify" src="../images/SplitterGeometry.png" /></p>
+</blockquote>
+<hr />
+<h2 id="common-elements-of-optimization-geometries-objective-regions-objective-functions-design-regions-basis-sets">Common elements of optimization geometries: Objective regions, objective functions, design regions, basis sets<a class="headerlink" href="#common-elements-of-optimization-geometries-objective-regions-objective-functions-design-regions-basis-sets" title="Permanent link">&para;</a></h2>
+<p>The examples above, distinct though they all are, illustrate
+the common defining features that are present in every
+<span class=SC>meep</span> optimization problem:</p>
+<ul>
+<li><strong>Objective regions:</strong> One or more <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#dft_obj">regions over which to tabulate frequency-domain fields (DFT cells)</a>
+  for use in computing power fluxes, mode-expansion coefficients, and other frequency-domain
+   quantities used in characterizing device performance.  Because these regions are used to evaluate
+   objective functions, we refer to them as <em>objective regions.</em></li>
+</ul>
+<blockquote>
+<p><img alt="📝" class="gemoji center pct80" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4dd.png" title=":memo:" /> <strong>Objective regions may or may not have zero thickness</strong>
+    In the examples above, it happens that all objective regions are one-dimensional
+    (zero-thickness) flux monitors, indicated by magenta lines; in a 3D geometry they
+    would be two-dimensional flux planes, still of zero thickness in the normal 
+    direction.  However, objective regions may also be of nonzero thickness, as for
+    instance if the objective function involves the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#energy">field energy in a box-shaped
+    subregion of a geometry.</a></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Objective quantities and the objective function:</strong> 
+      A specification of which quantities (power fluxes, mode coefficients,
+      energies, etc.) are to be computed for each objective region, and how
+      those quantities are to be crunched mathematically to yield a single number 
+      measuring device performance. We refer to the individual quantities as 
+      <em>objective quantities</em>, while the overall function that inputs one more more
+      objective quantities and outputs a single numerical score is the 
+      <em>objective function.</em></p>
+</li>
+<li>
+<p><strong>Design region:</strong> A specification of the region over which the material design is to be
+    optimized, i.e. the region in which the permittivity is given by the
+    design quantity <span><span class="MathJax_Preview">\epsilon\sup{des}(\mathbf x)</span><script type="math/tex">\epsilon\sup{des}(\mathbf x)</script></span>.
+    We refer to this as the <em>design region</em> <span><span class="MathJax_Preview">\mathcal{V}\sup{des}</span><script type="math/tex">\mathcal{V}\sup{des}</script></span>.</p>
+</li>
+<li>
+<p><strong>Basis:</strong> Because the design variable <span><span class="MathJax_Preview">\epsilon\sup{des}(\mathbf x)</span><script type="math/tex">\epsilon\sup{des}(\mathbf x)</script></span>
+    is a continuous function defined throughout a finite volume of space,
+    technically it involves infinitely many degrees of freedom.
+    To yield a finite-dimensional optimization problem, it is convenient
+    to approximate <span><span class="MathJax_Preview">\epsilon\sup{des}</span><script type="math/tex">\epsilon\sup{des}</script></span> as a finite expansion in some
+    convenient set of basis functions, i.e.
+    $$ \epsilon(\mathbf x) \equiv \sum_{d=1}^N \beta_d \mathcal{b}_d(\mathbf x),
+       \qquad \mathbf x\in \mathcal{V}\sup{des},
+    $$
+    where <span><span class="MathJax_Preview">\{\mathcal{b}_n(\mathbf x)\}</span><script type="math/tex">\{\mathcal{b}_n(\mathbf x)\}</script></span> is a set of <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span> scalar-valued
+    basis functions defined for <span><span class="MathJax_Preview">\mathbf x\in\mathcal{V}\sup{des}</span><script type="math/tex">\mathbf x\in\mathcal{V}\sup{des}</script></span>.
+    The task of the optimizer then becomes to determine
+    numerical values for the <span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>-vector of coefficients 
+    <span><span class="MathJax_Preview">\boldsymbol{\beta}=\{\beta_n\},n=1,\cdots,N.</span><script type="math/tex">\boldsymbol{\beta}=\{\beta_n\},n=1,\cdots,N.</script></span></p>
+<p>For adjoint optimization in <span class=SC>meep</span>, the
+basis set is chosen by the user, either from among a predefined collection of
+common basis sets, or as an arbitrary user-defined basis set specified by
+subclassing an abstract base class in <code>mp.adjoint.</code></p>
+</li>
+</ul>
+<h2 id="mechanics-of-meep-design-optimization">Mechanics of <span class=SC>meep</span> design optimization<a class="headerlink" href="#mechanics-of-meep-design-optimization" title="Permanent link">&para;</a></h2>
+<p>With all that by way of background, here's a quick rundown of the 
+process you'll follow to optimize a geometry in <code>meep.adjoint.</code></p>
+<ol>
+<li>You write a python script that implements a subclass of
+   <code>OptimizationProblem</code> (an abstract base class in <code>meep.adjoint</code>)
+   to describe your specific problem. In particular, your 
+   class must override the following two pure virtual methods
+   in <code>OptimizationProblem:</code></li>
+</ol>
+<details class="summary"><summary><code>init_problem</code>: One-time initialization</summary><p>Inputs an <code>args</code> structure describing command-line options
+and returns a 5-tuple
+<div class="highlight"><pre><span></span>   <span class="n">fstr</span><span class="p">,</span> <span class="n">objective_regions</span><span class="p">,</span> <span class="n">extra_regions</span><span class="p">,</span> <span class="n">design_region</span><span class="p">,</span> <span class="n">basis</span>
+</pre></div>
+defining your objective function, the objective regions on which 
+its inputs (the objective variables) are defined, the design region,
+and an expansion basis.</p>
+</details>
+<details class="summary"><summary><code>create_sim</code>: Instantiation of design-dependent geometries</summary><p>Inputs a vector of expansion coefficients <code>beta_vector</code> and 
+returns a <code>meep.simulation</code> describing a geometry with the 
+corresponding spatially-varying permittivity.</p>
+</details>
+<ol start="2">
+<li>You run computations on your geometry either by executing your
+   script from the shell with command-line options:</li>
+</ol>
+<div class="highlight"><pre><span></span>  % python HoleyWaveguide.py --beta <span class="m">0</span> <span class="m">2</span>.3 --eval_gradient
+</pre></div>
+
+<p>or equivalently from a python script or console by 
+calling its <code>run()</code> method:</p>
+<div class="highlight"><pre><span></span>  <span class="kn">from</span> <span class="nn">HoleyWaveguide</span> <span class="k">import</span> <span class="n">HoleyWaveguide</span>
+
+  <span class="n">HW</span><span class="o">=</span><span class="n">HoleyWaveguide</span><span class="p">(</span><span class="n">cmdline</span><span class="o">=</span><span class="s1">&#39;--beta 0 2.3 --eval_gradient&#39;</span><span class="p">)</span>
+  <span class="n">HW</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+<p>The actual calculations that may be run in this way
+range from a single non-iterative computation of the objective
+function and (optionally) its gradient at a given set of design-variable
+values, to <a href="./#the-cross-router">full-blown iterative design optimization</a></p>
+<p>Here, in their entirety, are the python scripts implementing the 4 examples
+described above. (These may also be found in the <code>python/examples/adjoint_optimization</code>
+subdirectory of your <span class=SC>meep</span> installation.)</p>
+<details class="example"><summary><code>HoleyWaveguide.py</code></summary><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">DFTCell</span><span class="p">,</span> <span class="n">adjoint_options</span><span class="p">,</span>
+                          <span class="n">xHat</span><span class="p">,</span> <span class="n">yHat</span><span class="p">,</span> <span class="n">zHat</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">FluxLine</span><span class="p">,</span>
+                          <span class="n">ParameterizedDielectric</span><span class="p">,</span> <span class="n">FourierLegendreBasis</span><span class="p">)</span>
+
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="k">class</span> <span class="nc">HoleyWaveguide</span><span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">add_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+
+        <span class="c1"># add new problem-specific arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dair&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_wvg&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_wvg&#39;</span><span class="p">,</span>     <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--r_disc&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--nr_max&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--kphi_max&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># set problem-specific defaults for existing (general) arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">fcen</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">dpml</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">init_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># size of computational cell</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">lcen</span>       <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span>
+        <span class="n">dpml</span>       <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lcen</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span><span class="o">==-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span>
+        <span class="n">dair</span>       <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dair</span><span class="o">==-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">dair</span>
+        <span class="n">L</span>          <span class="o">=</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">lcen</span>
+        <span class="n">Lmin</span>       <span class="o">=</span> <span class="mf">6.0</span><span class="o">*</span><span class="n">dpml</span> <span class="o">+</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span>
+        <span class="n">L</span>          <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">Lmin</span><span class="p">)</span>
+        <span class="n">sx</span>         <span class="o">=</span> <span class="n">dpml</span><span class="o">+</span><span class="n">L</span><span class="o">+</span><span class="n">dpml</span>
+        <span class="n">sy</span>         <span class="o">=</span> <span class="n">dpml</span><span class="o">+</span><span class="n">dair</span><span class="o">+</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span><span class="o">+</span><span class="n">dair</span><span class="o">+</span><span class="n">dpml</span>
+        <span class="n">cell_size</span>  <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span><span class="n">sy</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- design region</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">design_center</span> <span class="o">=</span> <span class="n">origin</span>
+        <span class="n">design_size</span>   <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span><span class="p">)</span>
+        <span class="n">design_region</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">design_center</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">design_size</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective regions</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">x0_east</span>       <span class="o">=</span>  <span class="n">args</span><span class="o">.</span><span class="n">r_disc</span> <span class="o">+</span> <span class="n">dpml</span>
+        <span class="n">x0_west</span>       <span class="o">=</span> <span class="o">-</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span> <span class="o">-</span> <span class="n">dpml</span>
+        <span class="n">y0</span>            <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">flux_length</span>   <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span>
+        <span class="n">east</span>          <span class="o">=</span> <span class="n">FluxLine</span><span class="p">(</span><span class="n">x0_east</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">flux_length</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;east&#39;</span><span class="p">)</span>
+        <span class="n">west</span>          <span class="o">=</span> <span class="n">FluxLine</span><span class="p">(</span><span class="n">x0_west</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">flux_length</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;west&#39;</span><span class="p">)</span>
+
+        <span class="n">objective_regions</span>  <span class="o">=</span> <span class="p">[</span><span class="n">east</span><span class="p">,</span> <span class="n">west</span><span class="p">]</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- optional extra regions for visualization</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">extra_regions</span>      <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">)]</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">full_dfts</span> <span class="k">else</span> <span class="p">[]</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># basis set</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">FourierLegendreBasis</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span><span class="p">,</span> <span class="n">nr_max</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">nr_max</span><span class="p">,</span> <span class="n">kphi_max</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">kphi_max</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- source location</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">source_center</span>    <span class="o">=</span> <span class="p">(</span><span class="n">x0_west</span> <span class="o">-</span> <span class="n">dpml</span><span class="p">)</span><span class="o">*</span><span class="n">xHat</span>
+        <span class="n">source_size</span>      <span class="o">=</span> <span class="n">flux_length</span><span class="o">*</span><span class="n">yHat</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective function</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">fstr</span><span class="o">=</span><span class="s1">&#39;Abs(P1_east)**2+0.0*(P2_east+P1_west+P2_west+M1_east+M2_east+M1_west+M2_west+S_east+S_west)&#39;</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- internal storage for variables needed later</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span>            <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpml</span>            <span class="o">=</span> <span class="n">dpml</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span>       <span class="o">=</span> <span class="n">cell_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span>           <span class="o">=</span> <span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_center</span>   <span class="o">=</span> <span class="n">design_center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_center</span>   <span class="o">=</span> <span class="n">source_center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_size</span>     <span class="o">=</span> <span class="n">source_size</span>
+
+        <span class="k">return</span> <span class="n">fstr</span><span class="p">,</span> <span class="n">objective_regions</span><span class="p">,</span> <span class="n">extra_regions</span><span class="p">,</span> <span class="n">design_region</span><span class="p">,</span> <span class="n">basis</span>
+
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="k">def</span> <span class="nf">create_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta_vector</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="n">args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span>
+        <span class="n">sx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="o">.</span><span class="n">x</span>
+
+        <span class="n">wvg</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps_wvg</span><span class="p">),</span>
+                     <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span><span class="p">))</span>
+        <span class="n">disc</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span><span class="p">,</span>
+                         <span class="n">epsilon_func</span><span class="o">=</span><span class="n">ParameterizedDielectric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span>
+                                                              <span class="n">beta_vector</span><span class="p">))</span>
+
+        <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">wvg</span><span class="p">]</span> <span class="k">if</span> <span class="n">vacuum</span> <span class="k">else</span> <span class="p">[</span><span class="n">wvg</span><span class="p">,</span> <span class="n">disc</span><span class="p">]</span>
+
+        <span class="n">envelope</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">GaussianSource</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">,</span><span class="n">fwidth</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">amp</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">envelope</span><span class="p">,</span> <span class="s2">&quot;fourier_transform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">amp</span> <span class="o">/=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">fourier_transform</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">)</span>
+        <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">EigenModeSource</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">envelope</span><span class="p">,</span>
+                                    <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_center</span><span class="p">,</span>
+                                    <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_size</span><span class="p">,</span>
+                                    <span class="n">eig_band</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">source_mode</span><span class="p">,</span>
+                                    <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span>
+                                   <span class="p">)</span>
+                <span class="p">]</span>
+
+        <span class="n">sim</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">res</span><span class="p">,</span> <span class="n">cell_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">,</span>
+                          <span class="n">boundary_layers</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">PML</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dpml</span><span class="p">)],</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span>
+                          <span class="n">sources</span><span class="o">=</span><span class="n">sources</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">complex_fields</span><span class="p">:</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">force_complex_fields</span><span class="o">=</span><span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">sim</span>
+
+<span class="c1">######################################################################</span>
+<span class="c1"># if executed as a script, we look at our own filename to figure out</span>
+<span class="c1"># the name of the class above, create an instance of this class called</span>
+<span class="c1"># opt_prob, and call its run() method.</span>
+<span class="c1">######################################################################</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">opt_prob</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="vm">__file__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]()</span>
+    <span class="n">opt_prob</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+</details>
+<hr />
+<div class="admonition example">
+<p class="admonition-title"><code>HoleCloak.py</code></p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">DFTCell</span><span class="p">,</span> <span class="n">adjoint_options</span><span class="p">,</span>
+                          <span class="n">xHat</span><span class="p">,</span> <span class="n">yHat</span><span class="p">,</span> <span class="n">zHat</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">FluxLine</span><span class="p">,</span>
+                          <span class="n">ParameterizedDielectric</span><span class="p">,</span> <span class="n">FourierLegendreBasis</span><span class="p">)</span>
+
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="k">class</span> <span class="nc">HoleCloak</span><span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">add_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+
+        <span class="c1"># add new problem-specific arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dair&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_wvg&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_wvg&#39;</span><span class="p">,</span>     <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--r_disc&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--r_cloak&#39;</span><span class="p">,</span>     <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--nr_max&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--kphi_max&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_disc&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;permittivity in hole region (0.0 for PEC)&#39;</span><span class="p">)</span>
+
+        <span class="c1"># set problem-specific defaults for existing (general) arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">fcen</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">dpml</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">init_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># size of computational cell</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">lcen</span>       <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span>
+        <span class="n">dpml</span>       <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lcen</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span><span class="o">==-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span>
+        <span class="n">dair</span>       <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dair</span><span class="o">==-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">dair</span>
+        <span class="n">L</span>          <span class="o">=</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">lcen</span>
+        <span class="n">Lmin</span>       <span class="o">=</span> <span class="mf">6.0</span><span class="o">*</span><span class="n">dpml</span> <span class="o">+</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span>
+        <span class="n">L</span>          <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">Lmin</span><span class="p">)</span>
+        <span class="n">sx</span>         <span class="o">=</span> <span class="n">dpml</span><span class="o">+</span><span class="n">L</span><span class="o">+</span><span class="n">dpml</span>
+        <span class="n">sy</span>         <span class="o">=</span> <span class="n">dpml</span><span class="o">+</span><span class="n">dair</span><span class="o">+</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span><span class="o">+</span><span class="n">dair</span><span class="o">+</span><span class="n">dpml</span>
+        <span class="n">cell_size</span>  <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- design region</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">design_center</span> <span class="o">=</span> <span class="n">origin</span>
+        <span class="n">design_size</span>   <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span><span class="p">)</span>
+        <span class="n">design_region</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">design_center</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">design_size</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective regions</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">fluxW_center</span>  <span class="o">=</span>  <span class="p">(</span><span class="o">+</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span><span class="o">+</span> <span class="n">dpml</span><span class="p">)</span><span class="o">*</span><span class="n">xHat</span>
+        <span class="n">fluxE_center</span>  <span class="o">=</span>  <span class="p">(</span><span class="o">-</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span><span class="o">-</span> <span class="n">dpml</span><span class="p">)</span><span class="o">*</span><span class="n">xHat</span>
+        <span class="n">flux_size</span>     <span class="o">=</span>  <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span><span class="o">*</span><span class="n">yHat</span>
+
+        <span class="c1">#fluxW_region  = mp.FluxRegion(center=fluxW_center, size=flux_size, direction=mp.X)</span>
+        <span class="c1">#fluxE_region  = mp.FluxRegion(center=fluxE_center, size=flux_size, direction=mp.X)</span>
+        <span class="n">x0_east</span>       <span class="o">=</span>  <span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span> <span class="o">+</span> <span class="n">dpml</span>
+        <span class="n">x0_west</span>       <span class="o">=</span> <span class="o">-</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span> <span class="o">-</span> <span class="n">dpml</span>
+        <span class="n">y0</span>            <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">flux_length</span>   <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span>
+        <span class="n">east</span>          <span class="o">=</span> <span class="n">FluxLine</span><span class="p">(</span><span class="n">x0_east</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">flux_length</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;east&#39;</span><span class="p">)</span>
+        <span class="n">west</span>          <span class="o">=</span> <span class="n">FluxLine</span><span class="p">(</span><span class="n">x0_west</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">flux_length</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;west&#39;</span><span class="p">)</span>
+
+        <span class="n">objective_regions</span>  <span class="o">=</span> <span class="p">[</span><span class="n">east</span><span class="p">,</span> <span class="n">west</span><span class="p">]</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- optional extra regions for visualization</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">extra_regions</span>      <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">)]</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">full_dfts</span> <span class="k">else</span> <span class="p">[]</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># basis set</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">FourierLegendreBasis</span><span class="p">(</span><span class="n">outer_radius</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span><span class="p">,</span> <span class="n">inner_radius</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span><span class="p">,</span>
+                                     <span class="n">nr_max</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">nr_max</span><span class="p">,</span> <span class="n">kphi_max</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">kphi_max</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- source location</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">source_center</span>    <span class="o">=</span> <span class="p">(</span><span class="n">x0_west</span><span class="o">-</span><span class="n">dpml</span><span class="p">)</span><span class="o">*</span><span class="n">xHat</span>
+        <span class="n">source_size</span>      <span class="o">=</span> <span class="n">flux_length</span><span class="o">*</span><span class="n">yHat</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective function</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">fstr</span><span class="o">=</span><span class="s1">&#39;Abs(P1_east)**2+0.0*(P1_west + M1_east + M1_west + S_west + S_east)&#39;</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- internal storage for variables needed later</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span>            <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpml</span>            <span class="o">=</span> <span class="n">dpml</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span>       <span class="o">=</span> <span class="n">cell_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span>           <span class="o">=</span> <span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_center</span>   <span class="o">=</span> <span class="n">design_center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_center</span>   <span class="o">=</span> <span class="n">source_center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_size</span>     <span class="o">=</span> <span class="n">source_size</span>
+
+        <span class="k">return</span> <span class="n">fstr</span><span class="p">,</span> <span class="n">objective_regions</span><span class="p">,</span> <span class="n">extra_regions</span><span class="p">,</span> <span class="n">design_region</span><span class="p">,</span> <span class="n">basis</span>
+
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="k">def</span> <span class="nf">create_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta_vector</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="n">args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span>
+        <span class="n">sx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="o">.</span><span class="n">x</span>
+
+        <span class="n">wvg</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps_wvg</span><span class="p">),</span>
+                     <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">w_wvg</span><span class="p">))</span>
+        <span class="n">cloak</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">r_cloak</span><span class="p">,</span>
+                          <span class="n">epsilon_func</span><span class="o">=</span><span class="n">ParameterizedDielectric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span>
+                                                               <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span>
+                                                               <span class="n">beta_vector</span><span class="p">))</span>
+        <span class="n">disc</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">r_disc</span><span class="p">,</span>
+                         <span class="n">material</span><span class="o">=</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">metal</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">eps_disc</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span>
+                                   <span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps_disc</span><span class="p">)))</span>
+
+        <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">wvg</span><span class="p">]</span> <span class="k">if</span> <span class="n">vacuum</span> <span class="k">else</span> <span class="p">[</span><span class="n">wvg</span><span class="p">,</span> <span class="n">cloak</span><span class="p">,</span> <span class="n">disc</span><span class="p">]</span>
+
+        <span class="n">envelope</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">GaussianSource</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">,</span><span class="n">fwidth</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">amp</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">envelope</span><span class="p">,</span> <span class="s2">&quot;fourier_transform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">amp</span> <span class="o">/=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">fourier_transform</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">)</span>
+        <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">EigenModeSource</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">envelope</span><span class="p">,</span>
+                                    <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_center</span><span class="p">,</span>
+                                    <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_size</span><span class="p">,</span>
+                                    <span class="n">eig_band</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">source_mode</span><span class="p">,</span>
+                                    <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span>
+                                   <span class="p">)</span>
+                <span class="p">]</span>
+
+        <span class="n">sim</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">res</span><span class="p">,</span> <span class="n">cell_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">,</span>
+                          <span class="n">boundary_layers</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">PML</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dpml</span><span class="p">)],</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span>
+                          <span class="n">sources</span><span class="o">=</span><span class="n">sources</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">complex_fields</span><span class="p">:</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">force_complex_fields</span><span class="o">=</span><span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">sim</span>
+
+<span class="c1">######################################################################</span>
+<span class="c1"># if executed as a script, we look at our own filename to figure out</span>
+<span class="c1"># the name of the class above, create an instance of this class called</span>
+<span class="c1"># opt_prob, and call its run() method.</span>
+<span class="c1">######################################################################</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">opt_prob</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="vm">__file__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]()</span>
+    <span class="n">opt_prob</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+</div>
+<div class="admonition example">
+<p class="admonition-title"><code>CrossRouter.py</code></p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">FluxLine</span><span class="p">,</span>
+                          <span class="n">xHat</span><span class="p">,</span> <span class="n">yHat</span><span class="p">,</span> <span class="n">zHat</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span>
+                          <span class="n">ParameterizedDielectric</span><span class="p">,</span> <span class="n">FiniteElementBasis</span><span class="p">)</span>
+
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="k">class</span> <span class="nc">CrossRouter</span><span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">add_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+
+        <span class="c1"># add new problem-specific arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--wh&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of horizontal waveguide&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--wv&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of vertical waveguide&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_stub&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide input/output stub length&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide permittivity&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--r_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region radius&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region side length&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--nfe&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of finite elements per unit length&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--n_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--s_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--e_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># set problem-specific defaults for existing (general) arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">fcen</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">dpml</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">epsilon_design</span><span class="o">=</span><span class="mf">6.0</span><span class="p">)</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">init_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># size of computational cell</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">lcen</span>          <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span>
+        <span class="n">dpml</span>          <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lcen</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span>
+        <span class="n">design_length</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">r_design</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">r_design</span> <span class="o">&gt;</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">l_design</span>
+        <span class="n">sx</span> <span class="o">=</span> <span class="n">sy</span>       <span class="o">=</span> <span class="n">dpml</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span> <span class="o">+</span> <span class="n">design_length</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span> <span class="o">+</span> <span class="n">dpml</span>
+        <span class="n">cell_size</span>     <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- design region bounding box</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">design_center</span> <span class="o">=</span> <span class="n">origin</span>
+        <span class="n">design_size</span>   <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">design_length</span><span class="p">,</span> <span class="n">design_length</span><span class="p">)</span>
+        <span class="n">design_region</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">design_center</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">design_size</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective and source regions</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">gap</span>            <span class="o">=</span>  <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="o">/</span><span class="mf">6.0</span>                    <span class="c1"># gap between source region and flux monitor</span>
+        <span class="n">d_flux</span>         <span class="o">=</span>  <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">design_length</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">)</span>  <span class="c1"># distance from origin to NSEW flux monitors</span>
+        <span class="n">d_source</span>       <span class="o">=</span>  <span class="n">d_flux</span> <span class="o">+</span> <span class="n">gap</span>                       <span class="c1"># distance from origin to source</span>
+        <span class="n">d_flx2</span>         <span class="o">=</span>  <span class="n">d_flux</span> <span class="o">+</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">gap</span>
+        <span class="n">l_flux_NS</span>      <span class="o">=</span>  <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">wv</span>
+        <span class="n">l_flux_EW</span>      <span class="o">=</span>  <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">wh</span>
+        <span class="n">north</span>          <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">+</span><span class="n">d_flux</span><span class="p">,</span> <span class="n">l_flux_NS</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="s1">&#39;north&#39;</span><span class="p">)</span>
+        <span class="n">south</span>          <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">d_flux</span><span class="p">,</span> <span class="n">l_flux_NS</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="s1">&#39;south&#39;</span><span class="p">)</span>
+        <span class="n">east</span>           <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="o">+</span><span class="n">d_flux</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">l_flux_EW</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;east&#39;</span><span class="p">)</span>
+        <span class="n">west1</span>          <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="o">-</span><span class="n">d_flux</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">l_flux_EW</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;west1&#39;</span><span class="p">)</span>
+        <span class="n">west2</span>          <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="o">-</span><span class="n">d_flx2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">l_flux_EW</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;west2&#39;</span><span class="p">)</span>
+
+        <span class="n">objective_regions</span>  <span class="o">=</span> <span class="p">[</span><span class="n">north</span><span class="p">,</span> <span class="n">south</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">west1</span><span class="p">,</span> <span class="n">west2</span><span class="p">]</span>
+
+        <span class="n">source_center</span>  <span class="o">=</span>  <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="o">-</span><span class="n">d_source</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">source_size</span>    <span class="o">=</span>  <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">l_flux_EW</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- optional extra regions for visualization</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">extra_regions</span>  <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">)]</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">full_dfts</span> <span class="k">else</span> <span class="p">[]</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># basis set</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">FiniteElementBasis</span><span class="p">(</span><span class="n">lx</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">nfe</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective function</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">fstr</span><span class="o">=</span><span class="p">(</span>   <span class="s1">&#39;   </span><span class="si">{:s}</span><span class="s1">*Abs(P1_north)**2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;0.0&#39;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">n_weight</span><span class="o">==</span><span class="mf">0.0</span> <span class="k">else</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">n_weight</span><span class="p">))</span>
+               <span class="o">+</span> <span class="s1">&#39; + </span><span class="si">{:s}</span><span class="s1">*Abs(M1_south)**2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;0.0&#39;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">s_weight</span><span class="o">==</span><span class="mf">0.0</span> <span class="k">else</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">s_weight</span><span class="p">))</span>
+               <span class="o">+</span> <span class="s1">&#39; + </span><span class="si">{:s}</span><span class="s1">*Abs(P1_east)**2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;0.0&#39;</span>  <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">e_weight</span><span class="o">==</span><span class="mf">0.0</span> <span class="k">else</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">e_weight</span><span class="p">))</span>
+               <span class="o">+</span> <span class="s1">&#39; + 0.0*(P1_north + M1_south + P1_east + P1_west1 + P1_west2)&#39;</span>
+               <span class="o">+</span> <span class="s1">&#39; + 0.0*(M1_north + M1_south + M1_east + M1_west1 + M1_west2)&#39;</span>
+               <span class="o">+</span> <span class="s1">&#39; + 0.0*(S_north + S_south + S_east + S_west1 + S_west2)&#39;</span>
+             <span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- internal storage for variables needed later</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span>            <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpml</span>            <span class="o">=</span> <span class="n">dpml</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span>       <span class="o">=</span> <span class="n">cell_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span>           <span class="o">=</span> <span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_center</span>   <span class="o">=</span> <span class="n">design_center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_size</span>     <span class="o">=</span> <span class="n">design_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_center</span>   <span class="o">=</span> <span class="n">source_center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_size</span>     <span class="o">=</span> <span class="n">source_size</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">eps_design</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">eps_design</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">eps</span>
+
+        <span class="k">return</span> <span class="n">fstr</span><span class="p">,</span> <span class="n">objective_regions</span><span class="p">,</span> <span class="n">extra_regions</span><span class="p">,</span> <span class="n">design_region</span><span class="p">,</span> <span class="n">basis</span>
+
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="k">def</span> <span class="nf">create_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta_vector</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="n">args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span>
+
+        <span class="n">hwvg</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps</span><span class="p">),</span>
+                      <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">wh</span><span class="p">))</span>
+        <span class="n">vwvg</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps</span><span class="p">),</span>
+                      <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">wv</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">r_design</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">router</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">r_design</span><span class="p">,</span>
+                               <span class="n">epsilon_func</span><span class="o">=</span><span class="n">ParameterizedDielectric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span>
+                                                                    <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span>
+                                                                    <span class="n">beta_vector</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">router</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_size</span><span class="p">,</span>
+                            <span class="n">epsilon_func</span><span class="o">=</span><span class="n">ParameterizedDielectric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span>
+                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span>
+                                                                 <span class="n">beta_vector</span><span class="p">))</span>
+        <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">hwvg</span><span class="p">,</span> <span class="n">vwvg</span><span class="p">,</span> <span class="n">router</span><span class="p">]</span>
+
+        <span class="n">envelope</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">GaussianSource</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">,</span><span class="n">fwidth</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">amp</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">envelope</span><span class="p">,</span> <span class="s2">&quot;fourier_transform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">amp</span> <span class="o">/=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">fourier_transform</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">)</span>
+        <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">EigenModeSource</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">envelope</span><span class="p">,</span>
+                                    <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_center</span><span class="p">,</span>
+                                    <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_size</span><span class="p">,</span>
+                                    <span class="n">eig_band</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">source_mode</span><span class="p">,</span>
+                                    <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span>
+                                   <span class="p">)</span>
+                <span class="p">]</span>
+
+        <span class="n">sim</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">res</span><span class="p">,</span> <span class="n">cell_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">,</span>
+                          <span class="n">boundary_layers</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">PML</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpml</span><span class="p">)],</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span>
+                          <span class="n">sources</span><span class="o">=</span><span class="n">sources</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">complex_fields</span><span class="p">:</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">force_complex_fields</span><span class="o">=</span><span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">sim</span>
+
+<span class="c1">######################################################################</span>
+<span class="c1"># if executed as a script, we look at our own filename to figure out</span>
+<span class="c1"># the name of the class above, create an instance of this class called</span>
+<span class="c1"># op, and call its run() method.</span>
+<span class="c1">######################################################################</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">op</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="vm">__file__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]()</span>
+    <span class="n">op</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+</div>
+<div class="admonition example">
+<p class="admonition-title"><code>AsmmetricSplitter.py</code></p>
+</div>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">FluxLine</span><span class="p">,</span>
+                          <span class="n">xHat</span><span class="p">,</span> <span class="n">yHat</span><span class="p">,</span> <span class="n">zHat</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span>
+                          <span class="n">ParameterizedDielectric</span><span class="p">,</span> <span class="n">FiniteElementBasis</span><span class="p">)</span>
+
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="k">class</span> <span class="nc">CrossRouter</span><span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">add_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+
+        <span class="c1"># add new problem-specific arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--wh&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of horizontal waveguide&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--wv&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of vertical waveguide&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_stub&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide input/output stub length&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide permittivity&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--r_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region radius&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region side length&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--nfe&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of finite elements per unit length&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--n_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--s_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--e_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># set problem-specific defaults for existing (general) arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">fcen</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">dpml</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">epsilon_design</span><span class="o">=</span><span class="mf">6.0</span><span class="p">)</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">init_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+
+
+<span class="err">```</span><span class="n">py3</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">DFTCell</span><span class="p">,</span> <span class="n">adjoint_options</span><span class="p">,</span>
+                          <span class="n">xHat</span><span class="p">,</span> <span class="n">yHat</span><span class="p">,</span> <span class="n">zHat</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">FluxLine</span><span class="p">,</span>
+                          <span class="n">ParameterizedDielectric</span><span class="p">,</span> <span class="n">FiniteElementBasis</span><span class="p">)</span>
+
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="k">class</span> <span class="nc">AsymmetricSplitter</span><span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">add_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+
+        <span class="c1"># add new problem-specific arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dair&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_in&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of input waveguide&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_out1&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of output waveguide 1&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_out2&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of output waveguide 2&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_stub&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;length of waveguide input/output stub&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;length of design region&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--h_design&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;height of design region&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_in&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;input waveguide permittivity&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_out1&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output waveguide 1 permittivity&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_out2&#39;</span><span class="p">,</span>    <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output waveguide 2 permittivity&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--nfe&#39;</span><span class="p">,</span>         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of finite elements per unit length&#39;</span><span class="p">)</span>
+
+        <span class="c1"># set problem-specific defaults for existing (general) arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">fcen</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">dpml</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="c1">##################################################</span>
+    <span class="k">def</span> <span class="nf">init_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># size of computational cell</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">lcen</span>       <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span>
+        <span class="n">dpml</span>       <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lcen</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span><span class="o">==-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">dpml</span>
+        <span class="n">dair</span>       <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_in</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dair</span><span class="o">==-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">dair</span>
+        <span class="n">sx</span>         <span class="o">=</span> <span class="n">dpml</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_design</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span> <span class="o">+</span> <span class="n">dpml</span>
+        <span class="n">sy</span>         <span class="o">=</span> <span class="n">dpml</span> <span class="o">+</span> <span class="n">dair</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">h_design</span> <span class="o">+</span> <span class="n">dair</span> <span class="o">+</span> <span class="n">dpml</span>
+        <span class="n">cell_size</span>  <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- design region</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">design_center</span> <span class="o">=</span> <span class="n">origin</span>
+        <span class="n">design_size</span>   <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">h_design</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">design_region</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">design_center</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">design_size</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective regions</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">x_in</span>          <span class="o">=</span>  <span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">)</span>
+        <span class="n">x_out</span>         <span class="o">=</span>  <span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">)</span>
+        <span class="n">y_out1</span>        <span class="o">=</span>  <span class="o">+</span><span class="mf">0.25</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">h_design</span>
+        <span class="n">y_out2</span>        <span class="o">=</span>  <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">h_design</span>
+
+        <span class="n">flux_in</span>       <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="n">x_in</span><span class="p">,</span>     <span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_in</span><span class="p">,</span>   <span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">)</span>
+        <span class="n">flux_out1</span>     <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="n">x_out</span><span class="p">,</span> <span class="n">y_out1</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_out1</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;out1&#39;</span><span class="p">)</span>
+        <span class="n">flux_out2</span>     <span class="o">=</span>  <span class="n">FluxLine</span><span class="p">(</span><span class="n">x_out</span><span class="p">,</span> <span class="n">y_out2</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_out2</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;out2&#39;</span><span class="p">)</span>
+
+        <span class="n">objective_regions</span>  <span class="o">=</span> <span class="p">[</span><span class="n">flux_in</span><span class="p">,</span> <span class="n">flux_out1</span><span class="p">,</span> <span class="n">flux_out2</span><span class="p">]</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- optional extra regions for visualization if the --full-dfts options is present.</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">extra_regions</span>      <span class="o">=</span> <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">Volume</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">)]</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">full_dfts</span> <span class="k">else</span> <span class="p">[]</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># forward source region</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">source_center</span>    <span class="o">=</span>  <span class="p">(</span><span class="n">x_in</span> <span class="o">-</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">)</span><span class="o">*</span><span class="n">xHat</span>
+        <span class="n">source_size</span>      <span class="o">=</span>  <span class="mf">2.0</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">w_in</span><span class="o">*</span><span class="n">yHat</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1"># basis set</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">FiniteElementBasis</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">h_design</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">nfe</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- objective function</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="n">fstr</span> <span class="o">=</span> <span class="p">(</span>   <span class="s1">&#39;Abs(P1_out1)**2&#39;</span>
+                 <span class="o">+</span> <span class="s1">&#39;+0.0*(P1_out1 + M1_out1)&#39;</span>
+                 <span class="o">+</span> <span class="s1">&#39;+0.0*(P1_out2 + M1_out2)&#39;</span>
+                 <span class="o">+</span> <span class="s1">&#39;+0.0*(P1_in   + M1_in + S_out1 + S_out2 + S_in)&#39;</span>
+               <span class="p">)</span>
+
+        <span class="c1">#----------------------------------------</span>
+        <span class="c1">#- internal storage for variables needed later</span>
+        <span class="c1">#----------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span>            <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dpml</span>            <span class="o">=</span> <span class="n">dpml</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span>       <span class="o">=</span> <span class="n">cell_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span>           <span class="o">=</span> <span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_center</span>   <span class="o">=</span> <span class="n">origin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_size</span>     <span class="o">=</span> <span class="n">design_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_center</span>   <span class="o">=</span> <span class="n">source_center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_size</span>     <span class="o">=</span> <span class="n">source_size</span>
+
+        <span class="k">return</span> <span class="n">fstr</span><span class="p">,</span> <span class="n">objective_regions</span><span class="p">,</span> <span class="n">extra_regions</span><span class="p">,</span> <span class="n">design_region</span><span class="p">,</span> <span class="n">basis</span>
+
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="c1">##############################################################</span>
+    <span class="k">def</span> <span class="nf">create_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta_vector</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="n">args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span>
+        <span class="n">sx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="o">.</span><span class="n">x</span>
+
+        <span class="n">x_in</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">)</span>
+        <span class="n">x_out</span>  <span class="o">=</span> <span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">)</span>
+        <span class="n">y_out1</span> <span class="o">=</span> <span class="o">+</span><span class="mf">0.25</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">h_design</span>
+        <span class="n">y_out2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">h_design</span>
+
+        <span class="n">wvg_in</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span> <span class="n">center</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">x_in</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span>
+                           <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">w_in</span><span class="p">),</span>
+                           <span class="n">material</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps_in</span><span class="p">))</span>
+        <span class="n">wvg_out1</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span> <span class="n">center</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">x_out</span><span class="p">,</span><span class="n">y_out1</span><span class="p">),</span>
+                             <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">w_out1</span><span class="p">),</span>
+                             <span class="n">material</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps_out1</span><span class="p">))</span>
+        <span class="n">wvg_out2</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span> <span class="n">center</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">x_out</span><span class="p">,</span><span class="n">y_out2</span><span class="p">),</span>
+                             <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_stub</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">w_out2</span><span class="p">),</span>
+                             <span class="n">material</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Medium</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eps_out2</span><span class="p">))</span>
+        <span class="n">design</span>   <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span> <span class="n">center</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span>
+                             <span class="n">size</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">l_design</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">h_design</span><span class="p">),</span>
+                             <span class="n">epsilon_func</span><span class="o">=</span><span class="n">ParameterizedDielectric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_center</span><span class="p">,</span>
+                                                                  <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">,</span>
+                                                                  <span class="n">beta_vector</span><span class="p">)</span>
+                           <span class="p">)</span>
+
+        <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">wvg_in</span><span class="p">,</span> <span class="n">wvg_out1</span><span class="p">,</span> <span class="n">wvg_out2</span><span class="p">,</span> <span class="n">design</span><span class="p">]</span>
+
+        <span class="n">envelope</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">GaussianSource</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">,</span><span class="n">fwidth</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">amp</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">envelope</span><span class="p">,</span> <span class="s2">&quot;fourier_transform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">amp</span> <span class="o">/=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">fourier_transform</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">fcen</span><span class="p">)</span>
+        <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">EigenModeSource</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">envelope</span><span class="p">,</span>
+                                    <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_center</span><span class="p">,</span>
+                                    <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_size</span><span class="p">,</span>
+                                    <span class="n">eig_band</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">source_mode</span><span class="p">,</span>
+                                    <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span>
+                                   <span class="p">)</span>
+                <span class="p">]</span>
+
+        <span class="n">sim</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">res</span><span class="p">,</span> <span class="n">cell_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_size</span><span class="p">,</span>
+                          <span class="n">boundary_layers</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">PML</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dpml</span><span class="p">)],</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span>
+                          <span class="n">sources</span><span class="o">=</span><span class="n">sources</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">complex_fields</span><span class="p">:</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">force_complex_fields</span><span class="o">=</span><span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">sim</span>
+
+<span class="c1">######################################################################</span>
+<span class="c1"># if executed as a script, we look at our own filename to figure out</span>
+<span class="c1"># the name of the class above, create an instance of this class called</span>
+<span class="c1"># opt_prob, and call its run() method.</span>
+<span class="c1">######################################################################</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">opt_prob</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="vm">__file__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]()</span>
+    <span class="n">opt_prob</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../.." title="Adjoint Module" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Adjoint Module
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../ReferenceManual/" title="Reference Manual" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Reference Manual
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://yakworks.github.io/mkdocs-material-components/" title="Material Components for MkDocs">
+          Material Components for MkDocs</a>
+      </div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application-68832431b5.js"></script>
+      
+      
+      <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+      <script>window.mdc.autoInit()</script>
+      <script src="../../assets/javascripts/headroom.min.js"></script>
+      <script src="../../assets/javascripts/jQuery.headroom.min.js"></script>
+      <script src="../../assets/javascripts/jq-mdc-web.js"></script>
+      <script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+      <script>app.initialize({version:"0.16.3",url:{base:"../.."}})</script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+    
+    
+  </body>
+</html>
