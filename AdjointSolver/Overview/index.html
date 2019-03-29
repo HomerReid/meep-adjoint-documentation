@@ -1419,51 +1419,8 @@ subdirectory of your <span class=SC>meep</span> installation.)</p>
 </pre></div>
 
 </details>
-<details class="example"><summary><code>AsmmetricSplitter.py</code></summary></details>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
-
-<span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">FluxLine</span><span class="p">,</span>
-                          <span class="n">xHat</span><span class="p">,</span> <span class="n">yHat</span><span class="p">,</span> <span class="n">zHat</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span>
-                          <span class="n">ParameterizedDielectric</span><span class="p">,</span> <span class="n">FiniteElementBasis</span><span class="p">)</span>
-
-<span class="c1">##################################################</span>
-<span class="c1">##################################################</span>
-<span class="c1">##################################################</span>
-<span class="k">class</span> <span class="nc">CrossRouter</span><span class="p">(</span><span class="n">OptimizationProblem</span><span class="p">):</span>
-
-    <span class="c1">##################################################</span>
-    <span class="c1">##################################################</span>
-    <span class="c1">##################################################</span>
-    <span class="k">def</span> <span class="nf">add_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
-
-        <span class="c1"># add new problem-specific arguments</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--wh&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of horizontal waveguide&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--wv&#39;</span><span class="p">,</span>       <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of vertical waveguide&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_stub&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide input/output stub length&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide permittivity&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--r_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region radius&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region side length&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--nfe&#39;</span><span class="p">,</span>      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>   <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of finite elements per unit length&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--n_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--s_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--e_weight&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.00</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-
-        <span class="c1"># set problem-specific defaults for existing (general) arguments</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">fcen</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">dpml</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">epsilon_design</span><span class="o">=</span><span class="mf">6.0</span><span class="p">)</span>
-
-    <span class="c1">##################################################</span>
-    <span class="c1">##################################################</span>
-    <span class="c1">##################################################</span>
-    <span class="k">def</span> <span class="nf">init_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-
-
-
-<span class="err">```</span><span class="n">py3</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<details class="example"><summary><code>AsymmetricSplitter.py</code></summary></details>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>

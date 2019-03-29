@@ -422,6 +422,75 @@ first section below, after which we present examples to illustrate
 the three key types of plot produced by the module and how the 
 default options can be customized.</p>
 <blockquote>
+<p><img alt="🔖" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong>tl;dr documentation for <code>meep.adjoint.visualize</code></strong></p>
+<ol start="0">
+<li>
+<p><strong>Motivation:</strong> Plotting is <em>much</em> too hard in <span class=SC>meep</span>, especially
+     at the lower end where you just want something quick and easy
+     to let you sanity-check your geometry.
+     This module attempts to
+     provide some simple functions that should <em>just work</em> in most cases
+     to provide some graphical intuition for what you're working with.
+     The spirit of the module is to provide functions that can be called 
+     <em>with no customization options whatsoever</em> and will do useful
+     relevant things by default, but which can also be customized
+     in cases where you <em>do</em> want to take the time to spruce up the 
+     output.</p>
+</li>
+<li>
+<p><strong>Visualizing geometries before timestepping.</strong> Call <code>visualize_sim</code> to view your simulation prior to timestepping:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span>   <span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="n">visualize_sim</span>
+
+   <span class="n">sim</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">simulation</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>    
+
+   <span class="c1"># insert code for adding DFT cells here</span>
+
+   <span class="n">visualize_sim</span><span class="p">(</span><span class="n">sim</span><span class="p">)</span>
+</pre></div>
+
+<p><img alt="zoomify" src="../images/RouterGeometry_Final.png" /></p>
+<ol start="2">
+<li><strong>Visualizing frequency-domain fields after timestepping.</strong> Call <code>visualize_sim</code> (same function, same no arguments!) after timestepping to view
+     frequency-domain (DFT) fields superposed atop the geometry;
+     the function automatically looks inside the <code>simulation</code> to determine what
+     frequency-domain fields are available to plot.</li>
+</ol>
+<div class="highlight"><pre><span></span>   <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">until</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+   <span class="n">visualize_sim</span><span class="p">(</span><span class="n">sim</span><span class="p">)</span>
+</pre></div>
+
+<p><img alt="zoomify" src="../images/RouterForward_Final.png" /></p>
+<ol start="3">
+<li>
+<p><strong>Real-time visualization of time-domain fields during timestepping.</strong> Use <code>AFEClient</code> to define 
+    a custom-made <a href="https://meep.readthedocs.io/en/latest/Scheme_User_Interface/#run-and-step-functions">step function</a>
+    that intermittently updates a plot of time-domain fields in real time as your
+    meep timestepping run progresses.</p>
+<div class="highlight"><pre><span></span>   <span class="kn">from</span> <span class="nn">meep.adjoint</span> <span class="k">import</span> <span class="n">AFEClient</span>
+
+   <span class="n">step_funcs</span><span class="o">=</span><span class="p">[</span> <span class="n">AFEClient</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Ez&#39;</span><span class="p">],</span> <span class="n">interval</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="p">]</span>
+   <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">step_funcs</span><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+
+<p>Here are movies of what this produces for the
+<a href="../Overview#the-holey-waveguide">holey waveguide</a> geometry,
+showing an incident eigenmode field propagating across a waveguide
+with and without a hole in it.</p>
+<ul>
+<li>
+<p>Without hole: <a href="../images/Ez2WithoutHole.h264"><code>Ez2WithoutHole.h264</code></a></p>
+</li>
+<li>
+<p>With hole: <a href="../images/Ez2WithHole.h264"><code>Ez2WithHole.h264</code></a></p>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<hr />
+<blockquote>
 <p><img alt="🔖" class="gemoji summary" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong><span class=SC>table of contents</span></strong></p>
 <ol>
 <li>
@@ -453,87 +522,92 @@ default options can be customized.</p>
     or click to expand the tabs below for a
     longer-winder account.</p>
 </blockquote>
-<details class="note"><summary><strong>The error-checking power of visual sanity checks for text-defined geometries</strong></summary></details>
-<p>The fact that every aspect of a <span class=SC>meep</span>
-   calculation---from the
-  <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#geometricobject">material geometry</a>,
-  to the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#pml">absorbing boundaries</a>,
-  to the placement and orientation
-  of the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#source">sources</a>,
-  to the positions and sizes of the
-  <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#FluxSpectra">flux monitors</a>---is
-  defined by lines of text in script files offers a welcome
-  change of pace from the immersive GUI experience of commercial
-  CAD tools, as well as a natural platform for complex,
-  0ustomized calculations that would be unwieldy or impossible
-  to launch from a point-and-click pull-down interface.
-  Nonetheless, as convenient as it is to specify geometries
-  non-graphically, it's <em>also</em> quite useful---arguably even
-  <em>essential</em>---to review a graphical representation
-  of the geometry you input as interpreted by
-  <span class=SC>meep</span>, both to confirm that your input
-  was processed as you expected and to catch the sorts of
-  inadvertent errors---a flux monitor in the wrong place,
-  a source pointing the wrong direction---that are
-  all too easy to overlook in your python script,
-  but instantly obvious upon visual inspection.</p>
-<blockquote>
+<details class="note"><summary><strong>The error-checking power of visual sanity checks for text-defined geometries</strong></summary><p>The fact that every aspect of a <span class=SC>meep</span>
+calculation---from the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#geometricobject">material geometry</a>,
+to the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#pml">absorbing boundaries</a>,
+to the placement and orientation
+of the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#source">sources</a>,
+to the positions and sizes of the
+<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#FluxSpectra">flux monitors</a>---is
+defined by lines of text in script files offers a welcome
+change of pace from the immersive GUI experience of commercial
+CAD tools, as well as a natural platform for complex,
+0ustomized calculations that would be unwieldy or impossible
+to launch from a point-and-click pull-down interface.
+Nonetheless, as convenient as it is to specify geometries
+non-graphically, it's <em>also</em> quite useful---arguably even
+<em>essential</em>---to review a graphical representation
+of the geometry you input as interpreted by
+<span class=SC>meep</span>, both to confirm that your input
+was processed as you expected and to catch the sorts of
+inadvertent errors---a flux monitor in the wrong place,
+a source pointing the wrong direction---that are
+all too easy to overlook in your python script,
+but instantly obvious upon visual inspection.</p>
 <p>In addition to the usefulness of visual sanity checks
-  on your input geometry, it can be helpful to look at
-  graphical visualizations of the electric and magnetic 
-  fields computed by <span class=SC>meep</span>---both
-  the time-domain and the frequency-domain fields---and
-  in particular to review how the field distributions 
-  evolve in space in the presence of your material geometry.
-  This is true even though, in many cases, the ultimate
-  desired output of your calculation will be non-graphical,
-  sucha a number---a power flux, an eigenmode coefficient, 
-  etc---whose computation, again, will be described by
-  lines of text you write in a script file. If the calculation
-  works correctly as you wrote it and you get 
-  a reasonable numerical output on your first try,
-  well, bully for you! You have no need of graphical
-  visualization aids. For the rest of us---who can't
-  figure out why our flux is 10 orders of magnitude 
-  too small until we look at the time-domain power flow and
-  realize we set things up backward, so that all the 
-  excitation power flows promptly <em>out of</em>, not into,
-  the computational cell---visualization tools can be 
-  a lifesaver.</p>
+on your input geometry, it can be helpful to look at
+graphical visualizations of the electric and magnetic 
+fields computed by <span class=SC>meep</span>---both
+the time-domain and the frequency-domain fields---and
+in particular to review how the field distributions 
+evolve in space in the presence of your material geometry.
+This is true even though, in many cases, the ultimate
+desired output of your calculation will be non-graphical,
+sucha a number---a power flux, an eigenmode coefficient, 
+etc---whose computation, again, will be described by
+lines of text you write in a script file. If the calculation
+works correctly as you wrote it and you get 
+a reasonable numerical output on your first try,
+well, bully for you! You have no need of graphical
+visualization aids. For the rest of us---who can't
+figure out why our flux is 10 orders of magnitude 
+too small until we look at the time-domain power flow and
+realize we set things up backward, so that all the 
+excitation power flows promptly <em>out of</em>, not into,
+the computational cell---visualization tools can be 
+a lifesaver.</p>
+</details>
+<details class="note"><summary>Wait, isn't this a solved problem?</summary><p>So we're agreed that visualization---of both inputs (geometries)
+and outputs (fields)---is a good thing. But isn't this a 
+solved problem? After all, <span class=SC>meep</span> offers
+plenty of routines for retrieving as much raw data on
+geometries and fields as any user could want---and, once one
+has the raw data, it's just a matter of choosing from among the 
+infinitude of available tools for plotting and visualization.
+Indeed, already within the <span class=SC>meep</span> documentation
+itself one can find many different types of visualization generated 
+by many different types of tool. What more is left to say?</p>
+</details>
+<details class="note"><summary>Wanted: Quick, easy, <em>standard</em> visualization paradigms that <em>just work</em> on any geometry</summary><p>Despite the arguably non-issue status of the situation, I would argue
+that the current situation is suboptimal in at least two ways.</p>
+<ul>
+<li>
+<p><strong>(a)</strong> The absence of a single, canonical solution means that, as a <span class=SC>meep</span> user,
+every time you feel the urge to visualize something you have to spend some time and effort
+figuring out how you are going to do it---and then going through the hassle of setting that up.
+In my experience, this was especially true when it came to making movies of the evolution
+time-domain fields---although the problem had been solved with documentation a couple of times
+in the manual, still somehow it felt like a major chore to set this up every time
+I wanted it.</p>
+</li>
+<li>
+<p><strong>(b)</strong> On a different note, the absence of generally-accepted visualization protocols
+means that everybody's visualizations look different. This is not necessarily tragic, and
+we wouldn't want to enforce sterile conformity, but it might be nice if there were <em>some</em>
+notion of "canonical <span class=SC>meep</span> visualization format" to serve as a common
+language.</p>
+</li>
+</ul>
+</details>
+<blockquote>
+<p><img alt="💡" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a1.png" title=":bulb:" /> The motivating desiderata for <code>meep.adjoint.Visualization</code></p>
 </blockquote>
-<details class="question"><summary>Wait, isn't this a solved problem?</summary></details>
-<p>So we're agreed that visualization---of both inputs (geometries)
-  and outputs (fields)---is a good thing. But isn't this a 
-  solved problem? After all, <span class=SC>meep</span> offers
-  plenty of routines for retrieving as much raw data on
-  geometries and fields as any user could want---and, once one
-  has the raw data, it's just a matter of choosing from among the 
-  infinitude of available tools for plotting and visualization.
-  Indeed, already within the <span class=SC>meep</span> documentation
-  itself one can find many different types of visualization generated 
-  by many different types of tool. What more is left to say?</p>
-<p>??? note Wanted: Quick, easy, <em>standard</em> visualization paradigms that <em>just work</em> on any geometry
-    Despite the arguably non-issue status of the situation, I would argue
-    that the current situation is suboptimal in at least two ways.
-    + <strong>(a)</strong> The absence of a single, canonical solution means that, as a <span class=SC>meep</span> user,
-    every time you feel the urge to visualize something you have to spend some time and effort
-    figuring out how you are going to do it---and then going through the hassle of setting that up.
-    In my experience, this was especially true when it came to making movies of the evolution
-    time-domain fields---although the problem had been solved with documentation a couple of times
-    in the manual, still somehow it felt like a major chore to set this up every time
-    I wanted it.
-    + <strong>(b)</strong> On a different note, the absence of generally-accepted visualization protocols
-    means that everybody's visualizations look different. This is not necessarily tragic, and
-    we wouldn't want to enforce sterile conformity, but it might be nice if there were <em>some</em>
-    notion of "canonical <span class=SC>meep</span> visualization format" to serve as a common
-    language.</p>
-<p>&lt;<img alt="💡" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a1.png" title=":bulb:" /> The motivating desiderata for <code>meep.adjoint.Visualization</code>
-  With all of that by way of backstory, here were the guidelines that motivated
+<p>With all of that by way of backstory, here were the guidelines that motivated
   the design of these routines.</p>
 <ol>
 <li>
-<p><em>They should fully address the three everyday situations that cry out most
-    urgently for visualization support</em>,' namely</p>
+<p>They should <strong>fully address the three everyday situations that cry out most
+      urgently for visualization support</strong>, namely</p>
 <ul>
 <li>
 <p><em>Simulation geometry before timestepping.</em> A static image of the simulation geometry at the begininng of the calculation, 
@@ -549,57 +623,58 @@ default options can be customized.</p>
       your "input" power go flying right out of the cell to the left instead of proceeding rightward 
       into the center like you intended---whereas the <em>frequency</em>-domain plots produced even by 
       such totally misbegotten simulations can be pretty effective at obscuring even obvious
-      culprits.
-      Also, after all, the ability to observe essentially time-domain phenomena is one of the
-      key reasons to use an FDTD tool in the first place; many frequency-domain problems
-      can be solved much more efficiently by frequency-domain solvers than by something like
-      <span class=SC>meep</sc>, but they don't produce nice movies showing e.g.
-      reflection and diffraction of wave packets from interfaces. So it seems particularly
-      appropriate for a time-domain-solver like <span class=SC>meep</span> to offer
-      built-in functionality for animating time-domain field evolutions.</p>
+      culprits.</p>
+<p>Also, after all, the ability to observe essentially time-domain phenomena is one of the
+  key reasons to use an FDTD tool in the first place; many frequency-domain problems
+  can be solved much more efficiently by frequency-domain solvers than by something like
+  <span class=SC>meep</sc>, but they don't produce nice movies showing e.g.
+  reflection and diffraction of wave packets from interfaces. So it seems particularly
+  appropriate for a time-domain-solver like <span class=SC>meep</span> to offer
+  built-in functionality for animating time-domain field evolutions.</p>
+</li>
+<li>
+<p><em>Frequency-domain fields after timestepping.</em> A static image showing the amplitudes of frequency-domain fields
+     in regions of DFT cells, with the spatial distributiono of Poynting flux plotted for DFT flux cells.</p>
 </li>
 </ul>
-<p>_ <em>Frequency-domain fields after timestepping.</em> A static image showing the amplitudes of frequency-domain fields
-    in regions of DFT cells, with the spatial distributiono of Poynting flux plotted for DFT flux cells.</p>
+<blockquote>
+<p><img alt="💡" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a1.png" title=":bulb:" /> <strong>A central goal of this module is to provide reliable, easy-to-use routines for
+      each of the aforementioned purposes.</strong></p>
+</blockquote>
+</li>
+<li>
+<p><em>They should offer a hierarchy of customizability options</em> for users at different
+     places on the willingness-to-suffer-for-their-art spectrum.
+     Of course, the goals outlined above---routines that are <em>easy to use</em> and <em>just work</em>---suggest
+     an implementation strategy in which the tools make all the artistic decisions for you; the easiest
+     calling convention to remember is the one with no parameters. However, one of the nice things
+     about the <a href="http://matplotlib.org"><span class=SC>matplotlib</span></a> backend is how very <em>extremely</em>
+     customizable it is, and it shouldn't be hard to pass at least some of those options
+     on to users of <code>meep.adjoint.Visualization.</code> 
+     In view of these considerations, the goal of the routines is to offer
+     a three-tiered hierarchy of customizability levels.</p>
+<p>a. <strong>Zero-effort calling model for lazy forgetful slackers</strong>SZ</p>
+<p>For users who can't be bothered to memorize or look up library function
+ prototypes---or who just want quick and dirty visualization at the
+ prototyping stage with the option to clean up later---it should be 
+ possible to call the visualization routines on just the <code>simulation</code> 
+ entity alone <em>with no configuration arguments whatsoever,</em>
+ with the module making reasonable choices to produce helpful graphics 
+ in a standardized format.</p>
+<p>b. <strong>Minimal-effort calling model for the slightly more motivated</strong></p>
+<p>For users who fall basically into the previous bucket but are
+ motivated to change one or another option that otherwise
+ obstructs the visualization (like, label font size too large),
+ there should be an easy way to configure global settings once,
+ after which the user can proceed lazily to call all visualization
+ routines with no customization arguments.</p>
+<p>c. <strong>Full-customization calling model for diligent nitpickers:</strong></p>
+<p>Finally, for users who <em>do</em> want to invest time and effort to 
+ configure plotting options to their liking, the visualization
+ module should provide copious customization options to allow
+ as much as possible of the visualization to be customized.</p>
 </li>
 </ol>
-<p><strong>A central goal of this module is to provide reliable, easy-to-use routines for
-     each of these purposes.</strong></p>
-<ol start="2">
-<li><em>They should offer a hierarchy of customizability options</em> for users at different
-   places on the willingness-to-suffer-for-their-art spectrum.
-   Of course, the goals outlined above---routines that are <em>easy to use</em> and <em>just work</em>---suggest
-   an implementation strategy in which the tools make all the artistic decisions for you; the easiest
-   calling convention to remember is the one with no parameters. However, one of the nice things
-   about the <a href="http://matplotlib.org"><span class=SC>matplotlib</span></a> backend is how very <em>extremely</em>
-   customizable it is, and it shouldn't be hard to pass at least some of those options
-   on to users of <code>meep.adjoint.Visualization.</code> 
-   In view of these considerations, the goal of the routines is to offer
-   a three-tiered hierarchy of customizability levels.</li>
-</ol>
-<p>a. *<em>The zero-effort calling model for lazy forgetful slackers *</em></p>
-<p>For users who can't be bothered to memorize or look up library function
-   prototypes---or who just want quick and dirty visualization at the
-   prototyping stage with the option to clean up later---it should be 
-   possible to call the visualization routines on just the <code>simulation</code> 
-   entity alone <em>with no configuration arguments whatsoever,</em>
-   with the module making reasonable choices to produce helpful graphics 
-   in a standardized format.</p>
-<div class="highlight"><pre><span></span>b. **Minimal-effort calling model for the slightly more motivated**
-For users who fall basically into the previous bucket but are
-motivated to change one or another option that otherwise
-obstructs the visualization (like, label font size too large),
-there should be an easy way to configure global settings once,
-after which the user can proceed lazily to call all visualization
-routines with no customization arguments.
-
-c. **Full-customization calling model for diligent nitpickers:**
-Finally, for users who *do* want to invest time and effort to 
-configure plotting options to their liking, the visualization
-module should provide copious customization options to allow
-as much as possible of the visualization to be customized.
-</pre></div>
-
 <h2 id="2-easy-visualization-of-simulation-geometries-before-timestepping-visualize_sim">2. <strong>Easy visualization of simulation geometries before timestepping: <code>visualize_sim</code></strong><a class="headerlink" href="#2-easy-visualization-of-simulation-geometries-before-timestepping-visualize_sim" title="Permanent link">&para;</a></h2>
 <p>As described above, the first visualization task we consider
 is that of double-checking the various geometric inputs
@@ -608,38 +683,22 @@ supplied to <span class=SC>pymeep</span> when creating a
 the computational cell and material geometry, the absorbing boundaries, the exciting sources, 
 and any DFT cells for which we requested tabulation of frequency-domain fields. Also described
 above was the imperative that, to ensure a maximally memorable calling convention,
- the visualization routine be callable on *just the <code>simulation</code> class itself with no
-other parameters required.<code>These objectives are satisfied by the</code>visualize_sim<code>routine in</code>meep.adjoint.Visualization<code>,
+the visualization routine be callable on <em>just the <code>simulation</code> class itself with no
+other parameters required.</em></p>
+<p>These objectives are satisfied by the <code>visualize_sim</code> routine in <code>meep.adjoint.Visualization</code>,
 whose calling convention is precision-engineered to be as painless as possible: after
-creating a &lt;span class=SC&gt;pymeep&lt;/sc&gt;</code>simulation<code>&lt;/sc&gt;
-through by a call like</code>#!py3 sim=mp.simulation(geometry=...)`, 
+creating a <span class=SC>pymeep</sc> <code>simulation</code>
+through a call like <code class="highlight"><span class="n">sim</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">simulation</span><span class="p">(</span><span class="n">geometry</span><span class="o">=...</span><span class="p">)</span></code>,
 you can simply say</p>
 <div class="highlight"><pre><span></span>  <span class="n">visualize_sim</span><span class="p">(</span><span class="n">sim</span><span class="p">)</span>
 </pre></div>
 
 <p>and voilà! A new plot window sprouts open to reveal your simulation
 in all its glory, looking something like this:</p>
-<div class="row">
-<p>![</p>
-</div>
-<p>as one example, here's what <code>visualize_sim</code>
-produces for the <a href="../Overview/#the-hole-cloak">Hole Cloak</a>
-example discussed in the adjoint-solver documentation:
-```</p>
-<p>True to form, the visualization function for this scenario</p>
-<p>(although there are many <em>optional</em> parameters 
-de</p>
-<p>All of this information is presented in graphical
-form</p>
+<p><img alt="zoomify" src="../images/RouterGeometry_Iter0.png" /></p>
 <h2 id="during-timestepping-real-time-visualization-of-time-domain-field-evolution">During timestepping: Real-time visualization of time-domain field evolution<a class="headerlink" href="#during-timestepping-real-time-visualization-of-time-domain-field-evolution" title="Permanent link">&para;</a></h2>
-<p>spl
-To support this, <code>meep.adjoint.Visualization</code> defines a new
-<a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#run-functions">step function</a>
-that you can pass to the
-[run function][RunFunctions] you use
-to drive timestepping.</p>
 <h2 id="after-timestepping-visualizing-frequency-domain-poynting-fluxes-and-energy-densities">After timestepping: Visualizing frequency-domain Poynting fluxes and energy densities<a class="headerlink" href="#after-timestepping-visualizing-frequency-domain-poynting-fluxes-and-energy-densities" title="Permanent link">&para;</a></h2>
-<h2 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">&para;</a></h2>
                 
                   
                 

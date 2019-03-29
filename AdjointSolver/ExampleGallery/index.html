@@ -299,13 +299,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#-" title="---" class="md-nav__link">
-    ---
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#numerical-validation-of-adjoint-gradients" title="Numerical validation of adjoint gradients" class="md-nav__link">
     Numerical validation of adjoint gradients
   </a>
@@ -321,8 +314,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-the-calculation" title="Running the calculation" class="md-nav__link">
-    Running the calculation
+  <a href="#running-the-calculation-serially-from-python" title="Running the calculation serially from Python" class="md-nav__link">
+    Running the calculation serially from Python
   </a>
   
 </li>
@@ -412,13 +405,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#-" title="---" class="md-nav__link">
-    ---
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#numerical-validation-of-adjoint-gradients" title="Numerical validation of adjoint gradients" class="md-nav__link">
     Numerical validation of adjoint gradients
   </a>
@@ -434,8 +420,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-the-calculation" title="Running the calculation" class="md-nav__link">
-    Running the calculation
+  <a href="#running-the-calculation-serially-from-python" title="Running the calculation serially from Python" class="md-nav__link">
+    Running the calculation serially from Python
   </a>
   
 </li>
@@ -562,10 +548,23 @@ for a simple toy model.</p>
 central section of a <a href="./#full-automated-optimization-of-a-cross-router-device">four-way router</a>
 to achieve near-perfect routing of power from the <code>west</code> input
 port to the <code>north</code> output port.</p>
+<p>The example may be executed as follows:</p>
 <div class="highlight"><pre><span></span>   <span class="nb">cd</span> <span class="si">${</span><span class="nv">MEEP_INSTALLATION</span><span class="si">}</span>/python/examples/adjoint_optimization
    python CrossRouter.py --verbose --visualize --optimize
 </pre></div>
 
+<p>The figures below show results for the 0<sup>th</sup> (initial), 1<sup>st</sup>, and final (50<sup>th</sup>)
+iterations. For each iteration, we show <strong>(1)</strong> the geometry, including the
+central region that is subject to design optimization, <strong>(2)</strong> the frequency-domain
+fields obtained by the forward calculation for the geometry on the given iteration,
+<strong>(3)</strong> the adjoint derivative <span><span class="MathJax_Preview">\partial f/\partial \epsilon</span><script type="math/tex">\partial f/\partial \epsilon</script></span> indicating
+how the permittivity in the design region should be updated to improve the objective 
+function.</p>
+<p>Notice in particular that the forward-field results (center diagram) indicate
+that, in the initial geometry, power flows almost directly from the west (input)
+port to the east port; in contrast, by the end of the optimization
+the power flow exhibits a near-perfect 90&deg; bend with almost all power
+flowing out through the north port.</p>
 <blockquote>
 <p><img alt="🔖" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong>Iteration Zero: Initial objective-function value <span><span class="MathJax_Preview">f_0 = 8.5\times 10^{-4}</span><script type="math/tex">f_0 = 8.5\times 10^{-4}</script></span></strong></p>
 </blockquote>
@@ -628,7 +627,7 @@ port to the <code>north</code> output port.</p>
 <p><img alt="🔖" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong>Objective-function evolution by iteration</strong>
   <img alt="zoomify" src="../images/RouterObjectiveByIter.png" /></p>
 </blockquote>
-<h2 id="-">---<a class="headerlink" href="#-" title="Permanent link">&para;</a></h2>
+<hr />
 <h2 id="numerical-validation-of-adjoint-gradients">Numerical validation of adjoint gradients<a class="headerlink" href="#numerical-validation-of-adjoint-gradients" title="Permanent link">&para;</a></h2>
 <p>As discussed in the <a href="../ReferenceManual/">Reference Manual</a>,
 the <code>OptimizationProblem</code> base class offers command-line options
@@ -664,8 +663,8 @@ test on the correctness of an adjoint implementation,
 and we get others by looking at the derivative
 at other points on the curve, with reference values
 be estimated via finite-differencing.</p>
-<p>Thus, for a set of 24 <span><span class="MathJax_Preview">\epsilon^\subs{hole}</span><script type="math/tex">\epsilon^\subs{hole}</script></span> values
-ranging from 1 to <span><span class="MathJax_Preview">2\epsilon^\sup{wvg}</span><script type="math/tex">2\epsilon^\sup{wvg}</script></span> we will
+<p>Thus, for a set of 24 <span><span class="MathJax_Preview">\epsilon\sub{hole}</span><script type="math/tex">\epsilon\sub{hole}</script></span> values
+ranging from 1 to <span><span class="MathJax_Preview">2\epsilon\sups{wvg}</span><script type="math/tex">2\epsilon\sups{wvg}</script></span> we will
 compute the objective function and its adjoint-based 
 and finite-difference derivatives with respect to
 <span><span class="MathJax_Preview">\epsilon\sups{hole}</span><script type="math/tex">\epsilon\sups{hole}</script></span>.</p>
@@ -688,46 +687,45 @@ variable <span><span class="MathJax_Preview">\beta_0\equiv \epsilon\sups{hole}</
 and <code>--filebase,</code> giving different names to output
 files so they don't overwrite one another.
 The options in common to all cases are:</p>
-<div class="highlight"><pre><span></span><span class="c1">### Running the calculation serially from Python</span>
-
-The effect of running the shell <span class="nb">command</span>
-<span class="sb">`</span>% python HoleyWaveguide.py OPTIONS<span class="sb">`</span>
-can be reproduced from a python script or console
-by creating an instance of <span class="sb">`</span>HoleyWaveguide<span class="sb">`</span>
-and calling its <span class="sb">`</span>run<span class="o">()</span><span class="sb">`</span> method.
-In this <span class="k">case</span>, the command-line options OPTIONS
-should be passed <span class="o">(</span>as a single string separated by spaces<span class="o">)</span>
-to the optional <span class="sb">`</span>cmdline<span class="sb">`</span> parameter of the <span class="sb">`</span>HoleyWaveguide<span class="sb">`</span>
-constructor, <span class="k">while</span> <span class="sb">`</span>run<span class="o">()</span><span class="sb">`</span> takes no arguments:
-
-<span class="sb">```</span>py3
-import numpy as np
-
-<span class="c1"># generate command lines</span>
-<span class="nv">bs</span> <span class="o">=</span> np.linspace<span class="o">(</span><span class="m">1</span>.0,12.0,23<span class="o">)</span>
-<span class="nv">args</span> <span class="o">=</span> <span class="s2">&quot; --eval_gradient --fd_order 2 --fd_index 0 &quot;</span>
-<span class="nv">cmdlines</span> <span class="o">=</span> <span class="o">[</span> args + <span class="s1">&#39;--beta 0 {} --filebase b{}&#39;</span>.format<span class="o">(</span>b,b<span class="o">)</span> <span class="k">for</span> b in bs <span class="o">]</span>
-
-<span class="c1"># run calculations </span>
-<span class="k">for</span> cmdline in cmdlines:
-    <span class="nv">HW</span><span class="o">=</span>HoleyWaveguide<span class="o">(</span><span class="nv">cmdline</span><span class="o">=</span>cmdline<span class="o">)</span>    
-    HW.run<span class="o">()</span>
+<div class="highlight"><pre><span></span><span class="nv">COMMON</span><span class="o">=</span><span class="s2">&quot;--verbose --eval_gradient --fd_index 0 --fd_order 2  --res 40 --df 0.25&quot;</span>
 </pre></div>
 
-<h3 id="running-the-calculation">Running the calculation<a class="headerlink" href="#running-the-calculation" title="Permanent link">&para;</a></h3>
-<p>Here's how the </p>
+<h3 id="running-the-calculation-serially-from-python">Running the calculation serially from Python<a class="headerlink" href="#running-the-calculation-serially-from-python" title="Permanent link">&para;</a></h3>
+<p>The effect of running the shell command
+<code>% python HoleyWaveguide.py OPTIONS</code>
+can be reproduced from a python script or console
+by creating an instance of <code>HoleyWaveguide</code>
+and calling its <code>run()</code> method.
+In this case, the command-line options OPTIONS
+should be passed (as a single string separated by spaces)
+to the optional <code>cmdline</code> parameter of the <code>HoleyWaveguide</code>
+constructor, while <code>run()</code> takes no arguments:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># generate command lines</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">12.0</span><span class="p">,</span><span class="mi">23</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="s2">&quot; --eval_gradient --fd_order 2 --fd_index 0 &quot;</span>
+<span class="n">cmdlines</span> <span class="o">=</span> <span class="p">[</span> <span class="n">args</span> <span class="o">+</span> <span class="s1">&#39;--beta 0 </span><span class="si">{}</span><span class="s1"> --filebase b</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bs</span> <span class="p">]</span>
+
+<span class="c1"># run calculations </span>
+<span class="k">for</span> <span class="n">cmdline</span> <span class="ow">in</span> <span class="n">cmdlines</span><span class="p">:</span>
+    <span class="n">HW</span><span class="o">=</span><span class="n">HoleyWaveguide</span><span class="p">(</span><span class="n">cmdline</span><span class="o">=</span><span class="n">cmdline</span><span class="p">)</span>    
+    <span class="n">HW</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
 <h3 id="running-the-calculation-in-parallel-using-paralleldesigntester">Running the calculation in parallel using <code>ParallelDesignTester</code><a class="headerlink" href="#running-the-calculation-in-parallel-using-paralleldesigntester" title="Permanent link">&para;</a></h3>
 <p>Although these calculations aren't particularly time-consuming,
 in a multiprocessor environment
 we can make them go <em>really</em> fast by using the <code>ParallelDesignTester</code>
 utility distributed with <code>meep.adjoint</code>. As described in the
-[Reference Manual][ParallelDesignTester], this is a simple
-tool provided by <code>meep.adjoint parallel batch processing of jobs 
+<a href="../ReferenceManual#2d-running-many-single-point-calculations-in-parallel-paralleldesigntester">ReferenceManual</a>,
+this is a simple
+tool provided by <code>meep.adjoint</code> for parallel batch processing of jobs 
 like the one considered here, which has the advantage of
 presenting as a completely transparent drop-in replacement
 for your existing serial loop: 
-the</code>entirety<code>of the rejiggering required to parallelize
-your batch is to replace the</code>for cmdline in cmdlines` loop 
+the <code>entirety</code> of the rejiggering required to parallelize
+your batch is to replace the  <code>for cmdline in cmdlines</code> loop 
 above with the single line</p>
 <div class="highlight"><pre><span></span><span class="n">ParallelDesignTester</span><span class="p">(</span><span class="s1">&#39;HoleyWaveguide&#39;</span><span class="p">,</span><span class="n">cmdlines</span><span class="p">)</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
 </pre></div>
@@ -762,11 +760,11 @@ of the other files.</p>
 <p>For the case at hand, we want to <strong>(a)</strong> concatenate all of the
 <code>.out</code> files into an omnibus data file, <strong>(b)</strong> sort by the 
 design-variable values reported on specific columns, then
-<strong>&copy;</strong> plot various data quantities (e.g. objective-function 
+<strong>(</strong><strong>c)</strong> plot various data quantities (e.g. objective-function 
 value, adjoint gradient components, and finite-difference derivatives, 
 each of which appear in their own specific columns)
 versus design variable.</p>
-<p>![HoleyWaveguideAdjointVsFDResults][images/HoleyWaveguide_AdjointVsFD.png]</p>
+<p><img alt="HoleyWaveguideAdjointVsFDResults" src="../images/HoleyWaveguide_AdjointVsFD.png" /></p>
 <p>We see that <span><span class="MathJax_Preview">\epsilon\sup{hole}</span><script type="math/tex">\epsilon\sup{hole}</script></span> derivatives computed by
 adjoints agree well with numerical finite-difference data.</p>
                 
