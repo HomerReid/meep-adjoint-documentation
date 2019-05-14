@@ -295,29 +295,42 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#1b-mandatory-class-method-overrides" title="1b. Mandatory class-method overrides" class="md-nav__link">
-    1b. Mandatory class-method overrides
+  <a href="#1b-mandatory-class-method-overrides-init_problem-and-create_sim" title="1b. Mandatory class-method overrides: init_problem and create_sim" class="md-nav__link">
+    1b. Mandatory class-method overrides: init_problem and create_sim
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-class-method-override-add_args" title="Optional class-method override: add_args" class="md-nav__link">
+    Optional class-method override: add_args
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1d-defining-your-objective-function" title="1d. Defining your objective function" class="md-nav__link">
+    1d. Defining your objective function
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1c-optional-class-method-override" title="1c. Optional class-method override" class="md-nav__link">
-    1c. Optional class-method override
+  <a href="#1e-selecting-an-expansion-basis" title="1e. Selecting an expansion basis" class="md-nav__link">
+    1e. Selecting an expansion basis
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#objective-function-specifications" title="Objective-function specifications" class="md-nav__link">
-    Objective-function specifications
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#expansion-bases" title="Expansion bases" class="md-nav__link">
-    Expansion bases
+  <a href="#1f-defining-your-own-expansion-basis" title="1f. Defining your own expansion basis" class="md-nav__link">
+    1f. Defining your own expansion basis
   </a>
   
 </li>
@@ -523,29 +536,42 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#1b-mandatory-class-method-overrides" title="1b. Mandatory class-method overrides" class="md-nav__link">
-    1b. Mandatory class-method overrides
+  <a href="#1b-mandatory-class-method-overrides-init_problem-and-create_sim" title="1b. Mandatory class-method overrides: init_problem and create_sim" class="md-nav__link">
+    1b. Mandatory class-method overrides: init_problem and create_sim
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optional-class-method-override-add_args" title="Optional class-method override: add_args" class="md-nav__link">
+    Optional class-method override: add_args
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1d-defining-your-objective-function" title="1d. Defining your objective function" class="md-nav__link">
+    1d. Defining your objective function
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1c-optional-class-method-override" title="1c. Optional class-method override" class="md-nav__link">
-    1c. Optional class-method override
+  <a href="#1e-selecting-an-expansion-basis" title="1e. Selecting an expansion basis" class="md-nav__link">
+    1e. Selecting an expansion basis
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#objective-function-specifications" title="Objective-function specifications" class="md-nav__link">
-    Objective-function specifications
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#expansion-bases" title="Expansion bases" class="md-nav__link">
-    Expansion bases
+  <a href="#1f-defining-your-own-expansion-basis" title="1f. Defining your own expansion basis" class="md-nav__link">
+    1f. Defining your own expansion basis
   </a>
   
 </li>
@@ -762,23 +788,34 @@ your objective. </p>
 <p><img alt="🔖" class="gemoji summary" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f516.png" title=":bookmark:" /> <strong><span class=SC>table of contents</span></strong></p>
 <ol>
 <li>
-<p><strong>Defining your problem</strong>: Writing a python script for <code>mp.adjoint</code></p>
-<p>a. The <code>OptimizationProblem</code> abstract base class</p>
-<p>b. Mandatory class-method overrides: <code>init_problem</code> and <code>create_sim</code></p>
-<p>c. Optional class-method override: <code>add_args</code></p>
+<p><a href="#S1"><strong>Defining your problem</strong>: Writing a python script for <code>mp.adjoint</code></a></p>
+<p><a href="#s1a">a. The <code>OptimizationProblem</code> abstract base class</a></p>
+<p><a href="#s1b">b. Mandatory class-method overrides: <code>init_problem</code> and <code>create_sim</code></a></p>
+<p><a href="#s1c">c. Defining your objective function</a></p>
+<p><a href="#s1d">d. Objective regions, extra regions, design region</a></p>
+<p><a href="#s1e">e. Selecting an expansion basis</a></p>
+<p><a href="#s1f">f. Defining your own expansion basis</a></p>
 </li>
 <li>
-<p><strong>Running your problem</strong>: Visualization, single-point calculations, and full iterative optimization</p>
-<p>a. Visualizing your geometry</p>
-<p>b. Evaluating the objective function value and gradient at a single design point</p>
-<p>c. Testing gradient components by finite-differencing</p>
-<p>d. Running many single-point calculations in parallel:<code>ParallelDesignTester</code></p>
-<p>e. Full iterative optimization</p>
+<p><a href="#S2">*<em>Running your problem, Part 1: *</em>: Single-point calculations</a></p>
+<p><a href="#s2a">a. Visualizing your geometry</a></p>
+<p><a href="#s2b">b. Evaluating the objective function value and gradient at a single design point</a></p>
+<p><a href="#s2c">c. Testing gradient components by finite-differencing</a></p>
+<p><a href="#s2d">d. Running many single-point calculations in parallel:<code>ParallelDesignTester</code></a></p>
+</li>
+<li>
+<p><a href="#S3">*<em>Running your problem, Part 2: *</em>: Iterative design optimization</a></p>
+<p><a href="#s3a">a. Configuring and launching an iterative optimization </a></p>
+<p><a href="#s3b">b. Optimization algorithms</a></p>
+</li>
+<li>
+<p><a href="#S4">Built-in command-line options</a></p>
 </li>
 </ol>
-<p><a href="#4-built-in-command-line-options">4. Built-in command-line options</a></p>
 </blockquote>
+<p><a name="S1"></a></p>
 <h2 id="1-defining-your-problem-writing-a-python-script-for-mpadjoint">1. Defining your problem: Writing a python script for <code>mp.adjoint</code><a class="headerlink" href="#1-defining-your-problem-writing-a-python-script-for-mpadjoint" title="Permanent link">&para;</a></h2>
+<p><a name="s1a"></a></p>
 <h3 id="1a-the-optimizationproblem-abstract-base-class">1a. The <code>OptimizationProblem</code> abstract base class<a class="headerlink" href="#1a-the-optimizationproblem-abstract-base-class" title="Permanent link">&para;</a></h3>
 <p>As described in the <a href="../Overview/">Overview</a>, the python script
 that drives your <code>mp.adjoint</code> session implements a subclass
@@ -792,7 +829,8 @@ That is to say, <code>OptimizationProblem</code> is an
 <a href="https://docs.python.org/3/library/abc.html">abstract base class</a>
 with two pure virtual methods that your derived class
 must override to describe the specifics of your design problem.</p>
-<h3 id="1b-mandatory-class-method-overrides">1b. Mandatory class-method overrides<a class="headerlink" href="#1b-mandatory-class-method-overrides" title="Permanent link">&para;</a></h3>
+<p><a name="s1b"></a></p>
+<h3 id="1b-mandatory-class-method-overrides-init_problem-and-create_sim">1b. Mandatory class-method overrides: <code>init_problem</code> and <code>create_sim</code><a class="headerlink" href="#1b-mandatory-class-method-overrides-init_problem-and-create_sim" title="Permanent link">&para;</a></h3>
 <p>More specifically, your subclass of <code>OptimizationProblem</code>
 must furnish implementations of the following two pure virtual
 methods left unimplemented in the base class. (Click the header
@@ -801,7 +839,7 @@ bars to unfold the description of each item.)</p>
 session; think of it as the class constructor. (Indeed, it is called from the
 parent class constructor.) 
 It has two purposes: <strong>(a)</strong> to give you a chance to complete any one-time initialization
-tasks you need to do, and <strong>(b)</strong> to communication to the base class the
+tasks you need to do, and <strong>(b)</strong> to communicate to the base class the
 <a href="../Overview/#common-elements-of-optimization-geometries-objective-regions-objective-functions-design-regions-basis-sets">CommonElementsOfOptimizationGeometries</a>
 needed to turn a generic <span class=SC>meep</span> simulation into an optimization problem.</p>
 <ul>
@@ -852,7 +890,7 @@ compute your objective function for a particular set of design-variable
 values.</p>
 </details>
 <hr />
-<h3 id="1c-optional-class-method-override">1c. Optional class-method override<a class="headerlink" href="#1c-optional-class-method-override" title="Permanent link">&para;</a></h3>
+<h4 id="optional-class-method-override-add_args">Optional class-method override: <code>add_args</code><a class="headerlink" href="#optional-class-method-override-add_args" title="Permanent link">&para;</a></h4>
 <details class="summary"><summary><code>add_args</code>: Configure problem-specific command-line arguments</summary><p>The <code>OptimizationProblem</code> base class defines a
 <a href="#4-built-in-command-line-options">large number of general-purpose command-line options</a>,
 with judiciously chosen default values, to control <code>mp.adjoint</code> calculations. 
@@ -878,7 +916,8 @@ command-line arguments are parsed.</p>
 <p><strong>Return values:</strong>  None.</p>
 </details>
 <hr />
-<h3 id="objective-function-specifications">Objective-function specifications<a class="headerlink" href="#objective-function-specifications" title="Permanent link">&para;</a></h3>
+<p><a name="s1d"></name></p>
+<h3 id="1d-defining-your-objective-function">1d. Defining your objective function<a class="headerlink" href="#1d-defining-your-objective-function" title="Permanent link">&para;</a></h3>
 <p>Your objective function is specified by the string <code>fstr</code> that you return as
 the first element in the 5-tuple return value of <code>init_problem.</code></p>
 <p>Your objective function will depend on one or more objective quantities,
@@ -917,7 +956,8 @@ depends.</p>
   index corresponding to the zero-based index of the DFT cell in the <code>objective_regions</code> list
   returned by your <code>init_problem</code>.</p>
 </blockquote>
-<h3 id="expansion-bases">Expansion bases<a class="headerlink" href="#expansion-bases" title="Permanent link">&para;</a></h3>
+<p><a name="s1e"></name></p>
+<h3 id="1e-selecting-an-expansion-basis">1e. Selecting an expansion basis<a class="headerlink" href="#1e-selecting-an-expansion-basis" title="Permanent link">&para;</a></h3>
 <p>The <code>basis</code> field returned by <code>init_problem</code> is a subclass of the 
 <code>Basis</code> base class implemented by <code>meep.adjoint.</code> You can write 
 your own subclass to define an arbitrary basis, or use one of the 
@@ -929,6 +969,53 @@ choice is <code>FiniteElementBasis</code>: </p>
 <p>which defines a basis of localized
 functions over a rectangle of dimensions <code>l_x</code>&times;<code>l_y</code> with <code>density</code>
 elements per unit length.</p>
+<p><a name="s1f"></name></p>
+<h3 id="1f-defining-your-own-expansion-basis">1f. Defining your own expansion basis<a class="headerlink" href="#1f-defining-your-own-expansion-basis" title="Permanent link">&para;</a></h3>
+<p>If none of the pre-implemented basis sets suffices for your needs,
+you may define your own arbitrary basis by implementing a new subclass
+of the <code>Basis</code> abstract base class in <code>mp.adjoint</code>. This class abstracts
+the representation of a spatially-varying permittivity function as a 
+finite linear combination of scalar basis functions,
+$$ \epsilon(\mathbf{x})=\sum \beta_n b_n(\mathbf{x}).$$
+The base class defines several methods related to this task and provides 
+default non-performance-optimized implementations for most of these, which 
+should be fine for most use cases. However, for design optimization of
+large structures there are two junctures, bookending each iteration of 
+the iterative optimization process, in which a sluggish <code>Basis</code>
+implementation could potentially slow things down significantly:
+<strong>(1)</strong> At the beginning of each iteration, Basis.<strong>call</strong>() is invoked
+once for each Yee-grid pixel in the design region.
+<strong>(2)</strong> At the end of each iteration, <code>Basis.project()</code> is called 
+to compute the basis-function projection of the objective-function
+gradient <span><span class="MathJax_Preview">g(\mathbf{x}) \equiv \partial f/\partial \epsilon(\mathbf{x}).</span><script type="math/tex">g(\mathbf{x}) \equiv \partial f/\partial \epsilon(\mathbf{x}).</script></span></p>
+<p>The easiest way to implement your own basis
+is probably to start with one of the existing subclasses
+in <code>mp.adjoint</code>, such as <code>SimpleFiniteElementBasis</code> or <code>PlaneWaveBasis</code>,
+and modify appropriately, subject to the following guidelines.</p>
+<ul>
+<li>
+<p>Your subclass must furnish an override for the pure virtual
+    <code>__call__</code> method in the base class. This method accepts a single
+    input argument <code>p</code> of type <code>mp.Vector3</code> (coordinates of evaluation
+    point) and returns the value of the full basis-function expansion at <code>p</code>,
+    i.e. <span><span class="MathJax_Preview">\sum \beta_n b_n(\mathbf{p}),</span><script type="math/tex">\sum \beta_n b_n(\mathbf{p}),</script></span> with the 
+    <code>$\beta_n$ coefficient values taken from the</code>np.array<code>-valued
+    class field</code>beta_vector` defined in the parent class.</p>
+</li>
+<li>
+<p>The constructor (<code>__init__</code> method) of your subclass must
+    call the base class constructor, which accepts a single integer-valued
+    parameter <code>dim</code> specifying the number of functions in the basis.</p>
+</li>
+<li>
+<p>The base class provides default implementations of all other class methods,
+    so in principle a bare-minimum subclass need not do anything beyond the above for
+    for a bare-minimum implementation. However, as noted above, for performance 
+    reasons you may wish to override <code>project()</code> with an implementation that exploits
+    special features of your basis to accelerate the calculation.</p>
+</li>
+</ul>
+<p><name="S2"></name></p>
 <h2 id="2-running-your-problem-visualization-single-point-calculations-and-full-iterative-optimization">2. <strong>Running your problem</strong>: Visualization, single-point calculations, and full iterative optimization<a class="headerlink" href="#2-running-your-problem-visualization-single-point-calculations-and-full-iterative-optimization" title="Permanent link">&para;</a></h2>
 <p>Having implemented your script, you can execute it as a python script to
 run various calculations specified by command-line options.</p>

@@ -613,7 +613,7 @@ language.</p>
 <p><em>Simulation geometry before timestepping.</em> A static image of the simulation geometry at the begininng of the calculation, 
       before timestepping has begun. The important targets for visualization are the following items and their 
       relative positioning vis-a-vis one another: <strong>(a)</strong> the material geometry, <strong>(b)</strong> the absorbers,
-      <strong>&copy;</strong> the location and nature of sources, <strong>(d)</strong> the position and size of any DFT cells in which
+      <strong>&lparen;c)</strong> the location and nature of sources, <strong>(d)</strong> the position and size of any DFT cells in which
       frequency-domain fields are to be computed.</p>
 </li>
 <li>
@@ -627,10 +627,10 @@ language.</p>
 <p>Also, after all, the ability to observe essentially time-domain phenomena is one of the
   key reasons to use an FDTD tool in the first place; many frequency-domain problems
   can be solved much more efficiently by frequency-domain solvers than by something like
-  <span class=SC>meep</sc>, but they don't produce nice movies showing e.g.
+  <span class=SC>meep</span>, but they don't produce nice movies showing e.g.
   reflection and diffraction of wave packets from interfaces. So it seems particularly
-  appropriate for a time-domain-solver like <span class=SC>meep</span> to offer
-  built-in functionality for animating time-domain field evolutions.</p>
+  unfortunate for a time-domain-solver like <span class=SC>meep</span> to offer
+  no easy built-in functionality for animating time-domain field evolutions.</p>
 </li>
 <li>
 <p><em>Frequency-domain fields after timestepping.</em> A static image showing the amplitudes of frequency-domain fields
@@ -653,13 +653,13 @@ language.</p>
      on to users of <code>meep.adjoint.Visualization.</code> 
      In view of these considerations, the goal of the routines is to offer
      a three-tiered hierarchy of customizability levels.</p>
-<p>a. <strong>Zero-effort calling model for lazy forgetful slackers</strong>SZ</p>
+<p>a. <strong>Zero-effort calling model for lazy forgetful slackers</strong></p>
 <p>For users who can't be bothered to memorize or look up library function
  prototypes---or who just want quick and dirty visualization at the
  prototyping stage with the option to clean up later---it should be 
  possible to call the visualization routines on just the <code>simulation</code> 
  entity alone <em>with no configuration arguments whatsoever,</em>
- with the module making reasonable choices to produce helpful graphics 
+ with the module making reasonable choices to produce helpful graphics
  in a standardized format.</p>
 <p>b. <strong>Minimal-effort calling model for the slightly more motivated</strong></p>
 <p>For users who fall basically into the previous bucket but are
@@ -669,7 +669,7 @@ language.</p>
  after which the user can proceed lazily to call all visualization
  routines with no customization arguments.</p>
 <p>c. <strong>Full-customization calling model for diligent nitpickers:</strong></p>
-<p>Finally, for users who <em>do</em> want to invest time and effort to 
+<p>Finally, for users who <em>do</em> want to invest time and effort to
  configure plotting options to their liking, the visualization
  module should provide copious customization options to allow
  as much as possible of the visualization to be customized.</p>
