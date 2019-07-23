@@ -165,30 +165,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-meep.adjoint.TimeStepper">
-<span id="meep-adjoint-timestepper-module"></span><h1><a class="reference internal" href="#module-meep.adjoint.TimeStepper" title="meep.adjoint.TimeStepper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep.adjoint.TimeStepper</span></code></a> module<a class="headerlink" href="#module-meep.adjoint.TimeStepper" title="Permalink to this headline">¶</a></h1>
-<p>TimeStepper.py: MEEP timestepping for forward and adjoint runs</p>
-<p>TimeStepper is a class that knows how to run a time-domain MEEP
-calculation to accumulate frequency-domain (DFT) field components
-in objective regions, from which may be computed the values of
-objective quantities, from which may be computed the objective
-function.</p>
-<p>TimeStepper monitors the convergence of DFT components and
-the associated objective quantities, and continues timestepping
-until the relevant output quantities have stopped changing.</p>
-<p>More specifically, it knows about two different types of
-timestepping runs: (1) forward runs, in which the sources are
-pre-specified by the caller and the outputs are objective
-quantities and the objective function, and (2) adjoint runs,
-in which we place the sources ourselves (see
-place_adjoint_sources below) and the output is the gradient
-df/dEps (more specifically, its projection onto the design basis).</p>
-<dl class="function">
-<dt id="meep.adjoint.TimeStepper.rel_diff">
-<code class="descclassname">meep.adjoint.TimeStepper.</code><code class="descname">rel_diff</code><span class="sig-paren">(</span><em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep/adjoint/TimeStepper.html#rel_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep.adjoint.TimeStepper.rel_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns value in range [0,2] quantifying error relative to magnitude</p>
-</dd></dl>
-
+  <div class="section" id="meep-adjoint-timestepper-module">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep.adjoint.TimeStepper</span></code> module<a class="headerlink" href="#meep-adjoint-timestepper-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
