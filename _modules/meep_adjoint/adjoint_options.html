@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meep_adjoint.adjoint_options &mdash; meep.adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> meep.adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Config/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TestSuite/index.html">Test suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">meep.adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>meep_adjoint.adjoint_options</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for meep_adjoint.adjoint_options</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Handling of adjoint-related configuration options.</span>
+
+<span class="sd">    This file exports two routines:</span>
+<span class="sd">        -- get_adjoint_options() to lookup the value of an option</span>
+<span class="sd">        -- set_default_adjoint_options() to override default option values</span>
+
+<span class="sd">    Internally, option settings are maintained by a module-wide instance of</span>
+<span class="sd">    &#39;OptionAlmanac&#39; (generic class for option handling defined in util.py),</span>
+<span class="sd">    which is lazily initialized on the first call to get_adjoint_options().</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.option_almanac</span> <span class="k">import</span> <span class="n">OptionTemplate</span><span class="p">,</span> <span class="n">OptionAlmanac</span>
+
+<span class="n">_adjoint_options</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="sd">&quot;&quot;&quot; module-wide database of adjoint-related options, referenced only in this file&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="_init_adjoint_options"><a class="viewcode-back" href="../../API/adjoint_options.html#meep_adjoint.adjoint_options._init_adjoint_options">[docs]</a><span class="k">def</span> <span class="nf">_init_adjoint_options</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;internal routine for just-in-time options processing&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_adjoint_options</span>
+    <span class="n">_adjoint_options</span> <span class="o">=</span> <span class="n">OptionAlmanac</span><span class="p">(</span><span class="n">adjoint_option_templates</span><span class="p">,</span>
+                                     <span class="n">custom_defaults</span><span class="o">=</span><span class="n">custom_defaults</span><span class="p">,</span>
+                                     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;meep_adjoint.rc&#39;</span><span class="p">,</span>
+                                     <span class="n">search_env</span><span class="o">=</span><span class="n">search_env</span><span class="p">)</span></div>
+
+
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<div class="viewcode-block" id="set_adjoint_option_defaults"><a class="viewcode-back" href="../../API/adjoint_options.html#meep_adjoint.adjoint_options.set_adjoint_option_defaults">[docs]</a><span class="k">def</span> <span class="nf">set_adjoint_option_defaults</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Routine intended to be called by meep_adjoint API scripts to set</span>
+<span class="sd">    problem-specific option defaults.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        custom_defaults: dict of {option:new_default_value} records</span>
+<span class="sd">        search_env:      True/False to enable/disable scanning environment variables</span>
+<span class="sd">                         for option settings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_init_adjoint_options</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="n">custom_defaults</span><span class="p">,</span> <span class="n">search_env</span><span class="o">=</span><span class="n">search_env</span><span class="p">)</span></div>
+
+
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<span class="c1">##################################################</span>
+<div class="viewcode-block" id="get_adjoint_option"><a class="viewcode-back" href="../../API/adjoint_options.html#meep_adjoint.adjoint_options.get_adjoint_option">[docs]</a><span class="k">def</span> <span class="nf">get_adjoint_option</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="sd">&quot;&quot;&quot;Return currently configured value of option.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        option (str): name of option</span>
+<span class="sd">        overrides (dict): {option:value} records to override current settings</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Value of option if found in database, or None otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_adjoint_options</span>
+    <span class="k">if</span> <span class="n">_adjoint_options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_init_adjoint_options</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">_adjoint_options</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="n">overrides</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">set_adjoint_options</span><span class="p">(</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">_adjoint_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+
+<span class="c1">######################################################################</span>
+<span class="c1"># The rest of the file just defines the available options.</span>
+<span class="c1">######################################################################</span>
+
+<span class="sd">&quot;&quot;&quot; definition of adjoint-related configuration options &quot;&quot;&quot;</span>
+<span class="n">adjoint_option_templates</span><span class="o">=</span> <span class="p">[</span>
+
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="c1">#- options affecting MEEP calculations</span>
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;res&#39;</span><span class="p">,</span>              <span class="mf">20.0</span><span class="p">,</span>   <span class="s1">&#39;Yee grid resolution&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">,</span>              <span class="mf">0.0</span><span class="p">,</span>   <span class="s1">&#39;source center frequency&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;df&#39;</span><span class="p">,</span>                <span class="mf">0.0</span><span class="p">,</span>   <span class="s1">&#39;source frequency width&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;source_component&#39;</span><span class="p">,</span> <span class="s1">&#39;Ez&#39;</span><span class="p">,</span>   <span class="s1">&#39;forward source component (str)&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;source_mode&#39;</span><span class="p">,</span>         <span class="mi">1</span><span class="p">,</span>   <span class="s1">&#39;forward source eigenmode index&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;nfreq&#39;</span><span class="p">,</span>               <span class="mi">1</span><span class="p">,</span>   <span class="s1">&#39;number of DFT frequencies&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">,</span>             <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>   <span class="s1">&#39;PML width (-1 --&gt; auto-select)&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">,</span>             <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>   <span class="s1">&#39;gap width between material bodies and PMLs (-1 --&gt; auto-select)&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;eps_func&#39;</span><span class="p">,</span>        <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>   <span class="s1">&#39;function of (x,y,z) giving initial design permittivity&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_reltol&#39;</span><span class="p">,</span>     <span class="mf">1.0e-6</span><span class="p">,</span>   <span class="s1">&#39;convergence tolerance for terminating timestepping&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_timeout&#39;</span><span class="p">,</span>      <span class="mf">10.0</span><span class="p">,</span>   <span class="s1">&#39;max runtime in units of last_source_time&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_interval&#39;</span><span class="p">,</span>     <span class="mf">0.25</span><span class="p">,</span>   <span class="s1">&#39;meep time between DFT convergence checks in units of last_source_time&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;complex_fields&#39;</span><span class="p">,</span>  <span class="kc">False</span><span class="p">,</span>   <span class="s1">&#39;use complex fields in forward calculation&#39;</span><span class="p">),</span>
+
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="c1">#- options affecting finite-element basis sets</span>
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;element_type&#39;</span><span class="p">,</span>   <span class="s1">&#39;CG 1&#39;</span><span class="p">,</span>  <span class="s1">&#39;finite-element family and degree&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;element_length&#39;</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>    <span class="s1">&#39;finite-element discretization length&#39;</span><span class="p">),</span>
+
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="c1">#- options affecting gradient-desscent optimizer</span>
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span>          <span class="mf">1.0</span><span class="p">,</span>     <span class="s1">&#39;initial value of gradient relaxation parameter&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha_min&#39;</span><span class="p">,</span>      <span class="mf">1.0e-3</span><span class="p">,</span>  <span class="s1">&#39;minimum value of alpha&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha_max&#39;</span><span class="p">,</span>      <span class="mf">10.0</span><span class="p">,</span>    <span class="s1">&#39;maximum value of alpha&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;boldness&#39;</span><span class="p">,</span>       <span class="mf">1.25</span><span class="p">,</span>    <span class="s1">&#39;sometimes you just gotta live a little (explain me)&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;timidity&#39;</span><span class="p">,</span>       <span class="mf">0.75</span><span class="p">,</span>    <span class="s1">&#39;can</span><span class="se">\&#39;</span><span class="s1">t be too cautious in this dangerous world (explain me)&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;max_iters&#39;</span><span class="p">,</span>      <span class="mi">100</span><span class="p">,</span>     <span class="s1">&#39;max number of optimization iterations&#39;</span><span class="p">),</span>
+
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="c1"># options affecting outputs</span>
+    <span class="c1">#--------------------------------------------------</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;filebase&#39;</span><span class="p">,</span>         <span class="s1">&#39;&#39;</span><span class="p">,</span>    <span class="s1">&#39;base name of output files (empty string --&gt; autodetermined)&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span>      <span class="s1">&#39;True&#39;</span><span class="p">,</span>    <span class="s1">&#39;produce more output&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;visualize&#39;</span><span class="p">,</span>    <span class="s1">&#39;True&#39;</span><span class="p">,</span>    <span class="s1">&#39;produce visualization graphics&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;silence_meep&#39;</span><span class="p">,</span> <span class="s1">&#39;True&#39;</span><span class="p">,</span>    <span class="s1">&#39;suppress MEEP console output&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

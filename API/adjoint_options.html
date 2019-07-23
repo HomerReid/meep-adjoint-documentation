@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>:py:mod:` API Reference &mdash; meep.adjoint 1.0 documentation</title>
+  <title>adjoint_options module &mdash; meep.adjoint 1.0 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="optimization_problem module" href="optimization_problem.html" />
-    <link rel="prev" title="Overview of the meep_adjoint class hierarchy" href="../Implementation/ClassHierarchy.html" /> 
+    <link rel="next" title="visualization_options module" href="visualization_options.html" />
+    <link rel="prev" title="option_almanac module" href="option_almanac.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,10 +90,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../Examples/index.html">Example Gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Visualization/index.html">Visualization Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../TestSuite/index.html">Test suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
@@ -102,7 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="finite_element_basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">finite_element_basis</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="option_almanac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="adjoint_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualization_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization_options</span></code> module</a></li>
 </ul>
 </li>
@@ -151,13 +150,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>:py:mod:` API Reference</li>
+          <li><a href="index.html">:py:mod:` API Reference</a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/API/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/API/adjoint_options.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -170,23 +171,58 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="py-mod-api-reference">
-<h1>:py:mod:` API Reference<a class="headerlink" href="#py-mod-api-reference" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">API Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="dft_cell.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft_cell</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">basis</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="finite_element_basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">finite_element_basis</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="visualization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="option_almanac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="adjoint_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="visualization_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization_options</span></code> module</a></li>
+  <div class="section" id="module-meep_adjoint.adjoint_options">
+<span id="adjoint-options-module"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module<a class="headerlink" href="#module-meep_adjoint.adjoint_options" title="Permalink to this headline">¶</a></h1>
+<p>Handling of adjoint-related configuration options.</p>
+<dl class="simple">
+<dt>This file exports two routines:</dt><dd><p>– get_adjoint_options() to lookup the value of an option
+– set_default_adjoint_options() to override default option values</p>
+</dd>
+</dl>
+<p>Internally, option settings are maintained by a module-wide instance of
+‘OptionAlmanac’ (generic class for option handling defined in util.py),
+which is lazily initialized on the first call to get_adjoint_options().</p>
+<dl class="data">
+<dt id="meep_adjoint.adjoint_options._adjoint_options">
+<code class="sig-prename descclassname">meep_adjoint.adjoint_options.</code><code class="sig-name descname">_adjoint_options</code><em class="property"> = None</em><a class="headerlink" href="#meep_adjoint.adjoint_options._adjoint_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>module-wide database of adjoint-related options, referenced only in this file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.adjoint_options._init_adjoint_options">
+<code class="sig-prename descclassname">meep_adjoint.adjoint_options.</code><code class="sig-name descname">_init_adjoint_options</code><span class="sig-paren">(</span><em class="sig-param">custom_defaults={}</em>, <em class="sig-param">search_env=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/adjoint_options.html#_init_adjoint_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.adjoint_options._init_adjoint_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>internal routine for just-in-time options processing</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.adjoint_options.get_adjoint_option">
+<code class="sig-prename descclassname">meep_adjoint.adjoint_options.</code><code class="sig-name descname">get_adjoint_option</code><span class="sig-paren">(</span><em class="sig-param">option</em>, <em class="sig-param">overrides={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/adjoint_options.html#get_adjoint_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.adjoint_options.get_adjoint_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return currently configured value of option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>option</strong> (<em>str</em>) – name of option</p></li>
+<li><p><strong>overrides</strong> (<em>dict</em>) – {option:value} records to override current settings</p></li>
 </ul>
-</div>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Value of option if found in database, or None otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.adjoint_options.set_adjoint_option_defaults">
+<code class="sig-prename descclassname">meep_adjoint.adjoint_options.</code><code class="sig-name descname">set_adjoint_option_defaults</code><span class="sig-paren">(</span><em class="sig-param">custom_defaults={}</em>, <em class="sig-param">search_env=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/adjoint_options.html#set_adjoint_option_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.adjoint_options.set_adjoint_option_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine intended to be called by meep_adjoint API scripts to set
+problem-specific option defaults.
+:param custom_defaults: dict of {option:new_default_value} records
+:param search_env: True/False to enable/disable scanning environment variables</p>
+<blockquote>
+<div><p>for option settings</p>
+</div></blockquote>
+</dd></dl>
+
 </div>
 
 
@@ -197,10 +233,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="optimization_problem.html" class="btn btn-neutral float-right" title="optimization_problem module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="visualization_options.html" class="btn btn-neutral float-right" title="visualization_options module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../Implementation/ClassHierarchy.html" class="btn btn-neutral float-left" title="Overview of the meep_adjoint class hierarchy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="option_almanac.html" class="btn btn-neutral float-left" title="option_almanac module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>:py:mod:` API Reference &mdash; meep.adjoint 1.0 documentation</title>
+  <title>visualization module &mdash; meep.adjoint 1.0 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="optimization_problem module" href="optimization_problem.html" />
-    <link rel="prev" title="Overview of the meep_adjoint class hierarchy" href="../Implementation/ClassHierarchy.html" /> 
+    <link rel="next" title="option_almanac module" href="option_almanac.html" />
+    <link rel="prev" title="finite_element_basis" href="finite_element_basis.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,14 +93,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../TestSuite/index.html">Test suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="dft_cell.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft_cell</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">basis</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="finite_element_basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">finite_element_basis</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="option_almanac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="adjoint_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualization_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization_options</span></code> module</a></li>
@@ -151,13 +151,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>:py:mod:` API Reference</li>
+          <li><a href="index.html">:py:mod:` API Reference</a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/API/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/API/visualization.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -170,23 +172,59 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="py-mod-api-reference">
-<h1>:py:mod:` API Reference<a class="headerlink" href="#py-mod-api-reference" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">API Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="dft_cell.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft_cell</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">basis</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="finite_element_basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">finite_element_basis</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="visualization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="option_almanac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="adjoint_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="visualization_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization_options</span></code> module</a></li>
-</ul>
-</div>
+  <div class="section" id="module-meep_adjoint.visualization">
+<span id="visualization-module"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module<a class="headerlink" href="#module-meep_adjoint.visualization" title="Permalink to this headline">¶</a></h1>
+<p>routines for standardized visualization of pymeep geometries and fields</p>
+<dl class="function">
+<dt id="meep_adjoint.visualization.abs2">
+<code class="sig-prename descclassname">meep_adjoint.visualization.</code><code class="sig-name descname">abs2</code><span class="sig-paren">(</span><em class="sig-param">z</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/visualization.html#abs2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.visualization.abs2" title="Permalink to this definition">¶</a></dt>
+<dd><p>squared magnitude of complex number</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.visualization.happy_cb">
+<code class="sig-prename descclassname">meep_adjoint.visualization.</code><code class="sig-name descname">happy_cb</code><span class="sig-paren">(</span><em class="sig-param">img</em>, <em class="sig-param">axes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/visualization.html#happy_cb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.visualization.happy_cb" title="Permalink to this definition">¶</a></dt>
+<dd><p>nice colorbars for subplots, from <a class="reference external" href="https://joseph-long.com/writing/colorbars">https://joseph-long.com/writing/colorbars</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.visualization.plot_eps">
+<code class="sig-prename descclassname">meep_adjoint.visualization.</code><code class="sig-name descname">plot_eps</code><span class="sig-paren">(</span><em class="sig-param">sim</em>, <em class="sig-param">fig=None</em>, <em class="sig-param">plot3D=False</em>, <em class="sig-param">options={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/visualization.html#plot_eps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.visualization.plot_eps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce graphical visualization of material geometry.
+:param fig: existing matplotlib figure to overwrite</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>(otherwise a new fig() is created)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>plot3D: True to plot in 3D axis system (typically used</dt><dd><p>for geometry–field superposition plots)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>options: dict of visualization option overrides</p>
+</div></blockquote>
+<p>Return value: None</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.visualization.plot_geometry">
+<code class="sig-prename descclassname">meep_adjoint.visualization.</code><code class="sig-name descname">plot_geometry</code><span class="sig-paren">(</span><em class="sig-param">sim</em>, <em class="sig-param">fig=None</em>, <em class="sig-param">plot3D=False</em>, <em class="sig-param">src_labels=[]</em>, <em class="sig-param">dft_labels=[]</em>, <em class="sig-param">options={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/visualization.html#plot_geometry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.visualization.plot_geometry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.visualization.plot_subregion">
+<code class="sig-prename descclassname">meep_adjoint.visualization.</code><code class="sig-name descname">plot_subregion</code><span class="sig-paren">(</span><em class="sig-param">sim</em>, <em class="sig-param">vol=None</em>, <em class="sig-param">center=None</em>, <em class="sig-param">size=None</em>, <em class="sig-param">plot3D=False</em>, <em class="sig-param">label=None</em>, <em class="sig-param">section=None</em>, <em class="sig-param">options=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/visualization.html#plot_subregion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.visualization.plot_subregion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add polygons representing subregions of meep geometries
+to the current 2D or 3D geometry visualization.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.visualization.texify">
+<code class="sig-prename descclassname">meep_adjoint.visualization.</code><code class="sig-name descname">texify</code><span class="sig-paren">(</span><em class="sig-param">expr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/visualization.html#texify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.visualization.texify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return expr modified to play well with latex formatting.</p>
+</dd></dl>
+
 </div>
 
 
@@ -197,10 +235,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="optimization_problem.html" class="btn btn-neutral float-right" title="optimization_problem module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="option_almanac.html" class="btn btn-neutral float-right" title="option_almanac module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../Implementation/ClassHierarchy.html" class="btn btn-neutral float-left" title="Overview of the meep_adjoint class hierarchy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="finite_element_basis.html" class="btn btn-neutral float-left" title="finite_element_basis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

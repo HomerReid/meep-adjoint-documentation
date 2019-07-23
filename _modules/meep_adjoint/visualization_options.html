@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meep_adjoint.visualization_options &mdash; meep.adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> meep.adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Config/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TestSuite/index.html">Test suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">meep.adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>meep_adjoint.visualization_options</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for meep_adjoint.visualization_options</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Handling of visualization-related configuration options.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.option_almanac</span> <span class="k">import</span> <span class="n">OptionTemplate</span><span class="p">,</span> <span class="n">OptionAlmanac</span>
+
+
+<span class="sd">&quot;&quot;&quot; module-wide dict of { section_name : section_almanac } records &quot;&quot;&quot;</span>
+<span class="n">_visualization_sections</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="n">RCFILE</span> <span class="o">=</span> <span class="s1">&#39;meep_visualization.rc&#39;</span>
+
+<span class="c1">######################################################################</span>
+<span class="c1"># internal routines</span>
+<span class="c1">######################################################################</span>
+<div class="viewcode-block" id="_init_visualization_options"><a class="viewcode-back" href="../../API/visualization_options.html#meep_adjoint.visualization_options._init_visualization_options">[docs]</a><span class="k">def</span> <span class="nf">_init_visualization_options</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;internal routine for just-in-time options processing&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_sectopts</span><span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="k">return</span> <span class="n">_init_section_options</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">custom_defaults</span><span class="p">,</span> <span class="n">search_env</span><span class="p">)</span>
+
+    <span class="k">global</span> <span class="n">_visualization_sections</span>
+    <span class="n">_visualization_sections</span> <span class="o">=</span> <span class="p">{</span> <span class="n">s</span> <span class="p">:</span> <span class="n">_sectopts</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">VISUALIZATION_SECTIONS</span> <span class="p">}</span></div>
+
+
+<span class="k">def</span> <span class="nf">_init_section_options</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">custom_defaults</span><span class="p">,</span> <span class="n">search_env</span><span class="p">):</span>
+    <span class="n">custom_section_defaults</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span> <span class="n">VISUALIZATION_SECTIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,{})</span> <span class="p">)</span>
+    <span class="n">custom_section_defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_subdict</span><span class="p">(</span><span class="n">custom_defaults</span><span class="p">,</span><span class="n">section</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">OptionAlmanac</span><span class="p">(</span><span class="n">VISUALIZATION_OPTION_TEMPLATES</span><span class="p">,</span>
+                         <span class="n">custom_defaults</span><span class="o">=</span><span class="n">custom_section_defaults</span><span class="p">,</span>
+                         <span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">RCFILE</span><span class="p">,</span> <span class="n">search_env</span><span class="o">=</span><span class="n">search_env</span><span class="p">,</span>
+                         <span class="n">prepend_section</span> <span class="o">=</span> <span class="p">(</span><span class="n">section</span> <span class="o">!=</span> <span class="s1">&#39;default&#39;</span><span class="p">))</span>
+
+
+
+<div class="viewcode-block" id="_subdict"><a class="viewcode-back" href="../../API/visualization_options.html#meep_adjoint.visualization_options._subdict">[docs]</a><span class="k">def</span> <span class="nf">_subdict</span><span class="p">(</span><span class="n">fulldict</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;returns a dict containing all items in fulldict whose key begins with &#39;section_&#39;.</span>
+<span class="sd">       if strip==True, the &#39;section_&#39; prefix is removed from keys in the returned dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prefix</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">section</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">strip</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">section</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="n">k</span><span class="p">[</span><span class="n">n</span><span class="p">:]:</span><span class="n">v</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">fulldict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="p">}</span></div>
+
+
+
+
+<span class="c1">######################################################################</span>
+<span class="c1"># exported routines</span>
+<span class="c1">######################################################################</span>
+<div class="viewcode-block" id="set_visualization_option_defaults"><a class="viewcode-back" href="../../API/visualization_options.html#meep_adjoint.visualization_options.set_visualization_option_defaults">[docs]</a><span class="k">def</span> <span class="nf">set_visualization_option_defaults</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        custom_defaults: dict of {option:new_default_value} records</span>
+<span class="sd">        search_env:      True/False to enable/disable scanning environment variables</span>
+<span class="sd">                         for option settings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_init_visualization_options</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="n">custom_defaults</span><span class="p">,</span> <span class="n">search_env</span><span class="o">=</span><span class="n">search_env</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_visualization_options"><a class="viewcode-back" href="../../API/visualization_options.html#meep_adjoint.visualization_options.get_visualization_options">[docs]</a><span class="k">def</span> <span class="nf">get_visualization_options</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="sd">&quot;&quot;&quot;Return currently configured values of options.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        opts (list of str):  names of options for which we want values</span>
+<span class="sd">        section (str): name of section</span>
+<span class="sd">        overrides (dict): {option:value} records to override current settings</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of option values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_visualization_sections</span>
+    <span class="k">if</span> <span class="n">_visualization_sections</span> <span class="o">==</span> <span class="p">{}:</span>
+        <span class="n">_init_visualization_options</span><span class="p">()</span>
+
+    <span class="n">almanac</span> <span class="o">=</span> <span class="n">_visualization_sections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">almanac</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;unknown options section </span><span class="si">{}</span><span class="s1"> (skipping)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">opts</span> <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VISUALIZATION_OPTIONS</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span> <span class="p">[</span> <span class="n">opt</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">sect</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">sect</span> <span class="ow">in</span> <span class="n">VISUALIZATION_SECTIONS</span><span class="p">]</span> <span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Option </span><span class="se">\&#39;</span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">: section-prefix semantics not available in get_visualization_options;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">))</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;use the </span><span class="se">\&#39;</span><span class="s1">section</span><span class="se">\&#39;</span><span class="s1"> parameter instead&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;unrecognized option </span><span class="si">{}</span><span class="s2">; something has probably gone wrong&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">))</span>
+
+    <span class="n">_overrides</span> <span class="o">=</span> <span class="n">overrides</span> <span class="k">if</span> <span class="n">section</span><span class="o">==</span><span class="s1">&#39;default&#39;</span> <span class="k">else</span> <span class="n">_subdict</span><span class="p">(</span><span class="n">overrides</span><span class="p">,</span><span class="n">section</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span> <span class="n">almanac</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="n">_overrides</span><span class="p">)</span> <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">opts</span> <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_visualization_option"><a class="viewcode-back" href="../../API/visualization_options.html#meep_adjoint.visualization_options.get_visualization_option">[docs]</a><span class="k">def</span> <span class="nf">get_visualization_option</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="sd">&quot;&quot;&quot; Singleton version of the above routine that also allows an</span>
+<span class="sd">        alternative calling convention for convenience: the section</span>
+<span class="sd">        label may be prepended to the name of the option instead of</span>
+<span class="sd">        specified separately. Thus, the following two sets of</span>
+<span class="sd">        parameter values are equivalent:</span>
+<span class="sd">            option=&#39;linewidth&#39;,     section=&#39;pml&#39;</span>
+<span class="sd">            option=&#39;pml_linewidth&#39;  section=&#39;default&#39;  (or section left unspecified)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">section</span><span class="o">==</span><span class="s1">&#39;default&#39;</span> <span class="ow">and</span> <span class="s1">&#39;_&#39;</span> <span class="ow">in</span> <span class="n">option</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">VISUALIZATION_SECTIONS</span><span class="p">:</span>
+            <span class="n">section</span><span class="p">,</span> <span class="n">option</span> <span class="o">=</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">option</span><span class="p">[</span><span class="mi">1</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="p">:</span> <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">get_visualization_options</span><span class="p">([</span><span class="n">option</span><span class="p">],</span><span class="n">section</span><span class="p">,</span><span class="n">overrides</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<span class="c1">######################################################################</span>
+<span class="c1"># Definitions of options and section-specific default values</span>
+<span class="c1">#####################################################################</span>
+<span class="sd">&quot;&quot;&quot; names, default values, descriptions of visualization options &quot;&quot;&quot;</span>
+<span class="n">VISUALIZATION_OPTION_TEMPLATES</span><span class="o">=</span> <span class="p">[</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">,</span>         <span class="s1">&#39;plasma&#39;</span><span class="p">,</span>        <span class="s1">&#39;default colormap&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span>         <span class="mf">1.0</span><span class="p">,</span>            <span class="s1">&#39;default transparency&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;fontsize&#39;</span><span class="p">,</span>      <span class="mi">25</span><span class="p">,</span>             <span class="s1">&#39;font size for labels and titles&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;shading&#39;</span><span class="p">,</span>      <span class="s1">&#39;gouraud&#39;</span><span class="p">,</span>       <span class="s1">&#39;shading style&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;interp&#39;</span><span class="p">,</span>       <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span>      <span class="s1">&#39;interpolation method&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">,</span>       <span class="s1">&#39;contourf&#39;</span><span class="p">,</span>      <span class="s1">&#39;contourf | imshow |pcolormesh&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;contours&#39;</span><span class="p">,</span>     <span class="mi">100</span><span class="p">,</span>             <span class="s1">&#39;number of contours&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;linecolor&#39;</span><span class="p">,</span>    <span class="s1">&#39;#ff0000&#39;</span><span class="p">,</span>       <span class="s1">&#39;default line color&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;linewidth&#39;</span><span class="p">,</span>    <span class="mf">4.0</span><span class="p">,</span>             <span class="s1">&#39;default line width&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;linestyle&#39;</span><span class="p">,</span>    <span class="s1">&#39;-&#39;</span><span class="p">,</span>             <span class="s1">&#39;default line style&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;fillcolor&#39;</span><span class="p">,</span>    <span class="s1">&#39;#ffffff&#39;</span><span class="p">,</span>       <span class="s1">&#39;default fill color&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;cmin&#39;</span><span class="p">,</span>         <span class="n">np</span><span class="o">.</span><span class="n">NINF</span><span class="p">,</span>         <span class="s1">&#39;colormap minimum&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;cmax&#39;</span><span class="p">,</span>         <span class="n">np</span><span class="o">.</span><span class="n">PINF</span><span class="p">,</span>         <span class="s1">&#39;colormap maximum&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;zmin&#39;</span><span class="p">,</span>         <span class="mf">0.6</span><span class="p">,</span>             <span class="s1">&#39;&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;zmax&#39;</span><span class="p">,</span>         <span class="mf">0.8</span><span class="p">,</span>             <span class="s1">&#39;&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;cb_pad&#39;</span><span class="p">,</span>       <span class="mf">0.04</span><span class="p">,</span>            <span class="s1">&#39;colorbar padding&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;cb_shrink&#39;</span><span class="p">,</span>    <span class="mf">0.60</span><span class="p">,</span>            <span class="s1">&#39;colorbar shrink factor&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;latex&#39;</span><span class="p">,</span>        <span class="kc">True</span><span class="p">,</span>            <span class="s1">&#39;LaTeX text formatting&#39;</span><span class="p">),</span>
+ <span class="p">]</span>
+
+<span class="sd">&quot;&quot;&quot;base option names, to which we prepend a prefix like &#39;eps_&#39; to get section-specific options&quot;&quot;&quot;</span>
+<span class="n">VISUALIZATION_OPTIONS</span> <span class="o">=</span> <span class="p">[</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">VISUALIZATION_OPTION_TEMPLATES</span> <span class="p">]</span>
+
+
+<span class="sd">&quot;&quot;&quot; section-specific overrides of default option values &quot;&quot;&quot;</span>
+<span class="n">VISUALIZATION_SECTIONS</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{},</span>
+
+<span class="c1">#----------------------------------------------------------------------</span>
+<span class="c1"># permittivity: blue-scale colormap, no boundary edges</span>
+<span class="c1">#----------------------------------------------------------------------</span>
+    <span class="s1">&#39;eps&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">0.0</span>
+           <span class="p">},</span>
+
+<span class="c1">#----------------------------------------------------------------------</span>
+<span class="c1"># pml regions: light grey semitransparent filling, no boundary edges</span>
+<span class="c1">#----------------------------------------------------------------------</span>
+    <span class="s1">&#39;pml&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span>  <span class="mf">0.0</span><span class="p">,</span>
+             <span class="s1">&#39;fillcolor&#39;</span><span class="p">:</span> <span class="s1">&#39;#CCCCCC&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;alpha&#39;</span><span class="p">:</span>      <span class="mf">0.25</span><span class="p">,</span>
+           <span class="p">},</span>
+
+<span class="c1">#----------------------------------------------------------------------</span>
+<span class="c1"># source regions: cyan lines, no labels</span>
+<span class="c1">#----------------------------------------------------------------------</span>
+    <span class="s1">&#39;src_region&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;linecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;#00ffff&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span>  <span class="mi">0</span>
+                  <span class="p">},</span>
+
+<span class="c1">#----------------------------------------------------------------------</span>
+<span class="c1"># flux regions: magenta line, with labels</span>
+<span class="c1">#----------------------------------------------------------------------</span>
+    <span class="s1">&#39;flux_region&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;linecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;#ff00ff&#39;</span><span class="p">,</span>
+                   <span class="p">},</span>
+
+<span class="c1">#----------------------------------------------------------------------</span>
+<span class="c1"># &#39;fields&#39; regions: boundaries indicated by semitransparent dashed</span>
+<span class="c1">#                   green lines, interiors not filled in, no labels</span>
+<span class="c1">#----------------------------------------------------------------------</span>
+    <span class="s1">&#39;fields_region&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+                       <span class="s1">&#39;linecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;#00ff00&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;linestyle&#39;</span><span class="p">:</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;fillcolor&#39;</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                        <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span>   <span class="mi">0</span>
+                   <span class="p">},</span>
+
+<span class="c1">#----------------------------------------------------------------------</span>
+<span class="c1"># flux data:</span>
+<span class="c1">#----------------------------------------------------------------------</span>
+    <span class="s1">&#39;flux_data&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;linecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;#ff00ff&#39;</span><span class="p">,</span> <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span><span class="mf">4.0</span>
+                 <span class="p">},</span>
+
+<span class="c1">#----------------------------------------------------------------------</span>
+<span class="c1"># &#39;fields&#39; data</span>
+<span class="c1">#----------------------------------------------------------------------</span>
+    <span class="s1">&#39;fields_data&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                     <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;contourf&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;zmin&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s1">&#39;zmax&#39;</span><span class="p">:</span> <span class="mf">0.6</span>
+                   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

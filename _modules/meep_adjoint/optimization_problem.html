@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meep_adjoint.optimization_problem &mdash; meep.adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> meep.adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Config/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TestSuite/index.html">Test suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">meep.adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>meep_adjoint.optimization_problem</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for meep_adjoint.optimization_problem</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;OptimizationProblem is the top-level class exported by the meep.adjoint module.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="p">(</span><span class="n">DFTCell</span><span class="p">,</span> <span class="n">ObjectiveFunction</span><span class="p">,</span> <span class="n">TimeStepper</span><span class="p">,</span>
+               <span class="n">FiniteElementBasis</span><span class="p">,</span> <span class="n">dft_cell_names</span><span class="p">,</span> <span class="n">E_CPTS</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">V3</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">visualize_sim</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">get_adjoint_option</span> <span class="k">as</span> <span class="n">adj_opt</span>
+<span class="kn">from</span> <span class="nn">.adjoint_options</span> <span class="k">import</span> <span class="n">set_adjoint_options</span>
+
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<div class="viewcode-block" id="OptimizationProblem"><a class="viewcode-back" href="../../API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem">[docs]</a><span class="k">class</span> <span class="nc">OptimizationProblem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Top-level class in the MEEP adjoint module.</span>
+
+<span class="sd">    Intended to be instantiated from user scripts with mandatory constructor</span>
+<span class="sd">    input arguments specifying the data required to define an adjoint-based</span>
+<span class="sd">    optimization.</span>
+
+<span class="sd">    The class knows how to do one basic thing: Given an input vector</span>
+<span class="sd">    of design variables, compute the objective function value (forward</span>
+<span class="sd">    calculation) and optionally its gradient (adjoint calculation).</span>
+<span class="sd">    This is done by the __call__ method. The actual computations</span>
+<span class="sd">    are delegated to a hierarchy of lower-level classes, of which</span>
+<span class="sd">    the uppermost is TimeStepper.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="OptimizationProblem.__init__"><a class="viewcode-back" href="../../API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_regions</span><span class="o">=</span><span class="p">[],</span> <span class="n">objective</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">basis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">design_region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">cell_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">background_geometry</span><span class="o">=</span><span class="p">[],</span> <span class="n">foreground_geometry</span><span class="o">=</span><span class="p">[],</span>
+                       <span class="n">sources</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_region</span><span class="o">=</span><span class="p">[],</span>
+                       <span class="n">extra_quantities</span><span class="o">=</span><span class="p">[],</span> <span class="n">extra_regions</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters:</span>
+
+<span class="sd">          objective regions (list of Subregion):</span>
+<span class="sd">              subregions of the computational cell over which frequency-domain</span>
+<span class="sd">              fields are tabulated and used to compute objective quantities</span>
+
+<span class="sd">          objective (str):</span>
+<span class="sd">              definition of the quantity to be maximized. This should be</span>
+<span class="sd">              a mathematical expression in which the names of one or more</span>
+<span class="sd">              objective quantities appear, and which should evaluate to</span>
+<span class="sd">              a real number when numerical values are substituted for the</span>
+<span class="sd">              names of all objective quantities.</span>
+
+
+<span class="sd">          basis (Basis):</span>
+<span class="sd">          design_region (Subregion):</span>
+<span class="sd">              (precisely one of these should be non-None) Specification</span>
+<span class="sd">              of function space for the design permittivity.</span>
+
+<span class="sd">              In general, basis will be a caller-created instance of</span>
+<span class="sd">              some subclass of meep.adjoint.Basis. Then the spatial</span>
+<span class="sd">              extent of the design region is determined by basis and</span>
+<span class="sd">              the design_region argument is ignored.</span>
+
+<span class="sd">              As an alternative convenience convention, the caller</span>
+<span class="sd">              may omit basis and set design_region; in this case,</span>
+<span class="sd">              an appropriate basis for the given design_region is</span>
+<span class="sd">              automatically created based on the values of various</span>
+<span class="sd">              module-wide adj_opt such as &#39;element_type&#39; and</span>
+<span class="sd">              &#39;element_length&#39;. This convenience convention is</span>
+<span class="sd">              only available for box-shaped (hyperrectangular)</span>
+<span class="sd">              design regions.</span>
+
+
+<span class="sd">          cell_size (Vector3)</span>
+<span class="sd">          background_geometry (list of GeometricObject)</span>
+<span class="sd">          foreground_geometry (list of GeometricObject)</span>
+
+<span class="sd">              Size of computational cell and lists of GeometricObjects</span>
+<span class="sd">              that {precede,follow} the design object in the overall geometry.</span>
+
+
+<span class="sd">          sources (list of Source)</span>
+<span class="sd">          source_region (Subregion)</span>
+<span class="sd">              (Specify either sources OR source_region) Specification</span>
+<span class="sd">              of forward source distribution, i.e. the source excitation(s) that</span>
+<span class="sd">              produce the fields from which the objective function is computed.</span>
+
+<span class="sd">              In general, sources will be an arbitrary caller-created list of Source</span>
+<span class="sd">              objects, in which case source_region, source_component are ignored.</span>
+
+<span class="sd">              As an alternative convenience convention, the caller may omit</span>
+<span class="sd">              sources and instead specify source_region; in this case, a</span>
+<span class="sd">              source distribution over the given region is automatically</span>
+<span class="sd">              created based on the values of module-wide adj_opt (such</span>
+<span class="sd">              as fcen, df, source_component, source_mode)</span>
+
+
+<span class="sd">          extra_quantities  (list of str)</span>
+<span class="sd">          extra_regions (list of Subregion)</span>
+<span class="sd">              By default, the module will compute only those DFT fields and</span>
+<span class="sd">              objective quantities needed to evaluate the specified objective</span>
+<span class="sd">              function. These arguments may be used to specify lists of ancillary</span>
+<span class="sd">              quantities and/or ancillary DFT cells (where &#39;ancillary&#39; means</span>
+<span class="sd">              &#39;not needed to compute the objective function value) to be computed</span>
+<span class="sd">              and reported/plotted as well.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#-----------------------------------------------------------------------</span>
+        <span class="c1"># process convenience arguments:</span>
+        <span class="c1">#  (a) if no basis was specified, create one using the given design</span>
+        <span class="c1">#      region plus global option values</span>
+        <span class="c1">#  (b) if no sources were specified, create one using the given source</span>
+        <span class="c1">#      region plus global option values</span>
+        <span class="c1">#-----------------------------------------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span> <span class="ow">or</span> <span class="n">FiniteElementBasis</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">design_region</span><span class="p">,</span>
+                                                 <span class="n">element_length</span><span class="o">=</span><span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;element_length&#39;</span><span class="p">),</span>
+                                                 <span class="n">element_type</span><span class="o">=</span><span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;element_type&#39;</span><span class="p">))</span>
+        <span class="n">design_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">domain</span>
+        <span class="n">design_region</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">design_region</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;design&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sources</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span> <span class="n">adj_opt</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;fcen&#39;</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">,</span> <span class="s1">&#39;source_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;source_component&#39;</span><span class="p">]</span> <span class="p">]</span>
+            <span class="n">envelope</span>    <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">GaussianSource</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fwidth</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">kws</span>         <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="n">V3</span><span class="p">(</span><span class="n">source_region</span><span class="o">.</span><span class="n">center</span><span class="p">),</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">V3</span><span class="p">(</span><span class="n">source_region</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+                            <span class="s1">&#39;src&#39;</span><span class="p">:</span> <span class="n">envelope</span><span class="p">}</span> <span class="c1">#, &#39;eig_band&#39;: m, &#39;component&#39;: c }</span>
+            <span class="n">sources</span>     <span class="o">=</span> <span class="p">[</span> <span class="n">mp</span><span class="o">.</span><span class="n">EigenModeSource</span><span class="p">(</span><span class="n">eig_band</span><span class="o">=</span><span class="n">m</span><span class="p">,</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="n">mp</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span> <span class="p">]</span>
+        <span class="n">rescale_sources</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span>
+
+        <span class="c1">#-----------------------------------------------------------------------</span>
+        <span class="c1"># initialize lower-level helper classes</span>
+        <span class="c1">#-----------------------------------------------------------------------</span>
+
+        <span class="c1"># DFTCells</span>
+        <span class="n">dft_cell_names</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">objective_cells</span> <span class="o">=</span> <span class="p">[</span> <span class="n">DFTCell</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">objective_regions</span> <span class="p">]</span>
+        <span class="n">extra_cells</span>     <span class="o">=</span> <span class="p">[</span> <span class="n">DFTCell</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">extra_regions</span> <span class="p">]</span>
+        <span class="n">design_cell</span>     <span class="o">=</span> <span class="n">DFTCell</span><span class="p">(</span><span class="n">design_region</span><span class="p">,</span> <span class="n">E_CPTS</span><span class="p">)</span>
+        <span class="n">dft_cells</span>       <span class="o">=</span> <span class="n">objective_cells</span> <span class="o">+</span> <span class="n">extra_cells</span> <span class="o">+</span> <span class="p">[</span><span class="n">design_cell</span><span class="p">]</span>
+
+        <span class="c1"># ObjectiveFunction</span>
+        <span class="n">obj_func</span>        <span class="o">=</span> <span class="n">ObjectiveFunction</span><span class="p">(</span><span class="n">fstr</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+                                            <span class="n">extra_quantities</span><span class="o">=</span><span class="n">extra_quantities</span><span class="p">)</span>
+
+        <span class="c1"># initial values of (a) design variables, (b) the spatially-varying</span>
+        <span class="c1"># permittivity function they define (the &#39;design function&#39;), (c) the</span>
+        <span class="c1"># GeometricObject describing a material body with this permittivity</span>
+        <span class="c1"># (the &#39;design object&#39;), and (d) mp.Simulation superposing the design</span>
+        <span class="c1"># object with the rest of the caller&#39;s geometry.</span>
+        <span class="c1"># Note that sources and DFT cells are not added to the Simulation at</span>
+        <span class="c1"># this stage; this is done later by internal methods of TimeStepper</span>
+        <span class="c1"># on a just-in-time basis before starting a timestepping run.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta_vector</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;eps_func&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">parameterized_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_vector</span><span class="p">)</span>
+        <span class="n">design_object</span>   <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">V3</span><span class="p">(</span><span class="n">design_region</span><span class="o">.</span><span class="n">center</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">V3</span><span class="p">(</span><span class="n">design_region</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+                                   <span class="n">epsilon_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_function</span><span class="o">.</span><span class="n">func</span><span class="p">())</span>
+        <span class="n">geometry</span>        <span class="o">=</span> <span class="n">background_geometry</span> <span class="o">+</span> <span class="p">[</span><span class="n">design_object</span><span class="p">]</span> <span class="o">+</span> <span class="n">foreground_geometry</span>
+        <span class="n">sim</span>             <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Simulation</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;res&#39;</span><span class="p">),</span>
+                                        <span class="n">boundary_layers</span><span class="o">=</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">PML</span><span class="p">(</span><span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">))],</span>
+                                        <span class="n">cell_size</span><span class="o">=</span><span class="n">V3</span><span class="p">(</span><span class="n">cell_size</span><span class="p">),</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">)</span>
+
+        <span class="c1"># TimeStepper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span>    <span class="o">=</span> <span class="n">TimeStepper</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span> <span class="n">dft_cells</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">sources</span><span class="p">)</span>
+
+        <span class="c1">#-----------------------------------------------------------------------</span>
+        <span class="c1"># if the &#39;filebase&#39; configuration option wasn&#39;t specified, set it</span>
+        <span class="c1"># to the base filename of the caller&#39;s script</span>
+        <span class="c1">#-----------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;filebase&#39;</span><span class="p">):</span>
+            <span class="n">script</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span> <span class="ow">or</span> <span class="s1">&#39;meep_adjoint&#39;</span>
+            <span class="n">script_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">script</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">set_adjoint_options</span><span class="p">({</span><span class="s1">&#39;filebase&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">script_base</span><span class="p">)})</span></div>
+
+
+    <span class="c1">#####################################################################</span>
+    <span class="c1"># The basic task of an OptimizationProblem: Given a vector of design</span>
+    <span class="c1"># variables, evaluate the objective function value and (optionally) gradient.</span>
+    <span class="c1">######################################################################</span>
+<div class="viewcode-block" id="OptimizationProblem.__call__"><a class="viewcode-back" href="../../API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta_vector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">need_gradient</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate value and (optionally) gradient of objective function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            beta_vector (np.array):</span>
+<span class="sd">                vector of design variables (or None to retain existing design)</span>
+<span class="sd">            need_gradient (bool):</span>
+<span class="sd">                whether or not the forward run to compute the objective-function</span>
+<span class="sd">                value will be followed by an adjoint run to compute the gradient.</span>
+
+<span class="sd">        Returns: 2-tuple (fq, gradf), where</span>
+
+<span class="sd">            fq = np.array([f q1 q2 ... qN])</span>
+<span class="sd">               = values of objective function &amp; objective quantities</span>
+
+<span class="sd">            gradf = np.array([df/dbeta_1 ... df/dbeta_D]), i.e. vector of partial</span>
+<span class="sd">                    f derivatives w.r.t. each design variable (if need_gradient==True),</span>
+<span class="sd">                  = None (need_gradient==False)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">beta_vector</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_design</span><span class="p">(</span><span class="n">beta_vector</span><span class="p">)</span>
+
+        <span class="n">fq</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
+        <span class="n">gradf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;adjoint&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">need_gradient</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">fq</span><span class="p">,</span> <span class="n">gradf</span></div>
+
+
+    <span class="c1">#####################################################################</span>
+    <span class="c1"># ancillary API methods #############################################</span>
+    <span class="c1">#####################################################################</span>
+<div class="viewcode-block" id="OptimizationProblem.update_design"><a class="viewcode-back" href="../../API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.update_design">[docs]</a>    <span class="k">def</span> <span class="nf">update_design</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta_vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the vector of design variables (expansion coefficients)</span>
+<span class="sd">           that determine the design function.</span>
+<span class="sd">           Args:</span>
+<span class="sd">               beta_vector: real-valued numpy array, length self.basis.dim</span>
+<span class="sd">           Return value:</span>
+<span class="sd">               None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta_vector</span> <span class="o">=</span> <span class="n">beta_vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">design_function</span><span class="o">.</span><span class="n">set_coefficients</span><span class="p">(</span><span class="n">beta_vector</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">state</span><span class="o">=</span><span class="s1">&#39;reset&#39;</span></div>
+
+
+    <span class="c1">#####################################################################</span>
+    <span class="c1">#####################################################################</span>
+    <span class="c1">#####################################################################</span>
+<div class="viewcode-block" id="OptimizationProblem.visualize"><a class="viewcode-back" href="../../API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;Produce a graphical visualization of the geometry and/or fields</span>
+<span class="sd">           as appropriate based on the current state of progress.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">state</span><span class="o">==</span><span class="s1">&#39;reset&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
+
+        <span class="n">dft_labels</span> <span class="o">=</span> <span class="p">[</span> <span class="n">cell</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">dft_cells</span> <span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.prepared&#39;</span><span class="p">):</span>
+            <span class="n">visualize_sim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">sim</span><span class="p">,</span> <span class="n">dft_labels</span><span class="o">=</span><span class="n">dft_labels</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;forward.complete&#39;</span><span class="p">:</span>
+            <span class="n">visualize_sim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepper</span><span class="o">.</span><span class="n">sim</span><span class="p">,</span> <span class="n">dft_labels</span><span class="o">=</span><span class="n">dft_labels</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span></div></div>
+        <span class="c1">#else self.stepper.state == &#39;forward.complete&#39;:</span>
+
+
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<div class="viewcode-block" id="rescale_sources"><a class="viewcode-back" href="../../API/optimization_problem.html#meep_adjoint.optimization_problem.rescale_sources">[docs]</a><span class="k">def</span> <span class="nf">rescale_sources</span><span class="p">(</span><span class="n">sources</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scale the overall amplitude of a spatial source distribution to compensate</span>
+<span class="sd">       for the frequency dependence of its temporal envelope.</span>
+
+<span class="sd">       In a MEEP calculation driven by sources with a pulsed temporal envelope T(t),</span>
+<span class="sd">       the amplitudes of all frequency-f DFT fields will be proportional to</span>
+<span class="sd">       T^tilde (f), the Fourier transform of the envelope. Here we divide</span>
+<span class="sd">       the overall amplitude of the source by T^tilde(f_c) (where f_c = center</span>
+<span class="sd">       frequency), which exactly cancels the extra scale factor for DFT</span>
+<span class="sd">       fields at f_c.</span>
+
+<span class="sd">       Args:</span>
+<span class="sd">           sources: list of mp.Sources</span>
+
+<span class="sd">       Returns:</span>
+<span class="sd">           none (the rescaling is done in-place)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+        <span class="n">envelope</span><span class="p">,</span> <span class="n">fcen</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">src</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">frequency</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">envelope</span><span class="p">,</span> <span class="s2">&quot;fourier_transform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">/=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">fourier_transform</span><span class="p">(</span><span class="n">fcen</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

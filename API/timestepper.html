@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>:py:mod:` API Reference &mdash; meep.adjoint 1.0 documentation</title>
+  <title>timestepper module &mdash; meep.adjoint 1.0 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="optimization_problem module" href="optimization_problem.html" />
-    <link rel="prev" title="Overview of the meep_adjoint class hierarchy" href="../Implementation/ClassHierarchy.html" /> 
+    <link rel="next" title="objective" href="objective.html" />
+    <link rel="prev" title="optimization_problem module" href="optimization_problem.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,12 +90,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../Examples/index.html">Example Gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Visualization/index.html">Visualization Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../TestSuite/index.html">Test suite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="dft_cell.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft_cell</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">basis</span></code></a></li>
@@ -151,13 +150,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>:py:mod:` API Reference</li>
+          <li><a href="index.html">:py:mod:` API Reference</a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/API/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/API/timestepper.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -170,23 +171,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="py-mod-api-reference">
-<h1>:py:mod:` API Reference<a class="headerlink" href="#py-mod-api-reference" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">API Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="dft_cell.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft_cell</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">basis</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="finite_element_basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">finite_element_basis</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="visualization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="option_almanac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="adjoint_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="visualization_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization_options</span></code> module</a></li>
-</ul>
-</div>
+  <div class="section" id="module-meep_adjoint.timestepper">
+<span id="timestepper-module"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module<a class="headerlink" href="#module-meep_adjoint.timestepper" title="Permalink to this headline">¶</a></h1>
+<p>TimeStepper.py: MEEP timestepping for forward and adjoint runs</p>
+<p>TimeStepper is a class that knows how to run a time-domain MEEP
+calculation to accumulate frequency-domain (DFT) field components
+in objective regions, from which may be computed the values of
+objective quantities, from which may be computed the objective
+function.</p>
+<p>TimeStepper monitors the convergence of DFT components and
+the associated objective quantities, and continues timestepping
+until the relevant output quantities have stopped changing.</p>
+<p>More specifically, it knows about two different types of
+timestepping runs: (1) forward runs, in which the sources are
+pre-specified by the caller and the outputs are objective
+quantities and the objective function, and (2) adjoint runs,
+for which TimeStepper itself determines the source
+distribution (see place_adjoint_sources below) and the
+output is the gradient df/dEps (more specifically, its
+projection onto the design basis).</p>
+<dl class="function">
+<dt id="meep_adjoint.timestepper.rel_diff">
+<code class="sig-prename descclassname">meep_adjoint.timestepper.</code><code class="sig-name descname">rel_diff</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/timestepper.html#rel_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.timestepper.rel_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns value in range [0,2] quantifying error relative to magnitude</p>
+</dd></dl>
+
 </div>
 
 
@@ -197,10 +206,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="optimization_problem.html" class="btn btn-neutral float-right" title="optimization_problem module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="objective.html" class="btn btn-neutral float-right" title="objective" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../Implementation/ClassHierarchy.html" class="btn btn-neutral float-left" title="Overview of the meep_adjoint class hierarchy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="optimization_problem.html" class="btn btn-neutral float-left" title="optimization_problem module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

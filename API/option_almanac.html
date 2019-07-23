@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>option_almanac module &mdash; meep.adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="adjoint_options module" href="adjoint_options.html" />
+    <link rel="prev" title="visualization module" href="visualization.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> meep.adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Config/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="dft_cell.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft_cell</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">basis</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="finite_element_basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">finite_element_basis</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adjoint_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization_options</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">meep.adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">:py:mod:` API Reference</a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/API/option_almanac.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-meep_adjoint.option_almanac">
+<span id="option-almanac-module"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module<a class="headerlink" href="#module-meep_adjoint.option_almanac" title="Permalink to this headline">¶</a></h1>
+<p>General-purpose utilities for meep.adjoint</p>
+<p>This file collects some general-purpose utility functions and classes that are
+used in meep.adjoint but are not specific to adjoint solvers or computational
+electromagnetism.</p>
+<p>The functions/classes included are as follows:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>process_options: creates {option:value} dicts by parsing a</dt><dd><p>hierarchy of config files, environment variables,
+and command-line options</p>
+</dd>
+</dl>
+</li>
+<li><p>math utility routines</p></li>
+</ol>
+<dl class="class">
+<dt id="meep_adjoint.option_almanac.OptionAlmanac">
+<em class="property">class </em><code class="sig-prename descclassname">meep_adjoint.option_almanac.</code><code class="sig-name descname">OptionAlmanac</code><span class="sig-paren">(</span><em class="sig-param">templates</em>, <em class="sig-param">custom_defaults={}</em>, <em class="sig-param">section=None</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">search_env=True</em>, <em class="sig-param">prepend_section=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/option_almanac.html#OptionAlmanac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.option_almanac.OptionAlmanac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Database of option values read from config files, environment, and command-line args.</p>
+<blockquote>
+<div><blockquote>
+<div><p>On instantiation, this class determines values for each element in a
+list of named options by consulting each of the following sources
+in increasing order of priority:</p>
+<ol class="loweralpha simple">
+<li><p>The default value given in the initialization template (see below)</p></li>
+<li><p>Dict of customized defaults passed to constructor or set_defaults()</p></li>
+<li><p>Global config file</p></li>
+<li><p>Local config file</p></li>
+<li><p>Environment variables</p></li>
+<li><p>Command-line arguments. (Processed arguments are removed
+from sys.argv, leaving other arguments unchanged for subsequent
+downstream parsing.)</p></li>
+</ol>
+</div></blockquote>
+<p>After initialization, class instances serve as databases of option values
+that may be queried via the __call__ method, thus:</p>
+<blockquote>
+<div><p>my_options = OptionAlmanac(…)
+opt_value  = my_options(‘option_name’)</p>
+</div></blockquote>
+</div></blockquote>
+<p>Constructor arguments:</p>
+<blockquote>
+<div><p>templates (list of OptionTemplate): option definitions</p>
+<p>custom_defaults (dict): optional overrides of default values in templates</p>
+<dl>
+<dt>section(str): optional section specification; if present, only matching</dt><dd><p>sections of config files are parsed. If absent, all
+sections of all files are parsed.</p>
+</dd>
+<dt>filename (str): If e.g. filename == ‘myconfig.rc’, then:</dt><dd><blockquote>
+<div><ol class="arabic simple">
+<li><p>the global config file is ~/.my_config.rc</p></li>
+<li><p>the local config file is ./my_config.rc in the current working directory.</p></li>
+</ol>
+</div></blockquote>
+<p>If unspecified, no configuration files are processed.</p>
+</dd>
+<dt>search_env (bool): Whether or not to look for option settings in</dt><dd><p>environment variables. The default is True, but
+you may want to set it to False if you have
+option whose names overlap with standard
+environment variables, such as ‘HOME’</p>
+</dd>
+<dt>prepend_section (bool): If True, the section name (plus an underscore) is</dt><dd><p>prepended to the names of options for searching
+environment variables and command-line arguments.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionAlmanac.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">overrides={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/option_almanac.html#OptionAlmanac.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.option_almanac.OptionAlmanac.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the almanac’s current value for the option
+with the given name, or None if the almanac has no such option,
+unless overrides has a value of the proper type,
+in which case that wins.
+Note: The first line here sets override to None if
+overrides has no value for name OR has a value
+but of an incompatible type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionAlmanac.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">templates</em>, <em class="sig-param">custom_defaults={}</em>, <em class="sig-param">section=None</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">search_env=True</em>, <em class="sig-param">prepend_section=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/option_almanac.html#OptionAlmanac.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.option_almanac.OptionAlmanac.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>harvest option values from config files, environment, and command-line args</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="meep_adjoint.option_almanac.OptionAlmanac.__weakref__">
+<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#meep_adjoint.option_almanac.OptionAlmanac.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionAlmanac.enforce_type">
+<code class="sig-name descname">enforce_type</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/option_almanac.html#OptionAlmanac.enforce_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.option_almanac.OptionAlmanac.enforce_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typechecking/conversion for option update candidates
+:param name: name of an option
+:type name: str
+:param value: a value somebody has proposed to assign the option
+:type value: ?</p>
+<dl class="simple">
+<dt>Returns: value converted to the type of the given option, or None</dt><dd><p>if this is not possible. The conversion is attempted by a simple
+typecast unless the return type is boolean, which we process by
+hand as automatic conversion does not work [i.e. bool(‘False’) == True].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionAlmanac.revise">
+<code class="sig-name descname">revise</code><span class="sig-paren">(</span><em class="sig-param">revisions</em>, <em class="sig-param">context</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/option_almanac.html#OptionAlmanac.revise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.option_almanac.OptionAlmanac.revise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cautiously apply a proposed set of candidates for updated option values.
+:param revisions: dict of {key:new_value} records OR list of (key,new_value) pairs
+:param context: optional str like ‘global config file’ or ‘command line’</p>
+<blockquote>
+<div><p>for inclusion in error messages to help trace mishaps</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result is similar to that of self.options.update</strong><strong>( </strong><strong>{k</strong> (<em>The</em>) – v for (k,v) in revisions } ),</p></li>
+<li><p><strong>but</strong> (<em>a</em>) – <ol class="loweralpha simple" start="2">
+<li><p>removes non-escaped single and double quotes surrounding strings,</p></li>
+<li><p>attempts type conversions as necessary to preserve the type of the
+value associated with each key.</p></li>
+</ol>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p>Return value: None (the class-internal dict of option settings is updated in-place)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meep_adjoint.option_almanac.OptionTemplate">
+<em class="property">class </em><code class="sig-prename descclassname">meep_adjoint.option_almanac.</code><code class="sig-name descname">OptionTemplate</code><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>name, default value, and usage for one configurable option</p>
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate.__getnewargs__">
+<code class="sig-name descname">__getnewargs__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate.__getnewargs__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self as a plain tuple.  Used by copy and pickle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate.__new__">
+<em class="property">static </em><code class="sig-name descname">__new__</code><span class="sig-paren">(</span><em class="sig-param">_cls</em>, <em class="sig-param">name</em>, <em class="sig-param">default</em>, <em class="sig-param">help</em><span class="sig-paren">)</span><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new instance of OptionTemplate(name, default, help)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate.__repr__">
+<code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a nicely formatted representation string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate._asdict">
+<code class="sig-name descname">_asdict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate._asdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OrderedDict which maps field names to their values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate._make">
+<em class="property">classmethod </em><code class="sig-name descname">_make</code><span class="sig-paren">(</span><em class="sig-param">iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate._make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new OptionTemplate object from a sequence or iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate._replace">
+<code class="sig-name descname">_replace</code><span class="sig-paren">(</span><em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate._replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OptionTemplate object replacing specified fields with new values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate.default">
+<em class="property">property </em><code class="sig-name descname">default</code><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate.help">
+<em class="property">property </em><code class="sig-name descname">help</code><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate.help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.option_almanac.OptionTemplate.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#meep_adjoint.option_almanac.OptionTemplate.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="meep_adjoint.option_almanac.uq">
+<code class="sig-prename descclassname">meep_adjoint.option_almanac.</code><code class="sig-name descname">uq</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/meep_adjoint/option_almanac.html#uq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.option_almanac.uq" title="Permalink to this definition">¶</a></dt>
+<dd><p>compensate for configparser’s failure to unquote strings</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="adjoint_options.html" class="btn btn-neutral float-right" title="adjoint_options module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="visualization.html" class="btn btn-neutral float-left" title="visualization module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
