@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Low-level (private) API: Classes and functions intended for use within meep_adjoint &mdash; meep_adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../_static/toggle_visibility.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> meep_adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../API/LowLevel.html"> Low-level (internal) API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">meep_adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Low-level (private) API: Classes and functions intended for use within <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/meep_adjoint/docs/API/LowLevel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="low-level-private-api-classes-and-functions-intended-for-use-within-meep-adjoint">
+<h1>Low-level (private) API: Classes and functions intended for use within <a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a><a class="headerlink" href="#low-level-private-api-classes-and-functions-intended-for-use-within-meep-adjoint" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="timestepper-interface-to-computational-back-end-provided-by-meep-or-other-fdtd-solver">
+<h2><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeStepper</span></code>: Interface to computational back-end provided by <span class="codename">meep</span> or other FDTD solver<a class="headerlink" href="#timestepper-interface-to-computational-back-end-provided-by-meep-or-other-fdtd-solver" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="thetimestepperclass"></span><dl class="class">
+<dt id="meep_adjoint.TimeStepper">
+<em class="property">class </em><code class="sig-name descname">TimeStepper</code><span class="sig-paren">(</span><em class="sig-param">obj_func</em>, <em class="sig-param">dft_cells</em>, <em class="sig-param">basis</em>, <em class="sig-param">sim</em>, <em class="sig-param">fwd_sources</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/timestepper.html#TimeStepper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.TimeStepper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstraction of low-level FDTD engine.</p>
+<p>TimeStepper is a class that knows how to invoke an FDTD solver
+to execute a time-domain calculation to obtain frequency-domain
+(DFT) field components in objective regions, from which may be
+computed (a) the values of objective quantities and objective functions,
+or (b) permittivity derivatives of the objective function, from which
+may be computed the objective-function gradient.</p>
+<p>This class lies between the top-level <a class="reference internal" href="../../../API/HighLevel.html#meep_adjoint.OptimizationProblem" title="meep_adjoint.OptimizationProblem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a> session-manager class
+and lower-level classes like <a class="reference internal" href="#meep_adjoint.ObjectiveFunction" title="meep_adjoint.ObjectiveFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ObjectiveFunction</span></code></a>. It exports a single method
+(<code class="docutils literal notranslate"><span class="pre">__call__</span></code>) which prepares and executes one complete FDTD timestepping run to
+compute frequency-domain fields, returning numerical quantities of interest
+computed from these fields. <code class="docutils literal notranslate"><span class="pre">__call__</span></code> accepts one <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>-valued argument <code class="xref py py-obj docutils literal notranslate"><span class="pre">job</span></code>,
+for which the recognized values are <code class="xref py py-obj docutils literal notranslate"><span class="pre">forward</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">adjoint</span></code>. For <code class="xref py py-obj docutils literal notranslate"><span class="pre">job`==`forward</span></code>, the
+excitation sources for the FDTD problem are the user-defined sources passed to the
+<a class="reference internal" href="../../../API/HighLevel.html#meep_adjoint.OptimizationProblem" title="meep_adjoint.OptimizationProblem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a> constructor and the result of the calculation is the
+objective-function value (plus the values of any additional requested objective quantities).
+For <code class="xref py py-obj docutils literal notranslate"><span class="pre">job`==`adjoint</span></code>, the excitation sources are automatically determined internally
+and the result of the calculation is the objective-function gradient.</p>
+<p><a class="reference internal" href="#meep_adjoint.TimeStepper" title="meep_adjoint.TimeStepper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeStepper</span></code></a> automatically determines when to terminate a timestepping run by
+monitoring the numerical convergence of the output quantities. The details of this process
+may be customized using configuration options. <a class="reference internal" href="#meep_adjoint.TimeStepper" title="meep_adjoint.TimeStepper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeStepper</span></code></a> does not itself know how
+to evaluate its output quantities, but rather outsources these calculations to public
+methods of <a class="reference internal" href="#meep_adjoint.ObjectiveFunction" title="meep_adjoint.ObjectiveFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ObjectiveFunction</span></code></a> and other low-level classes.</p>
+<dl class="method">
+<dt>
+<code class="sig-name descname">__call__(job):</code></dt>
+<dd><p>Populate the FDTD grid with an appropriate source distribution, initialize DFT cells for
+tabulating frequency-domain fields, then execute FDTD timestepping until the output quantities
+converges and return those quantities.</p>
+</dd></dl>
+
+<p>Constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>obj_func</strong> (<a class="reference internal" href="#meep_adjoint.ObjectiveFunction" title="meep_adjoint.ObjectiveFunction"><em>ObjectiveFunction</em></a>) – The function whose value or gradient we compute (copied from OptimizationProblem)</p></li>
+<li><p><strong>dft_cells</strong> (list of <a class="reference internal" href="#meep_adjoint.DFTCell" title="meep_adjoint.DFTCell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DFTCell</span></code></a>”) – List of <a class="reference internal" href="#meep_adjoint.DFTCell" title="meep_adjoint.DFTCell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DFTCell</span></code></a> structures, assumed to be ordered with objective cells <em>first</em> and the
+design cell <em>last</em> (so any <code class="xref py py-obj docutils literal notranslate"><span class="pre">extra</span></code> cells are in the interior of the list).</p></li>
+<li><p><strong>basis</strong> (<em>Basis</em>) – Function space (copied from OptimizationProblem).
+Logically this is not a necessary input for this calculation—it is used only in a
+post-processing step to compute the objective-function gradient by projecting df/dEps
+onto the function space. It might make more sense to define the output of TimeStepper
+to be the raw df/dEps matrix, with the projection step done at a higher level, in which
+case this parameter could be omitted. But then the convergence of the adjoint timestepping
+run would have to consider the full raw df/dEps matrix instead of the lower-dimensional
+gradient vector.</p></li>
+<li><p><strong>sim</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep.Simulation</span></code>) – Simulation object, copied from OptimizationProblem.</p></li>
+<li><p><strong>fwd_sources</strong> (list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep.Source</span></code>) – User-specified sources for the forward calculation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="meep_adjoint.TimeStepper.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">job</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/timestepper.html#TimeStepper.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.TimeStepper.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a forward or adjoint FDTD timestepping run and return results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.TimeStepper.prepare">
+<code class="sig-name descname">prepare</code><span class="sig-paren">(</span><em class="sig-param">job='forward'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/timestepper.html#TimeStepper.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.TimeStepper.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare simulation for timestepping by adding sources and DFT cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>job</em>) – <ol class="arabic">
+<li><p>If job==’forward’, prepare forward run to compute objective function value.</p></li>
+<li><p>If job==’adjoint’, prepare adjoint run to compute objective function gradient.</p></li>
+<li><p>If job is the name of an objective quantity, prepare adjoint run to compute
+the gradient of that quantity.</p></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.TimeStepper.get_adjoint_sources">
+<code class="sig-name descname">get_adjoint_sources</code><span class="sig-paren">(</span><em class="sig-param">qname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/timestepper.html#TimeStepper.get_adjoint_sources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.TimeStepper.get_adjoint_sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct adjoint source distribution.</p>
+<p>Return a list of mp.Source structures describing the distribution of sources
+appropriate for adjoint-method evaluation of the objective-function gradient
+df/deps.</p>
+<p>The optional parameter qname may be set to the name of an objective quantity Q,
+in which case we instead compute dQ/deps.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="objectivefunction-evaluation-of-objective-function-values-and-partial-derivatives">
+<h2><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectiveFunction</span></code>: Evaluation of objective-function values and partial derivatives<a class="headerlink" href="#objectivefunction-evaluation-of-objective-function-values-and-partial-derivatives" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="theobjectivefunctionclass"></span><dl class="class">
+<dt id="meep_adjoint.ObjectiveFunction">
+<em class="property">class </em><code class="sig-name descname">ObjectiveFunction</code><span class="sig-paren">(</span><em class="sig-param">fstr='S_0'</em>, <em class="sig-param">extra_quantities=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/objective.html#ObjectiveFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.ObjectiveFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Multivariate scalar-valued function defined by string expression.</p>
+<p>An <a class="reference internal" href="#meep_adjoint.ObjectiveFunction" title="meep_adjoint.ObjectiveFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ObjectiveFunction</span></code></a> is a scalar function
+<span class="math notranslate nohighlight">\(f^{obj}({q_n})\)</span>
+of <span class="math notranslate nohighlight">\(N\)</span> scalar variables <span class="math notranslate nohighlight">\(\{ q_0, q_1, ..., q_{N-1}\}\)</span>,
+where the <span class="math notranslate nohighlight">\({q_n}\)</span> are complex-valued in general and
+<span class="math notranslate nohighlight">\(f^{obj}\)</span> may be real- or complex-valued
+(only the real part is referenced for optimization purposes).</p>
+<p>An instance of <a class="reference internal" href="#meep_adjoint.ObjectiveFunction" title="meep_adjoint.ObjectiveFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ObjectiveFunction</span></code></a> is specified by a
+character string (the <code class="xref py py-obj docutils literal notranslate"><span class="pre">fstr</span></code> input to the constructor)
+that, upon parsing by <code class="xref py py-obj docutils literal notranslate"><span class="pre">sympy.sympify</span></code>, is identified as
+a mathematical expression depending on <span class="math notranslate nohighlight">\(N\)</span> unknown
+variables (which we call “objective quantities”).
+The strings identified by <code class="xref py py-obj docutils literal notranslate"><span class="pre">sympy</span></code> as the names of the
+variables should obey <a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> naming conventions for
+objective quantities (in particular, they should
+be parsable by <code class="xref py py-obj docutils literal notranslate"><span class="pre">make_qrule</span></code> to yield a valid <code class="xref py py-obj docutils literal notranslate"><span class="pre">qrule</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>fstr</strong> (<em>str</em>) – Mathematical expression defining objective function.</p></li>
+<li><p><strong>extra_quantities</strong> (<em>list of str</em><em>, </em><em>optional</em>) – Optional list of additional objective quantities to be computed
+and returned each time the objective function is evaluated.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Class instances store the following data:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fexpr</span></code> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">sympy</span></code> expression)</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sympy</span></code> expression returned by <code class="xref py py-obj docutils literal notranslate"><span class="pre">sympy.sympify(fstr)</span></code></p>
+</dd>
+<dt class="field-even"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qsyms</span></code> (list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">sympy.Symbol</span></code>)</dt>
+<dd class="field-even"><p>The variable (unknown) quantities on which the
+objective function depends, as identified by
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">sympy</span></code> upon parsing <code class="xref py py-obj docutils literal notranslate"><span class="pre">fstr</span></code>.</p>
+</dd>
+<dt class="field-odd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qnames</span></code> (list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</dt>
+<dd class="field-odd"><p>names of objective quantities</p>
+</dd>
+<dt class="field-even"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qrules</span></code> (list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">QRule</span></code>)</dt>
+<dd class="field-even"><p>rules specifying how the
+objective quantities are to be computed
+from FDTD data (specifically, from frequency-
+domain field data stored in DFTCells)</p>
+</dd>
+<dt class="field-odd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qvals</span></code> (array-like)</dt>
+<dd class="field-odd"><p>cache storing most recently computed values of objective quantities</p>
+</dd>
+<dt class="field-even"><code class="xref py py-obj docutils literal notranslate"><span class="pre">riqsyms</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">riqvals</span></code></dt>
+<dd class="field-even"><p>as qsyms and qvalues, but with each complex-valued
+‘q’ quantity split up into real-valued ‘r’ and ‘i’
+components. We do this to facilitate symbolic
+differentiation of non-analytic functions of objective
+quantities such as <span class="math notranslate nohighlight">\(|q_i|^2\)</span>—which, incidentally,
+would be written within <code class="xref py py-obj docutils literal notranslate"><span class="pre">fstr</span></code> like this: ‘Abs(q_i)**2’</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="meep_adjoint.ObjectiveFunction.get_dfdq">
+<code class="sig-name descname">get_dfdq</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/objective.html#ObjectiveFunction.get_dfdq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.ObjectiveFunction.get_dfdq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute first partial derivatives of objective function.</p>
+<p>Compute the partial derivatives <span class="math notranslate nohighlight">\(\partial f / \partial q_n\)</span>
+using values of <span class="math notranslate nohighlight">\(\{q_n\}\)</span> cached on most recent invocation
+of <code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code> (which must have been invoked at least once before
+this function can be called).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Array whose <a href="#id1"><span class="problematic" id="id2">*</span></a>n*th entry is <span class="math notranslate nohighlight">\(\partial f/\partial q_n\)</span>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dftcell-storage-for-frequency-domain-field-components-and-evaluation-of-objective-quantities">
+<h2><code class="xref py py-class docutils literal notranslate"><span class="pre">DFTCell</span></code>: Storage for frequency-domain field components and evaluation of objective quantities<a class="headerlink" href="#dftcell-storage-for-frequency-domain-field-components-and-evaluation-of-objective-quantities" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="thedftcellclass"></span><dl class="class">
+<dt id="meep_adjoint.DFTCell">
+<em class="property">class </em><code class="sig-name descname">DFTCell</code><span class="sig-paren">(</span><em class="sig-param">region</em>, <em class="sig-param">components=None</em>, <em class="sig-param">fcen=None</em>, <em class="sig-param">df=None</em>, <em class="sig-param">nfreq=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#DFTCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.DFTCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simpler data structure for frequency-domain fields in MEEP</p>
+<p>The instantiating data of a DFTCell are a grid subregion, a set of
+field components, and a list of frequencies. These metadata fields
+remain constant throughout the lifetime of a DFTCell.
+In addition to the metadata, instances of DFTCell allocate
+internal arrays of DFT registers in which the specified components of the
+frequency-domain fields at the specified grid points and frequencies
+are accumulated over the course of a MEEP timestepping run. These
+registers are reset to zero at the beginning of the next timestepping
+run, but in the meantime you can use the <code class="docutils literal notranslate"><span class="pre">save_fields</span></code> method
+to save an internally cached snapshot of the fields computed on a
+given timestepping run.</p>
+<p>Note: for now, all arrays are stored in memory. For large calculations with
+many DFT frequencies it might make sense to implement a disk-caching scheme.</p>
+<p>The internally-stored frequency-domain fields at a single frequency
+may be fetched via the get_EH_slice (single component) or
+get_EH_slices (all components) methods. By default these routines
+return slices of the currently active fields (i.e. the fields computed
+on the most recent timestepping run), but they accept an optional
+parameter specifying the label of a data set stored by a call to
+<code class="docutils literal notranslate"><span class="pre">save_fields</span></code> after a previous timestepping run.</p>
+<p>For convenience, DFTCell also offers a get_eigenmode_slices() method that
+computes and returns eigenfield profiles in the same format as DFT fields.</p>
+<p>DFTCells also know how to crunch their internally-stored field-component
+data to compute various physical quantities of interest, such as
+Poynting fluxes and field energies. We consider this the primary
+functionality exported by DFTCell, and thus implement it as the
+__call__ method of the class.</p>
+<p>DFTCell replaces the DftFlux, DftFields, DftNear2Far, DftForce, DftLdos,
+and DftObj structures in core pymeep.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>region</strong> (<a class="reference internal" href="#meep_adjoint.Subregion" title="meep_adjoint.Subregion"><em>Subregion</em></a>) – Subregion of computational cell in which to compute frequency-domain field components.</p></li>
+<li><p><strong>components</strong> (<em>list of meep components</em><em> (</em><em>i.e.</em><em> [</em><em>mp.Ex</em><em>, </em><em>mp.Hy</em><em>]</em><em>)</em><em>, </em><em>optional</em>) – Field components to compute.</p></li>
+<li><p><strong>df</strong><strong>, </strong><strong>nfreq</strong> (<em>fcen</em><em>,</em>) – Set of frequencies at which to compute FD fields.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="meep_adjoint.DFTCell.register">
+<code class="sig-name descname">register</code><span class="sig-paren">(</span><em class="sig-param">sim</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#DFTCell.register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.DFTCell.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Register’ the cell in a MEEP simulation to request computation of frequency-domain fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sim</strong> (<em>mp.Simulation</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.DFTCell.get_EH_slice">
+<code class="sig-name descname">get_EH_slice</code><span class="sig-paren">(</span><em class="sig-param">c</em>, <em class="sig-param">nf=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#DFTCell.get_EH_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.DFTCell.get_EH_slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch array of frequency-domain amplitudes for a single field component.</p>
+<p>Compute an array of frequency-domain field amplitudes, i.e. a
+frequency-domain array slice, for a single field component at a
+single frequency in the current simulation. This is like
+mp.get_dft_array(), but ‘zero-padded:’ when the low-level DFT object
+does not have data for the requested component (perhaps because it vanishes
+identically by symmetry), this routine returns an array of the expected
+dimensions with all zero entries, instead of a rank-0 array that prints
+out as a single preposterously large or small floating-point number,</p>
+<blockquote>
+<div><p>which is the not-very-user-friendly behavior of mp.get_dft_array().</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>c</strong> (<em>(</em><em>mp.component</em><em>)</em>) – Field component to fetch.</p></li>
+<li><p><strong>nf</strong> (<em>int</em><em>, </em><em>optional</em>) – Frequency index, by default 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Complex-valued array giving field amplitude at grid points.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.DFTCell.get_EH_slices">
+<code class="sig-name descname">get_EH_slices</code><span class="sig-paren">(</span><em class="sig-param">label=None</em>, <em class="sig-param">nf=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#DFTCell.get_EH_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.DFTCell.get_EH_slices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch arrays of frequency-domain field amplitudes for all stored components.</p>
+<p>Return a 1D array (list) of arrays of frequency-domain field amplitudes,
+one for each component in this DFTCell, at a single frequency in a
+single MEEP simulation. The simulation in question may be the present,
+ongoing simulation (if label==None), in which case the array slices are
+read directly from the currently active meep DFT object; or it may be a
+previous simulation (identified by label) for which
+DFTCell::save_fields(label) was called at the end of timestepping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>label</strong> (<em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Label of saved data to retrieve.</p></li>
+<li><p><strong>nf</strong> (<em>int</em><em>, </em><em>optional</em>) – Frequency index, by default 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Arrays of field-component amplitudes at grid points</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of np.array</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if no data exists for the specified label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.DFTCell.subtract_incident_fields">
+<code class="sig-name descname">subtract_incident_fields</code><span class="sig-paren">(</span><em class="sig-param">EHT</em>, <em class="sig-param">nf=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#DFTCell.subtract_incident_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.DFTCell.subtract_incident_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Substract incident from total fields to yield scattered fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>EHT</strong> (<em>list of arrays of field component amplitudes</em><em>, </em><em>as</em>) – returned by get_EH_slices, for the <strong>total</strong> fields</p></li>
+<li><p><strong>nf</strong> (<em>int</em><em>, </em><em>optional</em>) – frequency index, by default 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.DFTCell.save_fields">
+<code class="sig-name descname">save_fields</code><span class="sig-paren">(</span><em class="sig-param">label</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#DFTCell.save_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.DFTCell.save_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save current values of grid fields internally for later use.</p>
+<p>This routine tells the DFTCell to create and save an archive of
+the frequency-domain array slices for the present simulation—i.e.
+to copy the frequency-domain field data out of the sim.dft_obj
+structure and into an appropriate data buffer in the DFTCell,
+before the sim.dft_obj data vanish when sim is reset for the next run.
+This routine should be called after timestepping is complete. The
+given label is used to identify the stored data for future retrieval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>label</strong> (<em>str</em>) – Label assigned to data set, used subsequently for retrieval.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="meep_adjoint.DFTCell.get_eigenmode_slices">
+<code class="sig-name descname">get_eigenmode_slices</code><span class="sig-paren">(</span><em class="sig-param">mode</em>, <em class="sig-param">nf=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#DFTCell.get_eigenmode_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.DFTCell.get_eigenmode_slices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like get_EH_slices, but for eigenmode fields.</p>
+<p>Return a 1D array (list) of arrays of field amplitudes for all
+tangential E,H components at a single frequency—just like
+get_EH_slices()—except that the sliced E and H fields are the
+fields of eigenmode #mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>mode</strong> (<em>int</em>) – Eigenmode index.</p></li>
+<li><p><strong>nf</strong> (<em>int</em><em>, </em><em>optional</em>) – Frequency index, by default 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of np.arrays (same format as returned by get_EH_slices)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="subregion-rationalized-unified-handling-of-spatial-subregions">
+<h2><code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code>: Rationalized, unified handling of spatial subregions<a class="headerlink" href="#subregion-rationalized-unified-handling-of-spatial-subregions" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="thesubregionclass"></span><dl class="class">
+<dt id="meep_adjoint.Subregion">
+<em class="property">class </em><code class="sig-name descname">Subregion</code><span class="sig-paren">(</span><em class="sig-param">xmin=None</em>, <em class="sig-param">xmax=None</em>, <em class="sig-param">center=array([0.</em>, <em class="sig-param">0.</em>, <em class="sig-param">0.])</em>, <em class="sig-param">size=None</em>, <em class="sig-param">normal=None</em>, <em class="sig-param">dir=None</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/meep_adjoint/dft_cell.html#Subregion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meep_adjoint.Subregion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Subregion of computational cell.</p>
+<p>A Subregion is a finite hyperrectangular region of space contained
+within the extents of the FDTD computational grid.</p>
+<p>A Subregion may be of codimension 1 (i.e. it is a line in 2D
+or a plane in 3D), in which case it has a normal direction.
+Codim-1 subregions are used to define eigenmode sources and
+to evaluate Poynting fluxes and eigenmode expansion coefficients.</p>
+<p>Alternatively, the subregion may be of codimension 0 [i.e.
+it is a full rectangle (2D) or box (3D)], or of dimension 0 [i.e.
+it is a point]. The normal direction is undefined in these cases.</p>
+<p>A Subregion has a name (str), which is user-assigned or autogenerated
+if left unspecified.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">Subregion</span></code> is a common replacement for <code class="docutils literal notranslate"><span class="pre">FluxRegion</span></code>, <code class="docutils literal notranslate"><span class="pre">EnergyRegion</span></code>,
+and the other similar data structures in <strong class="program">libmeep</strong>.
+Its advantages are that (a) it eliminates redundant code and cumbersome API conventions
+imposed by the coexistence of multiple distinct data structures all describing the
+same thing, and that (b) it adds a user-assignable name field, which would be
+convenient to have already in core <strong class="program">pymeep</strong>
+but is essential in <code class="docutils literal notranslate"><span class="pre">meep_adjoint</span></code> to allow objective quantities to be
+assigned names that identify the objective region for which they are defined.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>xmin</strong> (<em>array-like</em><em>, </em><em>optional</em>) – minimal corner, by default None</p></li>
+<li><p><strong>xmax</strong> (<em>array-like</em><em>, </em><em>optional</em>) – maximal corner, by default None</p></li>
+<li><p><strong>center</strong> (<em>array-like</em><em>, </em><em>optional</em>) – center, by default <code class="docutils literal notranslate"><span class="pre">ORIGIN</span></code></p></li>
+<li><p><strong>size</strong> (<em>array-like</em><em>, </em><em>optional</em>) – size, by default None</p></li>
+<li><p><strong>normal</strong> (<em>array-like</em><em>, </em><em>optional</em>) – normal direction for codim-1 regions, by default None</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – arbitrary caller-chosen label; autogenerated if not specified</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,630 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Implementation notes I: The math and physics behind meep_adjoint &mdash; meep_adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/toggle_visibility.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overview of the meep_adjoint class hierarchy" href="ClassHierarchy.html" />
+    <link rel="prev" title="Test Suite" href="../test_suite/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> meep_adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Implementation I: Physics and math</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#toy-problem">Toy problem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#permittivity-derivative-by-finite-differencing">Permittivity derivative by finite-differencing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#permittivity-derivative-from-effective-sources">Permittivity derivative from effective sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#digression-configuring-time-domain-sources-for-desired-frequency-domain-fields-in-meep">Digression: Configuring time-domain sources for desired frequency-domain fields in <span class="codename">meep</span></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#invoking-reciprocity">Invoking reciprocity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#differentiating-more-complicated-functions-of-field-components">Differentiating more complicated functions of field components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#e-field-energy-in-region"><strong>E</strong>-field energy in region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poynting-flux">Poynting flux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/LowLevel.html"> Low-level (internal) API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">meep_adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Implementation notes I: The math and physics behind <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/implementation/MathAndPhysicsOfAdjoints.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="implementation-notes-i-the-math-and-physics-behind-meep-adjoint">
+<h1>Implementation notes I: The math and physics behind <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a><a class="headerlink" href="#implementation-notes-i-the-math-and-physics-behind-meep-adjoint" title="Permalink to this headline">¶</a></h1>
+<p>These notes are intended as something of a
+companion to the rest of the <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> documentation,
+and particularly as a complement and sequel to the
+<span class="xref std std-doc">Overview</span>; whereas the goal of
+that content is to document the user interface and
+explain how to use the solver for practical problems,
+our focus here will be what’s going on beneath the hood—how
+the solver actually <em>works.</em></p>
+<p>Actually, as will be clear to anyone who has ever reviewed the
+fundamentals of <a class="reference external" href="https://en.wikipedia.org/wiki/Adjoint_state_method">adjoint sensitivity analysis</a>,
+the conceptual basis of the method and the derivation of its key
+formulas are almost trivially straightforward, with the only
+potential source of difficulty being how to massage the mechanics
+of the procedure into a form that comports with
+<span class="codename">meep</span> conventions.</p>
+<div class="section" id="toy-problem">
+<h2>Toy problem<a class="headerlink" href="#toy-problem" title="Permalink to this headline">¶</a></h2>
+<p>Ultimately we want to use adjoint methods to differentiate
+complicated objective functions—involving quantities such as
+Poynting fluxes and mode-expansion coefficients—with respect
+to various different types of parameters describing material geometries.
+However, before tackling the problem in that full generality,
+it’s useful to build up to it by starting with a simple toy problem
+and adding complications one at a time. Thus we consider a
+simple waveguide geometry, excited by a point source at
+<span class="math notranslate nohighlight">\(\mathbf{x}^\text{src}\)</span> and define our objective function to be
+simply the frequency-domain electric-field amplitude at
+a point <span class="math notranslate nohighlight">\(\mathbf{x}^\text{obj}\)</span>; we will compute the derivative
+of this objective function with respect to the permittivity
+<span class="math notranslate nohighlight">\(\epsilon^\text{des}\)</span>
+in a small “design region” <span class="math notranslate nohighlight">\(\mathcal{V}^\text{des}\)</span>
+centered at a third point <span class="math notranslate nohighlight">\(\mathbf{x}^\text{des}\)</span>.</p>
+<img alt="../_images/AdjointToyGeometry1.png" src="../_images/AdjointToyGeometry1.png" />
+<div class="section" id="permittivity-derivative-by-finite-differencing">
+<h3>Permittivity derivative by finite-differencing<a class="headerlink" href="#permittivity-derivative-by-finite-differencing" title="Permalink to this headline">¶</a></h3>
+<p>An obvious brute-force way to get at this is simply
+to do two <span class="codename">meep</span>
+calculations, with <span class="math notranslate nohighlight">\(\epsilon^\text{des}\)</span>
+augmented by a small finite amount <span class="math notranslate nohighlight">\(\Delta\epsilon\)</span> on the
+second run, then compute the difference between the frequency-domain
+electric fields at <span class="math notranslate nohighlight">\(\mathbf{x}^\text{obj}\)</span> and divide
+by <span class="math notranslate nohighlight">\(\Delta\epsilon\)</span> to estimate the derivative.
+The following two figures illustrate results obtained by
+executing such a strategy; the upper plot shows the spatial
+distribution of <strong>E</strong>-field strength for the unperturbed geometry,
+while the lower plot shows the <em>difference</em> between the field
+strengths in the perturbed and unperturbed cases:</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{E_{z0}}(\omega_0, \mathbf{x}) \text{(unperturbed)}:\]</div>
+<img alt="../_images/AdjointToyEz0.png" src="../_images/AdjointToyEz0.png" />
+<div class="math notranslate nohighlight">
+\[\Delta {\widetilde E_z}(\omega_0, \mathbf{x}) \text{(perturbed-unperturbed)}:\]</div>
+<img alt="../_images/AdjointToydEz_FD.png" src="../_images/AdjointToydEz_FD.png" />
+<p>(Here and below we use the tilde sign (<span class="math notranslate nohighlight">\(\sim\)</span>) to indicate frequency-domain
+fields and sources.)</p>
+</div>
+<div class="section" id="permittivity-derivative-from-effective-sources">
+<h3>Permittivity derivative from effective sources<a class="headerlink" href="#permittivity-derivative-from-effective-sources" title="Permalink to this headline">¶</a></h3>
+<p>One way to think about the effect of a localized permittivity
+bump goes like this: Increasing the permittivity in some localized
+region of a material body corresponds to increasing the
+polarizability in that region—that is, the ease with which
+positive and negative charges in the material, ordinarily bound
+so tightly together that they neutralize each other as sources,
+can be induced by applied electric fields to separate (“polarize”),
+whereupon they cease to cancel each other and act as effective
+sources contributing to electromagnetic fields.
+Of course, if there were no electric field in the material,
+then we could increase its polarizability as much as we pleased
+without producing any sources—zero times a bigger
+coefficient being still zero—but here there <em>is</em> a nonzero
+electric field throughout our geometry, due to the point source
+in the unperturbed problem, which means that the effect of bumping the
+permittivity of the design region may be approximated by
+adding new <em>sources</em> in that region, with strength
+proportional to <span class="math notranslate nohighlight">\(\Delta\epsilon\)</span> and to the unperturbed electric field.
+More specifically, in a frequency-domain problem involving time-harmonic
+fields and sources with angular frequency <span class="math notranslate nohighlight">\(\omega\)</span> (time dependence
+<span class="math notranslate nohighlight">\(\propto e^{-i\omega t}\)</span>), the following perturbations are
+equivalent:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left(\begin{array}{c}
+\text{a permittivity shift of } \Delta\epsilon \\
+\text{over a small region } \mathcal{V} \text{ in which} \\
+\text{the electric field is } \widetilde{\mathbf{E}}
+\end{array}\right)
+\Longleftrightarrow
+ \left(\begin{array}{c}
+  \text{a localized electric current } \\
+  \text{flowing in }\mathcal{V} \text{ with amplitude } \\
+  \Delta\widetilde{\mathbf J}=-i\omega\Delta\epsilon \widetilde{\mathbf{E}}
+ \end{array}\right)\end{split}\]</div>
+<p><br></p>
+<img alt="../_images/AdjointToyGeometry2.png" src="../_images/AdjointToyGeometry2.png" />
+<p>Superposing this effective source with the original point source
+at <span class="math notranslate nohighlight">\(\mathbf{x}^\text{src}\)</span> yields a source configuration that,
+acting on the <em>unperturbed</em> geometry, produces the same fields
+as the point source alone acting on the <em>perturbed</em> geometry.</p>
+<p>Alternatively, by exploiting the linearity of Maxwell’s equations
+(and assuming we have linear media!) we could just as easily
+remove the original point source and compute the fields of
+<span class="math notranslate nohighlight">\(\widetilde{\Delta \mathbf{J}}\)</span> <em>alone</em>, which, upon dividing through by
+<span class="math notranslate nohighlight">\(\Delta\epsilon\)</span>, give just the derivatives of field components
+with respect to <span class="math notranslate nohighlight">\(\epsilon\)</span>. In other words,</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \widetilde{\mathbf E} (\mathbf x^\text{obj}) } {\partial \epsilon^\text{des}}
+\equiv
+\left(\begin{array}{cc}
+\text{electric field at }\mathbf{x}^\text{obj} \text{ due to }\\
+\text{current at }\mathbf{x}^\text{des}\text{ with amplitude}\\
+\widetilde{\Delta \mathbf J}=-i\omega\widetilde{\mathbf{E}}(\mathbf{x}^\text{obj})
+\end{array}\right)
+\]</div><p>Analogous reasoning yields a prescription for magnetic-field derivatives:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial\widetilde{\mathbf{H}}(\mathbf x^\text{obj})}{\partial \epsilon^\text{des}}
+\equiv
+\left(
+\begin{array}{cc}
+\text{magnetic field at }\mathbf{x}^\text{obj} \text{ due to }\\
+\text{current at }\mathbf{x}^\text{des}\text{ with amplitude}\\
+\widetilde{\Delta \mathbf J}=-i\omega\widetilde{\mathbf{E}}(\mathbf{x}^\text{obj})
+\end{array}
+\right)\]</div></div>
+<div class="section" id="digression-configuring-time-domain-sources-for-desired-frequency-domain-fields-in-meep">
+<h3>Digression: Configuring time-domain sources for desired frequency-domain fields in <span class="codename">meep</span><a class="headerlink" href="#digression-configuring-time-domain-sources-for-desired-frequency-domain-fields-in-meep" title="Permalink to this headline">¶</a></h3>
+<p>In frequency-domain electromagnetism we usually consider
+a time-harmonic source distribution of the form</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{J}^\text{monochromatic}(t,\mathbf{x})\equiv \widetilde{\mathbf{J}}(\mathbf x)e^{-i\omega t}\]</div>
+<p>and we ask for the time-harmonic electric field distribution
+radiated by this distribution:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{E}^\text{monochromatic}(t,\mathbf{x})\equiv\widetilde{\mathbf{E}}(\mathbf x)e^{-i\omega t}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sim\)</span> indicates frequency-domain amplitudes. A typical frequency-domain solver might input
+<span class="math notranslate nohighlight">\(\widetilde{\mathbf J}(\mathbf x)\)</span> and output <span class="math notranslate nohighlight">\(\widetilde{\mathbf E}(\mathbf x)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\widetilde{\mathbf J}(\mathbf x)
+\quad \Longrightarrow \quad
+\begin{array}{|c|}\hline\\
+\text{    frequency-domain solver    }\\
+\\\hline\end{array}
+\quad \Longrightarrow \quad
+\widetilde{\mathbf E}(\mathbf x)\end{split}\]</div>
+<p>On the other hand, when using <span class="codename">meep</span> to compute
+the fields produced by a given spatial source distribution,
+we typically construct a time-domain source of the form
+<span class="math notranslate nohighlight">\(\mathbf{J}^\text{meep}(t,\mathbf{x})=G(t)\widetilde{\mathbf{J}}(\mathbf x)\)</span>
+where <span class="math notranslate nohighlight">\(G(t)\)</span> is a Gaussian temporal envelope.
+More specifically, for a <a href="#id1"><span class="problematic" id="id2">|GaussianSource|</span></a> with
+center frequency <span class="math notranslate nohighlight">\(\omega_0=2\pi f_0\)</span>,
+frequency width <span class="math notranslate nohighlight">\(\Delta \omega =2\pi \Delta f\)</span>, and
+peak time <span class="math notranslate nohighlight">\(t_0\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[G(t) = e^{-i\omega_0(t-t_0) - \frac{1}{2}[\Delta f(t-t_0)]^2}.\]</div>
+<p>The Fourier transform of this is</p>
+<div class="math notranslate nohighlight">
+\[\widetilde G(\omega) \equiv \frac{1}{\sqrt{2\pi}}
+\int e^{i\omega t}G(t)\,dt =
+\frac{1}{\Delta f}
+e^{i\omega t_0 -\frac{(\omega-\omega_0)^2}{2\Delta f^2}}.\]</div>
+<p>So the <span class="codename">meep</span> version of the above input/output diagram looks like</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}G(t)\widetilde{\mathbf J}(\mathbf x)
+\quad \Longrightarrow \quad
+\begin{array}{|c|}\hline\\
+\text{ MEEP }\\
+\text{    (timestepping + DFT)    } \\
+\\\hline\end{array}
+\quad \Longrightarrow \quad
+\widetilde{G}(\omega)\widetilde{\mathbf E}(\mathbf x)\end{split}\]</div>
+<p>The upshot is that the frequency-domain fields obtained from a
+<span class="codename">meep</span> timestepping run with a Gaussian source
+come out multiplied by a factor of <span class="math notranslate nohighlight">\(\widetilde{G}(\omega)\)</span> that should
+be divided out to yield the desired frequency-domain quantities.</p>
+</div>
+</div>
+<div class="section" id="invoking-reciprocity">
+<h2>Invoking reciprocity<a class="headerlink" href="#invoking-reciprocity" title="Permalink to this headline">¶</a></h2>
+<p>It is convenient to describe the process described above
+in the language of frequency-domain Green’s functions, which
+express the fields radiated by monochromatic source distributions
+as spatial convolutions:</p>
+<div class="math notranslate nohighlight">
+\[ \widetilde{E_i}(\omega, \mathbf{x}^\text{dest}) =
+ \int
+ \mathcal{G}^\text{EE}_{ij}(\omega, \mathbf{x}^\text{dest}, \mathbf{x}^\text{src})
+ \widetilde{J_j}(\omega, \mathbf{x}^\text{src})
+\,d\mathbf{x}^\text{src}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\boldsymbol{\mathcal{G}}^\text{EE}\)</span> the
+electric-electric dyadic Green’s function of the material geometry
+(giving the electric field produced by a unit-strength electric
+current).  In this language, the effective-source representation
+of the permittivity derivative reads</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \widetilde{E}_i(\mathbf{x}^\text{obj})}{\partial \epsilon^\text{des}}
+=
+\int \mathcal{G}^\text{EE}_{ij}(\mathbf{x}^\text{obj}, \mathbf{x}^\text{des})
+\left[-i\omega \widetilde{E}_j(\mathbf{x}^\text{des})\right]
+\,d\mathbf{x}^\text{des}\]</div>
+<p>It is convenient to think of the RHS here as a double convolution
+of two vector-valued functions with the <span class="math notranslate nohighlight">\(\boldsymbol{\mathcal{G}}^\text{EE}\)</span> kernel:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \widetilde{E}_i(\mathbf{x}^\text{obj})}{\partial \epsilon^\text{des}}
+=
+\left[ \vphantom{\widetilde{\mathbf E}^\text{des}} \,\, \boldsymbol{\delta}_i^\text{obj}\,\,\right]
+\star \boldsymbol{\mathcal{G}}^\text{EE} \star
+\left[-i\omega \widetilde{\mathbf E}^\text{des}\right]\]</div>
+<p>or</p>
+<div class="math notranslate nohighlight">
+\[ \newcommand{\VMV}[3]{ \Big\langle #1 \Big| #2 \Big| #3 \Big\rangle}
+ \frac{\partial \widetilde E_i(\mathbf{x}^\text{obj})}{\partial \epsilon^\text{des}}
+=-i\omega\VMV{ \boldsymbol{\delta}_i^\text{obj} }
+             { \boldsymbol{\mathcal{G}}^\text{EE}}
+             { \widetilde{\mathbf E}^\text{des}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\star\)</span> denotes convolution,
+<span class="math notranslate nohighlight">\(\boldsymbol{\delta}_i^\text{obj}\)</span> is short for
+<span class="math notranslate nohighlight">\(\delta_{ij} \delta(\mathbf{x}-\mathbf{x}^\text{obj}),\)</span>
+and the bra-ket notation describes a machine that inputs two
+vector-valued functions <span class="math notranslate nohighlight">\(\mathbf{f},\mathbf{g}\)</span> and a kernel <span class="math notranslate nohighlight">\(\mathcal{K}\)</span>
+and outputs a scalar quantity:</p>
+<div class="math notranslate nohighlight">
+\[\VMV{\mathbf f}{\boldsymbol{\mathcal{K}}}{\mathbf g}
+\equiv \sum_{ij} \iint f_i(\mathbf{x})
+\mathcal{K}_{ij}(\mathbf{x},\mathbf{x}^\prime)
+g_j(\mathbf{x}^\prime) \,d\mathbf{x} \,d\mathbf{x}^\prime\]</div>
+<p>(Note that this is not a Hermitian inner product, i.e. the first
+factor is not conjugated.)</p>
+<p>For the magnetic-field derivative we have similarly</p>
+<div class="math notranslate nohighlight">
+\[\newcommand{\pard}[2]{\frac{\partial #1}{\partial #2}}
+\pard{\widetilde{H}_i(\mathbf{x}^\text{obj})}{\epsilon^\text{des}}
+=-i\omega\VMV{ \boldsymbol{\delta}_i^\text{obj}}
+            { \boldsymbol{\mathcal G}^\text{ME}}
+            { \widetilde{\mathbf E}^\text{des}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{\mathcal{G}}^\text{ME}\)</span> is the magnetic-electric
+Green’s function, giving the magnetic field produced
+by an electric current.</p>
+<p>Computationally, inner products like
+<span class="math notranslate nohighlight">\(\VMV{\mathbf f}{\boldsymbol{\mathcal{G}}^\text{EE}}{\mathbf g}\)</span>
+for arbitrary functions <span class="math notranslate nohighlight">\(\mathbf{f}(\mathbf x), \mathbf{g}(\mathbf x)\)</span>
+may be evaluated in <span class="codename">meep</span>
+as follows:</p>
+<ol class="arabic">
+<li><p>Create an electric current source with
+spatially-varying amplitude <span class="math notranslate nohighlight">\(\mathbf{g}(\mathbf x)\)</span>
+and Gaussian temporal envelope <span class="math notranslate nohighlight">\(G(t)\)</span>.</p></li>
+<li><p>Timestep and DFT to compute the frequency-domain electric field
+<span class="math notranslate nohighlight">\(\widetilde{\mathbf E}(\omega; \mathbf{x})\)</span> produced by this source.</p></li>
+<li><p>Compute the inner product
+<span class="math notranslate nohighlight">\([\widetilde{G}(\omega)]^{-1} \int \mathbf{f}\cdot \widetilde{\mathbf E}\,dV.\)</span>
+(The normalization prefactor was discussed above.)</p></li>
+</ol>
+<p>The virtue of writing things this way is that it allows the physical
+property of reciprocity to be expressed as the mathematical property
+that the aforementioned inner-product machine is insensitive to the
+order of its arguments, i.e. we can flip the <span class="math notranslate nohighlight">\(\mathbf f\)</span> and <span class="math notranslate nohighlight">\(\mathbf g\)</span>
+inputs and still get the same scalar output:</p>
+<div class="math notranslate nohighlight">
+\[\VMV{\mathbf f}{\boldsymbol{\mathcal{K}}}{\mathbf g} = \VMV{\mathbf g}{\boldsymbol{\mathcal{K}}}{\mathbf f}
+\quad\text{ for }\quad \boldsymbol{\mathcal{K}}= \boldsymbol{\mathcal{G}}^\text{EE}, \boldsymbol{\mathcal{G}}^\text{ME}.\]</div>
+<p>Applying reciprocity to the above expressions for field derivatives yields</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{\partial\widetilde E_i(\mathbf{x}^\text{obj})}{\partial \epsilon^\text{des}}
+&amp;=-i\omega\VMV{ \widetilde{\mathbf E }^\text{des}}
+              { \boldsymbol{\mathcal{G}}^\text{EE}}
+              { \boldsymbol{\delta}_i^\text{obj}}
+\tag{2}
+\\[5pt]
+\pard{\widetilde H_i(\mathbf{x}^\text{obj})}{\epsilon^\text{des}}
+&amp;=-i\omega\VMV{ \widetilde{\mathbf E }^\text{des}}
+              { \boldsymbol{\mathcal{G}}^\text{ME}}
+              { \boldsymbol{\delta}_i^\text{obj}}
+\tag{3a}
+\\
+\hphantom{\pard{\widetilde H_i(\mathbf{x}^\text{obj})}{\epsilon^\text{des}}}
+&amp;=+i\omega\VMV{ \widetilde{\mathbf E}^\text{des}}
+              { \boldsymbol{\mathcal{G}}^\text{EM}}
+              { \boldsymbol{\delta}_i^\text{obj}}
+\tag{3b}
+\end{align}\]</div><p>where in going to the last line we invoked the identity
+<span class="math notranslate nohighlight">\(\boldsymbol{\mathcal{G}}^\text{EM}=-\boldsymbol{\mathcal{G}}^\text{ME}.\)</span></p>
+<p>Note that equations (3a) and (3b), notwithstanding their nearly
+identical appearance, describe two rather different
+:codename:meep calculations: In the former case
+wf place an electric source at <span class="math notranslate nohighlight">\(\mathbf x^\text{obj}\)</span> and timestep to
+compute the resulting magnetic field, while in the latter
+case we place a magnetic source and timestep
+to compute the resulting electric field. (In both cases,
+upon computing the field in question we proceed to compute its
+overlap with the unperturbed <span class="math notranslate nohighlight">\(\mathbf E\)</span> field in the design region.)</p>
+</div>
+<div class="section" id="differentiating-more-complicated-functions-of-field-components">
+<h2>Differentiating more complicated functions of field components<a class="headerlink" href="#differentiating-more-complicated-functions-of-field-components" title="Permalink to this headline">¶</a></h2>
+<p>Thus far we have only considered derivatives of individual
+field components, and then only at a single point <span class="math notranslate nohighlight">\(\mathbf{x}^\text{obj}\)</span>;
+more generally, we will want to differentiate functions of
+multiple field components over a subregion of the grid,
+which we will call the <em>objective region</em> <span class="math notranslate nohighlight">\(\mathcal{V}^\text{obj}\)</span>.</p>
+<div class="section" id="e-field-energy-in-region">
+<h3><strong>E</strong>-field energy in region<a class="headerlink" href="#e-field-energy-in-region" title="Permalink to this headline">¶</a></h3>
+<p>As one example, the electric field energy in the objective
+region is defined by an integral over that region, which <span class="codename">meep</span>
+approximates by a weighted sum over grid points:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{E}=
+\frac{1}{2}\int_{\mathcal{V}^\text{obj}} \epsilon |\widetilde{\mathbf E}|^2 \,d\mathcal{V}
+\approx
+\frac{1}{2}\sum_{i,\mathbf{n}\in\mathcal{V}^\text{obj}} w_{\mathbf{n}}
+\epsilon_\mathbf {n} \widetilde E_{i\mathbf n}^* \widetilde E_{i\mathbf n}\]</div>
+<p>Here the sum is over all field components <span class="math notranslate nohighlight">\(i=\{x,y,z\}\)</span> and
+all grid points <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> lying in <span class="math notranslate nohighlight">\(\mathcal{V}^\text{obj}\)</span>,
+and <span class="math notranslate nohighlight">\(w_{\mathbf{n}}\)</span> is a cubature weight associated with point <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>.</p>
+<p>Differentiating, we have</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{\partial\mathcal E}{\partial\epsilon^\text{des}}
+&amp;=\text{Re }\sum_{i\mathbf{n}\in\mathcal V^\text{obj}} w_{\mathbf n}\epsilon_{\mathbf n}
+  \widetilde{E}^*_{i\mathbf n} \pard{\widetilde{E}_{i\mathbf n}} {\epsilon^\text{des}}
+\\
+&amp;\hspace{-1.5in}\text{Insert equation (1a):}
+\\
+&amp;=\text{Re }\left\{ -i\omega \VMV{\epsilon \widetilde{\mathbf E}^\text{obj*}}
+                                  {{\boldsymbol{\mathcal{G}}}^\text{EE}}
+                                  {\widetilde{\mathbf E}^\text{des}}
+             \right\}
+\\
+&amp;\hspace{-1.5in}\text{Invoke reciprocity:}
+\\
+&amp;=\text{Re }\left\{ -i\omega \VMV{\widetilde{\mathbf E}^\text{des}}
+                                 {{\boldsymbol{\mathcal{G}}}^\text{EE}}
+                                 {\epsilon \widetilde{\mathbf E}^\text{obj*}}
+             \right\}
+\end{align}
+\]</div></div>
+<div class="section" id="poynting-flux">
+<h3>Poynting flux<a class="headerlink" href="#poynting-flux" title="Permalink to this headline">¶</a></h3>
+<p>A case that arises frequently is that in which the objective region
+is a cross-sectional surface <span class="math notranslate nohighlight">\(\mathcal S^\text{obj}\)</span> cutting normally through a
+waveguide or similar structure and the objective function is the
+normal Poynting flux through <span class="math notranslate nohighlight">\(\mathcal S\)</span>.
+For example, the <span class="math notranslate nohighlight">\(x\)</span>-directed Poynting flux is given by</p>
+<div class="math notranslate nohighlight">
+\[S_x
+=
+\frac{1}{2}\text{Re }\left\{ \int_{\mathcal S^\text{obj}} \Big(E^*_y H_z + \cdots\Big) \, d\mathbf{x} \right\}
+\approx \frac{1}{2}\text{Re }\sum_{\mathbf n\in \mathcal S^\text{obj}} w_{\mathbf n}
+\Big(E^*_{y\mathbf n} H_{z\mathbf n} + \cdots\Big)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\cdots\)</span> refers to three other terms of the form <span class="math notranslate nohighlight">\(\pm E^*_i H_j\)</span>.
+Differentiating and rearranging slightly, we have</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{\partial S_x}{\partial \epsilon^\text{des}}
+&amp;=\text{Re }\sum_{\mathbf n\in \mathcal S^\text{obj}} w
+  \left\{ \widetilde{E}^*_{y} \pard{\widetilde{H}_z}{\epsilon^\text{des}}
+         +\widetilde{H}^*_{z} \pard{\widetilde{E}_y}{\epsilon^\text{des}}
+        +\cdots
+  \right\}
+\\[5pt]
+&amp;\hspace{-0.5in}\text{Use (1a) and (1b):}
+\\[5pt]
+&amp;=\text{Re }\left\{ -i\omega \VMV{\widetilde{\mathbf E}_{y}^\text{obj*}}
+                                 {\boldsymbol{\mathcal{G}}^\text{ME}}
+                                 {\widetilde{\mathbf E}^\text{des}}
+                    -i\omega \VMV{\widetilde{\mathbf H}_z^\text{obj*}} {\boldsymbol{\mathcal{G}}^\text{EE}}
+                                 {\widetilde{\mathbf E}^\text{des}}
+                    +\cdots
+           \right\}
+\\[5pt]
+&amp;\hspace{-0.5in}\text{Use reciprocity:}
+\\[5pt]
+&amp;=\text{Re }\left\{ -i\omega  \VMV{\widetilde{\mathbf E}^\text{des}}
+                                 {\boldsymbol{\mathcal{G}}^\text{ME}}
+                                 {\widetilde{\mathbf E}_y^\text{obj*}}
+                   -i\omega \VMV{\widetilde{\mathbf E}^\text{des}}
+                                {\boldsymbol{\mathcal{G}}^\text{EE}}
+                                {\widetilde{\mathbf H}_z^\text{obj*}}
+                   +\cdots
+             \right\}
+\end{align}
+\]</div></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ClassHierarchy.html" class="btn btn-neutral float-right" title="Overview of the meep_adjoint class hierarchy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../test_suite/index.html" class="btn btn-neutral float-left" title="Test Suite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

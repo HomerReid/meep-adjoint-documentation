@@ -1,0 +1,26 @@
+/*
+   this file, together with _templates/toggle_view.html, implements
+   a new sphinx directive 'toggle' that produces HTML content
+   with a view/hide toggle switch
+
+   usage:
+
+   .. container:: toggle
+   
+       .. literalinclude:: examples/Router.py
+
+   source: https://stackoverflow.com/questions/2454577/sphinx-restructuredtext-show-hide-code-snippets
+*/
+
+.toggle .header {
+    display: block;
+    clear: both;
+}
+
+.toggle .header:after {
+    content: " ▶";
+}
+
+.toggle .header.open:after {
+    content: " ▼";
+}

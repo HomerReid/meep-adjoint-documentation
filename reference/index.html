@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>General reference &mdash; meep_adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/toggle_visibility.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Visualization module" href="../visualization/index.html" />
+    <link rel="prev" title="Configuration and customization" href="../customization/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> meep_adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">General reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tweaks-to-meep-conventions">Tweaks to <span class="codename">meep</span> conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#unified-handling-and-labeling-of-spatial-regions-the-subregion-class">Unified handling and labeling of spatial regions: The <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code> class:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#naming-conventions-for-objective-quantities">Naming conventions for objective quantities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/LowLevel.html"> Low-level (internal) API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">meep_adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>General reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="general-reference">
+<h1>General reference<a class="headerlink" href="#general-reference" title="Permalink to this headline">¶</a></h1>
+<p>This page documents various conventions and protocols adopted by <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>.</p>
+<hr class="docutils" />
+<hr class="docutils" />
+<div class="section" id="tweaks-to-meep-conventions">
+<h2>Tweaks to <span class="codename">meep</span> conventions<a class="headerlink" href="#tweaks-to-meep-conventions" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> package introduces a few minor updates or revisions
+to some of the standard ways of doing business in <span class="codename">meep</span> and the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+python module
+</a>.</p>
+<div class="section" id="unified-handling-and-labeling-of-spatial-regions-the-subregion-class">
+<h3>Unified handling and labeling of spatial regions: The <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code> class:<a class="headerlink" href="#unified-handling-and-labeling-of-spatial-regions-the-subregion-class" title="Permalink to this headline">¶</a></h3>
+<p>A historical idiosyncrasy of the <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> C++ back-end engine, which was retained in the
+definition of the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+python interface
+</a>, is the use of multiple (at least <a class="reference internal" href="#regiontypes"><span class="std std-ref">seven</span></a> <a class="footnote-reference brackets" href="#f1" id="id1">1</a>)
+distinct data structures to describe subregions of the computational geometry
+depending on the task at hand. <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> replaces <em>all</em> of these
+with the single new class <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code>.</p>
+<p>as a replacement for the
+<a class="footnote-reference brackets" href="#f1" id="id2">1</a>
+as a <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> defines the simple class <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code></p>
+</div>
+</div>
+<div class="section" id="naming-conventions-for-objective-quantities">
+<h2>Naming conventions for objective quantities<a class="headerlink" href="#naming-conventions-for-objective-quantities" title="Permalink to this headline">¶</a></h2>
+<p><hr class="thick"></p>
+<div class="topic">
+<p class="topic-title first">Footnotes</p>
+<span class="target" id="regiontypes"></span><dl class="footnote brackets">
+<dt class="label" id="f1"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>)</span></dt>
+<dd><p>Namely: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Volume</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">FluxRegion</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">FieldsRegion</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Near2FarRegion</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">ForceRegion</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">EnergyRegion</span></code>, and
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">ModeRegion</span></code>, and perhaps I am missing some.</p>
+<p>def add_dft_fields(self, components, freq_min, freq_max, nfreq, where=None, center=None, size=None):
+def _add_flux(self, fcen, df, nfreq, fluxes):</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../visualization/index.html" class="btn btn-neutral float-right" title="Visualization module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../customization/index.html" class="btn btn-neutral float-left" title="Configuration and customization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

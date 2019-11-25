@@ -1,0 +1,61 @@
+********************************************************************************
+High-level (public) API: Exported classes and functions 
+********************************************************************************
+
+The "high-level" API consists of classes, functions, and other python objects
+intended specifically to be invoked by :obj:`meep_adjoint` users in driver
+scripts and interactive sessions. 
+
+In principle, a high-level API offers
+access to a package's full range of capabilities via maximally streamlined 
+and convenient interfaces that do not require users to know anything about 
+under-the-hood implementation details. I think the high-level API to
+:obj:`meep_adjoint` is quite succcessful by this standard: it should be
+entirely possible for device engineers to assemble a productive
+:obj:`meep_adjoint`-based design-optimization workflow using only the
+public class methods and package-level functions documented on this page.
+
+On the other hand, some users may be interested in delving into the innards
+of the adjoint-sensitivity implementation in :obj:`meep_adjoint`---perhaps 
+to extend the capabilities of the package, or to improve its performance,
+or to borrow pieces of the computation for other projects, or perhaps
+just to trace through the details of how it all works. Users interested
+in how the sausage is made are referred to the
+:doc:`low-level API reference </API/LowLevel>` on the following page,
+as well as the discussion of the class hierarchy
+in the :ref:`implementation notes <implementation/ClassHierarchy>`.
+
+
+========================================================================================================================
+:class:`OptimizationProblem <meep_adjoint.OptimizationProblem>`: Driver class for :obj:`meep_adjoint` sessions
+========================================================================================================================
+
+.. _TheOptimizationProblemClass:
+
+.. autoclass:: meep_adjoint.OptimizationProblem
+   :inherited-members:
+
+
+==========================================================================================
+Package-level functions for accessing configuration options
+==========================================================================================
+
+----------------------------------------------------------------------
+Adjoint-solver options
+----------------------------------------------------------------------
+
+.. autofunction:: meep_adjoint.get_adjoint_option
+
+.. autofunction:: meep_adjoint.set_adjoint_option_defaults
+
+----------------------------------------------------------------------
+Visualization options
+----------------------------------------------------------------------
+
+.. autofunction:: meep_adjoint.get_visualization_option
+
+.. autofunction:: meep_adjoint.get_visualization_options
+
+.. autofunction:: meep_adjoint.set_visualization_option_defaults
+
+.. autofunction:: meep_adjoint.set_option_defaults

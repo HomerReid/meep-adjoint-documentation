@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meep_adjoint: A python package for adjoint sensitivity analysis in MEEP &mdash; meep_adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/toggle_visibility.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> meep_adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/LowLevel.html"> Low-level (internal) API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">meep_adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code>: A python package for adjoint sensitivity analysis in MEEP</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/meep_adjoint/docs/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><span class="target" id="module-meep_adjoint"></span><div class="section" id="meep-adjoint-a-python-package-for-adjoint-sensitivity-analysis-in-meep">
+<h1><a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>: A python package for adjoint sensitivity analysis in MEEP<a class="headerlink" href="#meep-adjoint-a-python-package-for-adjoint-sensitivity-analysis-in-meep" title="Permalink to this headline">¶</a></h1>
+<p>This is the root of the documentation tree for <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>.
+Jump directly to the package-wide <a class="reference internal" href="#tableofcontents"><span class="std std-ref">Table of Contents</span></a> below,
+or read on for a quick-start summary.</p>
+<div class="section" id="what-does-this-package-do">
+<h2>What does this package do?<a class="headerlink" href="#what-does-this-package-do" title="Permalink to this headline">¶</a></h2>
+<p>You’ll find a longer answer in the <a class="reference internal" href="overview/index.html"><span class="doc">Overview</span></a>
+(and a more succinct one in the <span class="xref std std-doc">API Reference</span>),
+but, in a nutshell: It extends the computational capabilities of the
+core <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> solver in a particular way that facilitates interaction
+with <a class="reference external" href="https://en.wikipedia.org/wiki/Category:Optimization_algorithms_and_methods">numerical optimization algorithms</a>, opening the door to
+intelligent design tools that automatically design devices to meet
+given performance specifications.</p>
+<div class="admonition-wait-what-exactly-does-the-package-do-again admonition">
+<p class="admonition-title">Wait, <em>what</em> exactly does the package do again?</p>
+<blockquote>
+<div><blockquote>
+<div><p>If that was a bit vague, we can be more specific about precisely what
+<a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> does. Consider a typical design problem
+in which we seek to tune a device geometry to optimize some
+performance metric.
+For example, in the <span class="xref std std-doc">right-angle router</span>
+example in the <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>
+<a class="reference internal" href="example_gallery/index.html"><span class="doc">example gallery</span></a>,
+we are designing a four-waveguide interconnect for an optical network,
+and our goal is to choose the permittivity distribution
+<span class="math notranslate nohighlight">\(\epsilon(\mathbf{x})\)</span> in the junction region to steer
+incoming optical signals arriving on the <strong>West</strong> port
+around a 90-degree bend to the <strong>North</strong> port, ideally
+with zero leakage power emitted from the <strong>South</strong> and
+<strong>East</strong> ports:</p>
+<p><strong>Mathematical formulation of design-optimization problems</strong></p>
+<p>To formulate this problem mathematically so we can
+hand it off to a numerical optimizer, we might begin by
+expressing the unknown design function as an expansion
+in some convenient finite set of basis functions:</p>
+<div class="math notranslate nohighlight">
+\[\epsilon(\mathbf x)\approx\sum_{d=1}^D \beta_d b_d(\mathbf x)\]</div>
+<p>Then each possible design configuration corresponds to a <span class="math notranslate nohighlight">\(D\)</span>-dimensional vector of
+coefficient values <span class="math notranslate nohighlight">\(\boldsymbol{\beta}=\{\beta_1,\cdots,\beta_D\}\)</span>, while the metric
+defining the performance of a design—the quantity we are trying to
+optimize—is a (real-valued, scalar) function of a vector-valued argument,
+the <em>objective function</em> <span class="math notranslate nohighlight">\(f^\text{obj}(\boldsymbol{\beta}).\)</span> For the
+right-angle router with fixed input power entering the <strong>West</strong> port,
+we could define our objective to be simply to maximize output power from
+the <strong>North</strong> port, i.e.</p>
+<div class="math notranslate nohighlight">
+\[f^\text{obj}(\boldsymbol{\beta}) = S_\text{North} \tag{1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(S_\text{North}\)</span> denotes the outgoing power flux
+(integral of normal Poynting vector) through the <strong>North</strong> flux monitor.
+Alternatively, assuming the input power is delivered in its entirety
+by a single mode—call it mode <span class="math notranslate nohighlight">\(m\)</span>— of the <strong>West</strong> waveguide (as
+would be the case if we excited our FDTD simulations with an <code class="docutils literal notranslate"><span class="pre">EigenmodeSource</span></code>
+tuned to mode <span class="math notranslate nohighlight">\(m\)</span>),
+we could optimize for maximal output power carried by mode <span class="math notranslate nohighlight">\(m\)</span> of the
+<strong>North</strong> waveguide, or equivalently for maximal magnitude of the
+forward-traveling b`mode-expansion coefficient`_
+evaluated at the <strong>North</strong> flux monitor, in which case we would instead have</p>
+<div class="math notranslate nohighlight">
+\[f^\text{obj}(\boldsymbol{\beta}) = |P^m_\text{North}|^2 \tag{2}\]</div>
+<p>where <a href="#id1"><span class="problematic" id="id2">:py:`P^m_\text{North}`</span></a> denotes the coefficient
+of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">math</span></code>:$m$th forward-traveling waveguide mode at the <strong>North</strong>
+flux monitor.
+(The use of symbols <span class="math notranslate nohighlight">\(S\)</span> and <span class="math notranslate nohighlight">\(P^m\)</span> respectively for Poynting flux
+and forward-traveling mode-expansion coefficient is part of the
+<a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> rules for labeling objective quantities.)</p>
+<p><strong>Mathematical formulation of design-optimization problems</strong></p>
+<p>For our
+in the router problem
+a real-valued scalar
+device given by a
+and we can picture the process of device optimization
+as a journey through a <span class="math notranslate nohighlight">\(D\)</span>-dimensional space in
+search of the magical point <span class="math notranslate nohighlight">\(\boldsymbol{\beta}_*\)</span>
+at which
+single point moving through a
+location. To the performance of a
+location. To the performance of a</p>
+<p>For a</p>
+<p>or equivalently to a <span class="math notranslate nohighlight">\(D\)</span>-dimensional
+vector <span class="math notranslate nohighlight">\({\boldsymbol{\beta}}\)</span>,
+ranges
+values of the <span class="math notranslate nohighlight">\(D\)</span> coefficients
+evice design is specified by the
+<span class="math notranslate nohighlight">\(D\)</span>-dimensional vector of numbers
+<span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span></p>
+<blockquote>
+<div><p>sum_{d=1}^D beta_d b_d(mathbf x)</p>
+</div></blockquote>
+</div></blockquote>
+<p>Then, for given fixed values of the input power, operating
+frequency, and other parameters, the design metric we are trying
+to optimize—that is, our <em>objective function</em>
+<span class="math notranslate nohighlight">\(f^\text{obj}\)</span>—may be thought of as a function of the
+<span class="math notranslate nohighlight">\(D\)</span>-dimensional vector of expansion coefficients
+<span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>, i.e.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}   f^\text{obj}(\boldsymbol{\beta})
+   =\text{power output from \textbf{North} port}
+   \equiv S_{\text{North}}\\
+There's just one problem, which perhaps already
+occurred to you if you have any experience with high-dimensional
+optimization:\\and asks for the optimal\end{aligned}\end{align} \]</div>
+<p>Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the <strong>West</strong> input waveguide port</p>
+</div></blockquote>
+<dl>
+<dt>^text{design}(mathbf x)approx</dt><dd><p>sum_{d=1}^D beta_d b_d(mathbf x)</p>
+<p>Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ^text{design}(mathbf x)approx
+sum_{d=1}^D beta_d b_d(mathbf x)</p>
+<p>Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the <strong>West</strong> input
+waveguide port to the <strong>North</strong> output wav</p>
+<blockquote>
+<div><p>Here <span class="math notranslate nohighlight">\(\epsilon(x)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\epsilon(\mathbf x)=\sum \beta_d b_d(\mathbf x)\]</div>
+<p>Now suppose some region of the material geometry is free
+to be tweaked</p>
+<p>you’re a device designer tasked with maximizing
+some performance metric $f$ expressed as a function of these
+output quantities—for example, we might put
+<span class="math notranslate nohighlight">\(f=S_2(\omega_3)\)</span> to maximize flux through the 2nda
+flux region at the 3rd frequency, or
+<span class="math notranslate nohighlight">\(f = (S_1(\omega_3) - S_2(\omega_3))^2\)</span>
+to maximize the <em>difference</em> between two fluxes, etc.</p>
+</div></blockquote>
+</dd>
+</dl>
+</div>
+<div class="admonition-the-scope-of-program-meep-adjoint admonition">
+<p class="admonition-title">The scope of <strong class="program">meep_adjoint</strong></p>
+<p><strong>Q.</strong> Does this mean that the package <em>only</em> computes objective-function gradients? That is, it doesn’t actually do any optimization?</p>
+<dl class="simple">
+<dt><strong>A.</strong> The <em>primary</em> mission of <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> is to compute objective-function gradients. This is the task the package guarantees to execute efficiently and accurately,</dt><dd><p>and it’s one that’s self-contained, unambiguous, and easily <em>testable.</em> <a class="footnote-reference brackets" href="#id4" id="id3">1</a></p>
+</dd>
+</dl>
+<p>The larger question of how best to <em>use</em> gradient information for
+design automation—which involves questions such as which of the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Category:Optimization_algorithms_and_methods">myriad available gradient-based optimization algorithms</a> to use,
+and how to configure its tunable parameters—is officially beyond the
+purview of <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>, and indeed is much too broad
+a problem to be treated with anything approaching comprehensiveness
+by any single package. We hope <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> will be
+helpful to <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep</span></code> users as they navigate this
+vast domain.</p>
+<p><strong>With all of that by way of disclaimer,</strong> however, we note that
+<a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> does ship with one (rather simple-minded)
+implementation of an optimization algorithm—namely, a
+<span class="xref std std-doc">basic gradient-descent solver.</span>
+Per the discussion above, we make
+no claim as to the robustness or efficiency of this solver,
+and we encourage users to consider it a first step in the
+process of optimizing any geometry, to be replaced by more
+sophisticated solvers as necessary; but, having said that,
+we note that the simple built-in optimizer suffices to
+yield good results on all the problems considered in
+the <a class="reference internal" href="example_gallery/index.html"><span class="doc">example gallery</span></a>.</p>
+</div>
+</div>
+<div class="section" id="what-does-a-typical-workflow-look-like">
+<h2>What does a typical workflow look like?<a class="headerlink" href="#what-does-a-typical-workflow-look-like" title="Permalink to this headline">¶</a></h2>
+<p>You’ll find a full step-by-step walkthrough in the
+<a class="reference internal" href="tutorial/index.html"><span class="doc">Tutorial</span></a> and additional guided case studies
+in the <a class="reference internal" href="example_gallery/index.html"><span class="doc">Example gallery</span></a>, but here is a
+quick rundown:</p>
+<p>1) <em>Initialization and Problem Definition:</em>
+You begin by creating an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">optimization_problem</span></code>
+This is the top-level python class exported by <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>,
+analogous to the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#the-simulation-class"> <code>Simulation</code> </a>
+class in the core <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+python module
+</a>; it stores all data and state
+relevant to the progress of a design optimization, and
+you will access most <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> functionality
+via its class methods.</p>
+<p>2) <em>Interactive single-point calculations</em>  Before
+launching a full-blown iterative optimization run that
+could run for hours or days, you will probably want
+to run some sanity-check calculations involving your
+geometry. These include…**(section incomplete)**</p>
+<p>3) <em>Full iterative optimization</em>: Launch your optimization
+run and monitor its progress via graphical or other indicators.</p>
+</div>
+<div class="section" id="how-is-the-documentation-structured">
+<h2>How is the documentation structured?<a class="headerlink" href="#how-is-the-documentation-structured" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="table-of-contents">
+<span id="tableofcontents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Documentation Home</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview/index.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview/index.html#background-automated-design-optimization-and-the-adjoint-method">Background: Automated design optimization and the adjoint method</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/index.html#electromagnetic-design-optimization">Electromagnetic design optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/index.html#but-function-values-alone-aren-t-enough-for-efficient-optimization">…but function <em>values</em> alone aren’t enough for efficient optimization.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/index.html#meep-adjoint-is-a-tool-for-computing-objective-function-gradients"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> is a tool for computing objective-function <em>gradients</em>.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/index.html#examples-of-optimization-problems">Examples of optimization problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview/index.html#the-holey-waveguide">The Holey Waveguide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/index.html#the-hole-cloak">The Hole Cloak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/index.html#the-cross-router">The cross-router</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview/index.html#the-asymmetric-splitter">The asymmetric splitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview/index.html#defining-elements-of-optimization-problems">Defining elements of optimization problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#the-problem-optimal-routing-of-optical-power-flows">The problem: optimal routing of optical power flows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#the-driver-script-router-py">The driver script: <code class="xref py py-mod docutils literal notranslate"><span class="pre">router.py</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#the-phases-of-a-meep-adjoint-session-and-the-structure-of-this-tutorial">The phases of a <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code> session and the structure of this tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#phase-1-problem-definition-and-initialization-br-creating-an-optimizationproblem">Phase 1: Problem definition and initialization: <br> Creating an <code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#fetch-values-for-local-script-specific-and-global-meep-adjoint-wide-configurable-options">Fetch values for local (script-specific) and global (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep-adjoint</span></code>-wide) configurable options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#set-up-the-computational-geometry">Set up the computational geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#define-the-fixed-material-geometry">Define the fixed material geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#delineate-functional-subregions">Delineate functional subregions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#define-the-objective-function">Define the objective function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#phase-2-interactive-exploration">Phase 2: Interactive exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#phase-3-automated-optimization">Phase 3: Automated optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example_gallery/index.html">Example Gallery</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization/index.html">Configuration and customization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#what-are-the-configurable-options-how-do-they-affect-the-behavior-of-the-package">What are the configurable options? How do they affect the behavior of the package?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#how-do-i-set-option-values">How do I set option values?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#api-routines-for-querying-current-values-of-configuration-options">API routines for querying current values of configuration options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#implementation">Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#options">Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization/index.html#general-overview">General overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization/index.html#adjoint-options">Adjoint options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization/index.html#trying-csv-tables">Trying csv tables…</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_suite/index.html">Test suite</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#toy-problem">Toy problem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#permittivity-derivative-by-finite-differencing">Permittivity derivative by finite-differencing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#permittivity-derivative-from-effective-sources">Permittivity derivative from effective sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#digression-configuring-time-domain-sources-for-desired-frequency-domain-fields-in-meep">Digression: Configuring time-domain sources for desired frequency-domain fields in <span class="codename">meep</span></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#invoking-reciprocity">Invoking reciprocity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#differentiating-more-complicated-functions-of-field-components">Differentiating more complicated functions of field components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#e-field-energy-in-region"><strong>E</strong>-field energy in region</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html#poynting-flux">Poynting flux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="implementation/ClassHierarchy.html#the-class-hierarchy-in-a-nutshell">The class hierarchy in a nutshell</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="API/LowLevel.html"> Low-level (internal) API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="API/LowLevel.html#timestepper-interface-to-computational-back-end-provided-by-meep-or-other-fdtd-solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeStepper</span></code>: Interface to computational back-end provided by <span class="codename">meep</span> or other FDTD solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/LowLevel.html#objectivefunction-evaluation-of-objective-function-values-and-partial-derivatives"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectiveFunction</span></code>: Evaluation of objective-function values and partial derivatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/LowLevel.html#dftcell-storage-for-frequency-domain-field-components-and-evaluation-of-objective-quantities"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFTCell</span></code>: Storage for frequency-domain field components and evaluation of objective quantities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/LowLevel.html#subregion-rationalized-unified-handling-of-spatial-subregions"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code>: Rationalized, unified handling of spatial subregions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><a class="reference internal" href="../../genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="../../py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="../../search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+<p>..######################################################################
+..######################################################################
+..######################################################################</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>For example, one obvious test of the correctness
+of <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> is to estimate objective-function
+derivatives by numerical finite-differencing and compare to
+components of the adjoint-method gradient. This is the basis
+of one of the tests in the <a class="reference internal" href="#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> unit-test suite,
+and also of the <span class="xref std std-doc">holey waveguide</span>
+example in the <a class="reference internal" href="example_gallery/index.html"><span class="doc">example gallery.</span></a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

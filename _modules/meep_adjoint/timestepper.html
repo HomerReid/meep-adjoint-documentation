@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>meep_adjoint.timestepper &mdash; meep.adjoint 1.0 documentation</title>
+  <title>meep_adjoint.timestepper &mdash; meep_adjoint 1.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/toggle_visibility.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> meep.adjoint
+            <a href="../../index.html" class="icon icon-home"> meep_adjoint
           
 
           
@@ -80,18 +81,33 @@
               
             
             
-              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Overview/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Examples/index.html">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Visualization/index.html">Visualization Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../TestSuite/index.html">Test suite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../API/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/LowLevel.html"> Low-level (internal) API</a></li>
 </ul>
 
             
@@ -106,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">meep.adjoint</a>
+          <a href="../../index.html">meep_adjoint</a>
         
       </nav>
 
@@ -139,6 +155,8 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../meep_adjoint.html">meep_adjoint</a> &raquo;</li>
+        
       <li>meep_adjoint.timestepper</li>
     
     
@@ -155,53 +173,115 @@
            <div itemprop="articleBody">
             
   <h1>Source code for meep_adjoint.timestepper</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot; TimeStepper.py: MEEP timestepping for forward and adjoint runs</span>
+<span></span><span class="sd">&quot;&quot;&quot;Implementation of TimeStepper class.&quot;&quot;&quot;</span>
 
-<span class="sd">  TimeStepper is a class that knows how to run a time-domain MEEP</span>
-<span class="sd">  calculation to accumulate frequency-domain (DFT) field components</span>
-<span class="sd">  in objective regions, from which may be computed the values of</span>
-<span class="sd">  objective quantities, from which may be computed the objective</span>
-<span class="sd">  function.</span>
-
-<span class="sd">  TimeStepper monitors the convergence of DFT components and</span>
-<span class="sd">  the associated objective quantities, and continues timestepping</span>
-<span class="sd">  until the relevant output quantities have stopped changing.</span>
-
-<span class="sd">  More specifically, it knows about two different types of</span>
-<span class="sd">  timestepping runs: (1) forward runs, in which the sources are</span>
-<span class="sd">  pre-specified by the caller and the outputs are objective</span>
-<span class="sd">  quantities and the objective function, and (2) adjoint runs,</span>
-<span class="sd">  for which TimeStepper itself determines the source</span>
-<span class="sd">  distribution (see place_adjoint_sources below) and the</span>
-<span class="sd">  output is the gradient df/dEps (more specifically, its</span>
-<span class="sd">  projection onto the design basis).</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
-
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
 
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">dt2</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">,</span> <span class="n">Basis</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">V3</span><span class="p">,</span> <span class="n">E_CPTS</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">,</span> <span class="n">Basis</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">V3</span><span class="p">,</span> <span class="n">E_CPTS</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">update_dashboard</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">get_adjoint_option</span> <span class="k">as</span> <span class="n">adj_opt</span>
 
-<span class="k">class</span> <span class="nc">TimeStepper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+<span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+<span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+<span class="c1">#########################################################</span>
+<span class="c1"># step function to update GUI dashboard progress bar</span>
+<span class="c1">#########################################################</span>
+<span class="n">mt0</span><span class="p">,</span> <span class="n">wt0</span><span class="p">,</span> <span class="n">wtdb</span><span class="p">,</span> <span class="n">wtcpu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">update_interval</span><span class="p">,</span> <span class="n">cpu_interval</span><span class="p">,</span> <span class="n">proc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">dashboard_sf</span><span class="p">(</span><span class="n">sim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provisional implementation of step function to update GUI dashboard.&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">mt0</span><span class="p">,</span> <span class="n">wt0</span><span class="p">,</span> <span class="n">wtdb</span><span class="p">,</span> <span class="n">wtcpu</span><span class="p">,</span> <span class="n">update_interval</span><span class="p">,</span> <span class="n">cpu_interval</span><span class="p">,</span> <span class="n">proc</span>
+    <span class="n">mt</span><span class="p">,</span> <span class="n">wt</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">round_time</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">mt</span><span class="o">&gt;</span><span class="n">mt0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">wt</span><span class="o">-</span><span class="n">wtdb</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">update_interval</span><span class="p">:</span>
+        <span class="n">updates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;progress </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">mt</span><span class="p">)),</span>
+                   <span class="s1">&#39;ms_per_timestep </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">1000.0</span><span class="o">*</span><span class="p">(</span><span class="n">wt</span><span class="o">-</span><span class="n">wt0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">mt</span><span class="o">-</span><span class="n">mt0</span><span class="p">))]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">wt</span><span class="o">-</span><span class="n">wtcpu</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">cpu_interval</span><span class="p">:</span>
+            <span class="n">wtcpu</span> <span class="o">=</span> <span class="n">wt</span>
+            <span class="n">updates</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;cpu_usage </span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">cpu_percent</span><span class="p">())]</span>
+        <span class="n">update_dashboard</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
+        <span class="n">mt0</span><span class="p">,</span> <span class="n">wt0</span><span class="p">,</span> <span class="n">wtdb</span> <span class="o">=</span> <span class="n">mt</span><span class="p">,</span> <span class="n">wt</span><span class="p">,</span> <span class="n">wt</span>
+<span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+<span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+<span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+
+
+<div class="viewcode-block" id="TimeStepper"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper">[docs]</a><span class="k">class</span> <span class="nc">TimeStepper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstraction of low-level FDTD engine.</span>
+<span class="sd">    </span>
+<span class="sd">    TimeStepper is a class that knows how to invoke an FDTD solver</span>
+<span class="sd">    to execute a time-domain calculation to obtain frequency-domain </span>
+<span class="sd">    (DFT) field components in objective regions, from which may be </span>
+<span class="sd">    computed (a) the values of objective quantities and objective functions,</span>
+<span class="sd">    or (b) permittivity derivatives of the objective function, from which</span>
+<span class="sd">    may be computed the objective-function gradient. </span>
+<span class="sd">    </span>
+<span class="sd">    This class lies between the top-level `OptimizationProblem` session-manager class</span>
+<span class="sd">    and lower-level classes like `ObjectiveFunction`. It exports a single method</span>
+<span class="sd">    (``__call__``) which prepares and executes one complete FDTD timestepping run to</span>
+<span class="sd">    compute frequency-domain fields, returning numerical quantities of interest </span>
+<span class="sd">    computed from these fields. ``__call__`` accepts one `str`-valued argument `job`, </span>
+<span class="sd">    for which the recognized values are `forward` or `adjoint`. For `job`==`forward`, the </span>
+<span class="sd">    excitation sources for the FDTD problem are the user-defined sources passed to the</span>
+<span class="sd">    `OptimizationProblem` constructor and the result of the calculation is the </span>
+<span class="sd">    objective-function value (plus the values of any additional requested objective quantities).</span>
+<span class="sd">    For `job`==`adjoint`, the excitation sources are automatically determined internally </span>
+<span class="sd">    and the result of the calculation is the objective-function gradient.</span>
+<span class="sd">        </span>
+<span class="sd">    `TimeStepper` automatically determines when to terminate a timestepping run by </span>
+<span class="sd">    monitoring the numerical convergence of the output quantities. The details of this process</span>
+<span class="sd">    may be customized using configuration options. `TimeStepper` does not itself know how</span>
+<span class="sd">    to evaluate its output quantities, but rather outsources these calculations to public </span>
+<span class="sd">    methods of `ObjectiveFunction` and other low-level classes.</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    __call__(job):</span>
+<span class="sd">        Populate the FDTD grid with an appropriate source distribution, initialize DFT cells for</span>
+<span class="sd">        tabulating frequency-domain fields, then execute FDTD timestepping until the output quantities</span>
+<span class="sd">        converges and return those quantities.   </span>
+
+<span class="sd">    &quot;&quot;&quot;</span> 
 
     <span class="c1">#########################################################</span>
     <span class="c1">#########################################################</span>
     <span class="c1">#########################################################</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_func</span><span class="p">,</span> <span class="n">dft_cells</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">sim</span><span class="p">,</span> <span class="n">fwd_sources</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Args:</span>
-<span class="sd">            obj_func  (ObjectiveFunction)</span>
-<span class="sd">            dft_cells (list of DFTCell)</span>
-<span class="sd">            basis     (subclass of Basis)</span>
-<span class="sd">            sim       (mp.Simulation object)</span>
-<span class="sd">            fwd_sources (list of mp.Source or mp.EigenModeSource):</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        Constructor.</span>
 
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------      </span>
+<span class="sd">        obj_func : ObjectiveFunction</span>
+<span class="sd">            The function whose value or gradient we compute (copied from OptimizationProblem)</span>
+<span class="sd">        dft_cells : list of `DFTCell`&quot;</span>
+<span class="sd">            List of `DFTCell` structures, assumed to be ordered with objective cells *first* and the </span>
+<span class="sd">            design cell *last* (so any `extra` cells are in the interior of the list).</span>
+<span class="sd">        basis : Basis</span>
+<span class="sd">            Function space (copied from OptimizationProblem). </span>
+<span class="sd">            Logically this is not a necessary input for this calculation---it is used only in a </span>
+<span class="sd">            post-processing step to compute the objective-function gradient by projecting df/dEps</span>
+<span class="sd">            onto the function space. It might make more sense to define the output of TimeStepper</span>
+<span class="sd">            to be the raw df/dEps matrix, with the projection step done at a higher level, in which</span>
+<span class="sd">            case this parameter could be omitted. But then the convergence of the adjoint timestepping</span>
+<span class="sd">            run would have to consider the full raw df/dEps matrix instead of the lower-dimensional</span>
+<span class="sd">            gradient vector.</span>
+<span class="sd">        sim : `meep.Simulation`</span>
+<span class="sd">            Simulation object, copied from OptimizationProblem.</span>
+<span class="sd">        fwd_sources : list of `meep.Source`</span>
+<span class="sd">            User-specified sources for the forward calculation.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">obj_func</span>    <span class="o">=</span> <span class="n">obj_func</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dft_cells</span>   <span class="o">=</span> <span class="n">dft_cells</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span> <span class="o">=</span> <span class="n">dft_cells</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -213,24 +293,32 @@
 
 
     <span class="k">def</span> <span class="nf">__update__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Recompute output quantities using most recent values</span>
-<span class="sd">           of frequency-domain fields.</span>
-<span class="sd">           This is an internal helper method for run() that computes</span>
-<span class="sd">           the objective function value (forward run) or gradient (adjoint run)</span>
-<span class="sd">           using the latest values of the frequency-domain fields</span>
-<span class="sd">           stored in the DFT cells. During timestepping it is called</span>
-<span class="sd">           every check_interval units of MEEP time once the excitation</span>
-<span class="sd">           sources have died down.</span>
-<span class="sd">           Args:</span>
-<span class="sd">               job = &#39;forward&#39; or &#39;adjoint&#39;</span>
-<span class="sd">           Return values:</span>
-<span class="sd">               If job==&#39;forward&#39;:</span>
-<span class="sd">                   numpy array of length N+1 storing values of the objective</span>
-<span class="sd">                   function and the N objective quantities [F, Q0, Q1, ... QN]</span>
-<span class="sd">                   as returned by ObjectiveFunction.__call__</span>
-<span class="sd">               If job==&#39;adjoint&#39;:</span>
-<span class="sd">                   numpy array of length basis.dim storing components of</span>
-<span class="sd">                   the objective-function gradient</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recompute output quantities using most recent values of frequency-domain fields.</span>
+<span class="sd">           </span>
+<span class="sd">        This is an internal helper method for run() that computes</span>
+<span class="sd">        the objective function value (forward run) or gradient (adjoint run)</span>
+<span class="sd">        using the latest values of the frequency-domain fields</span>
+<span class="sd">        stored in the DFT cells. During timestepping it is called</span>
+<span class="sd">        every check_interval units of MEEP time once the excitation</span>
+<span class="sd">        sources have died down.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------      </span>
+<span class="sd">        job : str</span>
+<span class="sd">            &#39;forward&#39; or &#39;adjoint&#39;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ** If job==`forward`: **</span>
+<span class="sd">        fq: numpy array of length N+1 storing values of the objective</span>
+<span class="sd">            function and the N objective quantities [F, Q0, Q1, ... QN]</span>
+
+<span class="sd">        ** If job==`adjoint`: **</span>
+<span class="sd">        df: numpy array of length `basis.dim` storing components of the</span>
+<span class="sd">            objective-function gradient</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">job</span><span class="o">==</span><span class="s1">&#39;forward&#39;</span><span class="p">:</span>
             <span class="n">retvals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dft_cells</span><span class="p">)</span>
@@ -240,9 +328,10 @@
         <span class="k">else</span><span class="p">:</span> <span class="c1"># job==&#39;adjoint&#39;</span>
             <span class="n">EH_fwd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span><span class="o">.</span><span class="n">get_EH_slices</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
             <span class="n">EH_adj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span><span class="o">.</span><span class="n">get_EH_slices</span><span class="p">()</span>
-            <span class="n">ncs</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span><span class="o">.</span><span class="n">components</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">E_CPTS</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dfdEps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">[</span> <span class="n">EH_fwd</span><span class="p">[</span><span class="n">nc</span><span class="p">]</span><span class="o">*</span><span class="n">EH_adj</span><span class="p">[</span><span class="n">nc</span><span class="p">]</span> <span class="k">for</span> <span class="n">nc</span> <span class="ow">in</span> <span class="n">ncs</span> <span class="p">]</span> <span class="p">)</span> <span class="p">)</span>
-            <span class="n">retvals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dfdEps</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dfdEps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span> <span class="n">n</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span><span class="o">.</span><span class="n">components</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">E_CPTS</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dfdEps</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span> <span class="n">EH_fwd</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">*</span><span class="n">EH_adj</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="p">)</span>
+            <span class="n">retvals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dfdEps</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design_cell</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="n">differential</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">retvals</span>
 
 
@@ -250,11 +339,8 @@
     <span class="c1"># main timestepper routine that keeps going until the</span>
     <span class="c1"># relevant output quantity has converged</span>
     <span class="c1">#########################################################</span>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Execute the full MEEP timestepping run for a forward</span>
-<span class="sd">           or adjoint calculation and return the results.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
+<div class="viewcode-block" id="TimeStepper.run"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Execute a forward or adjoint FDTD timestepping run and return results.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
 
         <span class="n">last_source_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwd_sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">swigobj</span><span class="o">.</span><span class="n">last_time</span><span class="p">()</span>
@@ -263,7 +349,7 @@
         <span class="n">reltol</span>           <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dft_reltol&#39;</span><span class="p">)</span>
 
         <span class="c1"># configure real-time animations of evolving time-domain fields</span>
-        <span class="n">step_funcs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#        step_funcs = []</span>
 <span class="c1">#        clist = adjoint_adj_opt(&#39;animate_components&#39;)</span>
 <span class="c1">#        if clist is not None:</span>
 <span class="c1">#            ivl=adjoint_adj_opt(&#39;animate_interval&#39;)</span>
@@ -272,15 +358,38 @@
 
         <span class="c1"># start by timestepping without interruption until the sources are extinguished</span>
         <span class="n">log</span><span class="p">(</span><span class="s2">&quot;Beginning </span><span class="si">{}</span><span class="s2"> timestepping run...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">job</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">step_funcs</span><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="n">last_source_time</span><span class="p">)</span>
+
+        <span class="n">update_dashboard</span><span class="p">([</span><span class="s1">&#39;run </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">job</span><span class="p">)])</span>
+        <span class="k">global</span> <span class="n">mt0</span><span class="p">,</span> <span class="n">wt0</span><span class="p">,</span> <span class="n">wtdb</span><span class="p">,</span> <span class="n">wtcpu</span><span class="p">,</span> <span class="n">proc</span>
+        <span class="n">dummy</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">cpu_percent</span><span class="p">()</span>
+
+        <span class="n">mta</span><span class="p">,</span> <span class="n">mtb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">last_source_time</span>
+        <span class="n">update_dashboard</span><span class="p">([</span><span class="s1">&#39;stage sources&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;progress range </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">mta</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">mtb</span><span class="p">))])</span>
+        <span class="n">log</span><span class="p">(</span><span class="s1">&#39;stepping from </span><span class="si">{}</span><span class="s1"> to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mta</span><span class="p">,</span><span class="n">mtb</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">**</span><span class="se">\n</span><span class="s1">**stepping from </span><span class="si">{}</span><span class="s1"> to </span><span class="si">{}</span><span class="se">\n</span><span class="s1">**</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mta</span><span class="p">,</span><span class="n">mtb</span><span class="p">))</span>
+        <span class="n">mt0</span><span class="p">,</span> <span class="n">wt0</span> <span class="o">=</span> <span class="n">mta</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">wtdb</span><span class="p">,</span> <span class="n">wtcpu</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">wt0</span><span class="p">,</span> <span class="n">wt0</span><span class="p">,</span> <span class="p">(</span><span class="n">mtb</span><span class="o">-</span><span class="n">mta</span><span class="p">)</span><span class="o">/</span><span class="mf">100.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">at_every</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">dashboard_sf</span><span class="p">),</span> <span class="n">until</span><span class="o">=</span><span class="n">mtb</span><span class="p">)</span>
         <span class="n">vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__update__</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
 
         <span class="c1"># now continue timestepping with intermittent convergence checks until</span>
         <span class="c1"># we converge or timeout</span>
-        <span class="n">max_rel_delta</span> <span class="o">=</span> <span class="mf">1.0e9</span><span class="p">;</span>
+        <span class="n">stage</span><span class="p">,</span> <span class="n">max_rel_delta</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0e9</span>
         <span class="k">while</span> <span class="n">max_rel_delta</span><span class="o">&gt;</span><span class="n">reltol</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">round_time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">max_time</span><span class="p">:</span>
-            <span class="n">check_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">round_time</span><span class="p">()</span> <span class="o">+</span> <span class="n">check_interval</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">step_funcs</span><span class="p">,</span> <span class="n">until</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">check_time</span><span class="p">,</span> <span class="n">max_time</span><span class="p">))</span>
+
+            <span class="c1">#check_time = self.sim.round_time() + check_interval</span>
+            <span class="c1">#self.sim.run(*step_funcs, until = min(check_time, max_time))</span>
+            <span class="n">mta</span><span class="p">,</span> <span class="n">mtb</span><span class="p">,</span> <span class="n">stage</span> <span class="o">=</span> <span class="n">mtb</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">mtb</span> <span class="o">+</span> <span class="n">check_interval</span><span class="p">,</span> <span class="n">max_time</span><span class="p">),</span> <span class="n">stage</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">update_dashboard</span><span class="p">([</span><span class="s1">&#39;stage conv </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stage</span><span class="p">),</span>
+                              <span class="s1">&#39;progress range </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">mta</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">mtb</span><span class="p">))])</span>
+            <span class="n">log</span><span class="p">(</span><span class="s1">&#39;stepping from </span><span class="si">{}</span><span class="s1"> to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mta</span><span class="p">,</span><span class="n">mtb</span><span class="p">))</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">**</span><span class="se">\n</span><span class="s1">**stepping from </span><span class="si">{}</span><span class="s1"> to </span><span class="si">{}</span><span class="se">\n</span><span class="s1">**</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mta</span><span class="p">,</span><span class="n">mtb</span><span class="p">))</span>
+            <span class="n">mt0</span><span class="p">,</span> <span class="n">wt0</span> <span class="o">=</span> <span class="n">mta</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">wtdb</span><span class="p">,</span> <span class="n">wtcpu</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">wt0</span><span class="p">,</span> <span class="n">wt0</span><span class="p">,</span> <span class="p">(</span><span class="n">mtb</span><span class="o">-</span><span class="n">mta</span><span class="p">)</span><span class="o">/</span><span class="mf">100.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">at_every</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">dashboard_sf</span><span class="p">),</span> <span class="n">until</span><span class="o">=</span><span class="n">mtb</span><span class="p">)</span>
+
             <span class="n">last_vals</span><span class="p">,</span> <span class="n">vals</span> <span class="o">=</span> <span class="n">vals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__update__</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
             <span class="n">rel_delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">rel_diff</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">lv</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">lv</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="n">last_vals</span><span class="p">)]</span> <span class="p">)</span>
             <span class="n">max_rel_delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">rel_delta</span><span class="p">)</span>
@@ -289,24 +398,26 @@
         <span class="c1"># for forward runs we save the converged DFT fields for later use</span>
         <span class="k">if</span> <span class="n">job</span><span class="o">==</span><span class="s1">&#39;forward&#39;</span><span class="p">:</span>
             <span class="p">[</span> <span class="n">cell</span><span class="o">.</span><span class="n">save_fields</span><span class="p">(</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dft_cells</span> <span class="p">]</span>
+            <span class="n">update_dashboard</span><span class="p">([</span><span class="s1">&#39;current </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">job</span> <span class="o">+</span> <span class="s1">&#39;.complete&#39;</span>
-        <span class="k">return</span> <span class="n">vals</span>
+        <span class="k">return</span> <span class="n">vals</span></div>
 
 
     <span class="c1">##############################################################</span>
     <span class="c1">##############################################################</span>
     <span class="c1">##############################################################</span>
-    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepare simulation for timestepping by adding sources and DFT cells.</span>
+<div class="viewcode-block" id="TimeStepper.prepare"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper.prepare">[docs]</a>    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare simulation for timestepping by adding sources and DFT cells.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        job (str): The type of timestepping run to prepare:</span>
+<span class="sd">            1. If job==&#39;forward&#39;, prepare forward run to compute objective function value.</span>
+<span class="sd">            2. If job==&#39;adjoint&#39;, prepare adjoint run to compute objective function gradient.</span>
+<span class="sd">            3. If job is the name of an objective quantity, prepare adjoint run to compute</span>
+<span class="sd">               the gradient of that quantity.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">          job (str): The type of timestepping run to prepare:</span>
-<span class="sd">             1. If job==&#39;forward&#39;, prepare forward run to compute objective function value.</span>
-<span class="sd">             2. If job==&#39;adjoint&#39;, prepare adjoint run to compute objective function gradient.</span>
-<span class="sd">             3. If job is the name of an objective quantity, prepare adjoint run to compute</span>
-<span class="sd">                the gradient of that quantity.</span>
-
-<span class="sd">        Return value: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target_state</span> <span class="o">=</span> <span class="n">job</span> <span class="o">+</span> <span class="s1">&#39;.prepared&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">target_state</span><span class="p">:</span> <span class="k">return</span>
@@ -330,14 +441,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">init_sim</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">:</span>
             <span class="n">cell</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">target_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">target_state</span></div>
 
 
     <span class="c1">##############################################################</span>
     <span class="c1">##############################################################</span>
     <span class="c1">##############################################################</span>
-    <span class="k">def</span> <span class="nf">get_adjoint_sources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeStepper.get_adjoint_sources"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper.get_adjoint_sources">[docs]</a>    <span class="k">def</span> <span class="nf">get_adjoint_sources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct adjoint source distribution.</span>
+<span class="sd">    </span>
 <span class="sd">        Return a list of mp.Source structures describing the distribution of sources</span>
 <span class="sd">        appropriate for adjoint-method evaluation of the objective-function gradient</span>
 <span class="sd">        df/deps.</span>
@@ -368,7 +481,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;unknown objective quantity </span><span class="si">{}</span><span class="s1"> in get_adjoint_sources (skipping)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">qname</span><span class="p">))</span>
             <span class="k">return</span> <span class="p">[]</span>
-        <span class="n">rwlist</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj_func</span><span class="o">.</span><span class="n">qrules</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">w</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iwlist</span> <span class="p">]</span>
+        <span class="n">rwlist</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj_func</span><span class="o">.</span><span class="n">qrules</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">w</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iwlist</span> <span class="k">if</span> <span class="n">w</span><span class="o">!=</span><span class="mf">0.0</span> <span class="p">]</span>
 
         <span class="c1">######################################################################</span>
         <span class="c1"># loop over all contributing objective quantities</span>
@@ -388,24 +501,15 @@
                                        <span class="n">amp_data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">EH</span><span class="p">[</span><span class="n">nc</span><span class="p">]),</span><span class="n">shape</span><span class="p">)</span>
                                       <span class="p">)</span> <span class="k">for</span> <span class="n">nc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">components</span><span class="p">))</span>
                            <span class="p">]</span>
-        <span class="k">return</span> <span class="n">sources</span>
+        <span class="k">return</span> <span class="n">sources</span></div></div>
 
 
 
 
-<div class="viewcode-block" id="rel_diff"><a class="viewcode-back" href="../../API/timestepper.html#meep_adjoint.timestepper.rel_diff">[docs]</a><span class="k">def</span> <span class="nf">rel_diff</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; returns value in range [0,2] quantifying error relative to magnitude&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">rel_diff</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return value in range [0,2] quantifying error relative to magnitude.&quot;&quot;&quot;</span>
     <span class="n">diff</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">b</span><span class="p">)])</span>
-    <span class="k">return</span> <span class="mf">2.</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.</span> <span class="k">if</span> <span class="n">scale</span><span class="o">==</span><span class="mf">0.</span> <span class="k">else</span> <span class="n">diff</span><span class="o">/</span><span class="n">scale</span></div>
-
-
-<span class="c1">######################################################################</span>
-<span class="c1">######################################################################</span>
-<span class="c1">######################################################################</span>
-<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">mp</span><span class="o">.</span><span class="n">am_master</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;filebase&#39;</span><span class="p">):</span> <span class="k">return</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;filebase&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.log&#39;</span> <span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dt2</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%T &#39;</span><span class="p">),</span><span class="n">msg</span><span class="p">))</span>
+    <span class="k">return</span> <span class="mf">2.</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.</span> <span class="k">if</span> <span class="n">scale</span><span class="o">==</span><span class="mf">0.</span> <span class="k">else</span> <span class="n">diff</span><span class="o">/</span><span class="n">scale</span>
 </pre></div>
 
            </div>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>meep_adjoint.adjoint_options &mdash; meep.adjoint 1.0 documentation</title>
+  <title>meep_adjoint.adjoint_options &mdash; meep_adjoint 1.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/toggle_visibility.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> meep.adjoint
+            <a href="../../index.html" class="icon icon-home"> meep_adjoint
           
 
           
@@ -80,18 +81,33 @@
               
             
             
-              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Overview/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Examples/index.html">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Visualization/index.html">Visualization Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../TestSuite/index.html">Test suite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../API/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/LowLevel.html"> Low-level (internal) API</a></li>
 </ul>
 
             
@@ -106,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">meep.adjoint</a>
+          <a href="../../index.html">meep_adjoint</a>
         
       </nav>
 
@@ -139,6 +155,8 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../meep_adjoint.html">meep_adjoint</a> &raquo;</li>
+        
       <li>meep_adjoint.adjoint_options</li>
     
     
@@ -158,8 +176,8 @@
 <span></span><span class="sd">&quot;&quot;&quot; Handling of adjoint-related configuration options.</span>
 
 <span class="sd">    This file exports two routines:</span>
-<span class="sd">        -- get_adjoint_options() to lookup the value of an option</span>
-<span class="sd">        -- set_default_adjoint_options() to override default option values</span>
+<span class="sd">        get_adjoint_option() to lookup the value of an option</span>
+<span class="sd">        set_default_adjoint_options() to override default option values</span>
 
 <span class="sd">    Internally, option settings are maintained by a module-wide instance of</span>
 <span class="sd">    &#39;OptionAlmanac&#39; (generic class for option handling defined in util.py),</span>
@@ -173,19 +191,19 @@
 <span class="sd">&quot;&quot;&quot; module-wide database of adjoint-related options, referenced only in this file&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="_init_adjoint_options"><a class="viewcode-back" href="../../API/adjoint_options.html#meep_adjoint.adjoint_options._init_adjoint_options">[docs]</a><span class="k">def</span> <span class="nf">_init_adjoint_options</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_init_adjoint_options</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;internal routine for just-in-time options processing&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">_adjoint_options</span>
     <span class="n">_adjoint_options</span> <span class="o">=</span> <span class="n">OptionAlmanac</span><span class="p">(</span><span class="n">adjoint_option_templates</span><span class="p">,</span>
                                      <span class="n">custom_defaults</span><span class="o">=</span><span class="n">custom_defaults</span><span class="p">,</span>
                                      <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;meep_adjoint.rc&#39;</span><span class="p">,</span>
-                                     <span class="n">search_env</span><span class="o">=</span><span class="n">search_env</span><span class="p">)</span></div>
+                                     <span class="n">search_env</span><span class="o">=</span><span class="n">search_env</span><span class="p">)</span>
 
 
 <span class="c1">######################################################################</span>
 <span class="c1">######################################################################</span>
 <span class="c1">######################################################################</span>
-<div class="viewcode-block" id="set_adjoint_option_defaults"><a class="viewcode-back" href="../../API/adjoint_options.html#meep_adjoint.adjoint_options.set_adjoint_option_defaults">[docs]</a><span class="k">def</span> <span class="nf">set_adjoint_option_defaults</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="set_adjoint_option_defaults"><a class="viewcode-back" href="../../API/HighLevel.html#meep_adjoint.set_adjoint_option_defaults">[docs]</a><span class="k">def</span> <span class="nf">set_adjoint_option_defaults</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Routine intended to be called by meep_adjoint API scripts to set</span>
 <span class="sd">    problem-specific option defaults.</span>
@@ -200,7 +218,7 @@
 <span class="c1">##################################################</span>
 <span class="c1">##################################################</span>
 <span class="c1">##################################################</span>
-<div class="viewcode-block" id="get_adjoint_option"><a class="viewcode-back" href="../../API/adjoint_options.html#meep_adjoint.adjoint_options.get_adjoint_option">[docs]</a><span class="k">def</span> <span class="nf">get_adjoint_option</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="p">{}):</span>
+<div class="viewcode-block" id="get_adjoint_option"><a class="viewcode-back" href="../../API/HighLevel.html#meep_adjoint.get_adjoint_option">[docs]</a><span class="k">def</span> <span class="nf">get_adjoint_option</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="p">{}):</span>
     <span class="sd">&quot;&quot;&quot;Return currently configured value of option.</span>
 
 <span class="sd">    Args:</span>
@@ -229,7 +247,7 @@
 <span class="n">adjoint_option_templates</span><span class="o">=</span> <span class="p">[</span>
 
     <span class="c1">#--------------------------------------------------</span>
-    <span class="c1">#- options affecting MEEP calculations</span>
+    <span class="c1">#- options affecting FDTD geometries/calculations</span>
     <span class="c1">#--------------------------------------------------</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;res&#39;</span><span class="p">,</span>              <span class="mf">20.0</span><span class="p">,</span>   <span class="s1">&#39;Yee grid resolution&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">,</span>              <span class="mf">0.0</span><span class="p">,</span>   <span class="s1">&#39;source center frequency&#39;</span><span class="p">),</span>
@@ -239,7 +257,7 @@
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;nfreq&#39;</span><span class="p">,</span>               <span class="mi">1</span><span class="p">,</span>   <span class="s1">&#39;number of DFT frequencies&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">,</span>             <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>   <span class="s1">&#39;PML width (-1 --&gt; auto-select)&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">,</span>             <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span>   <span class="s1">&#39;gap width between material bodies and PMLs (-1 --&gt; auto-select)&#39;</span><span class="p">),</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;eps_func&#39;</span><span class="p">,</span>        <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>   <span class="s1">&#39;function of (x,y,z) giving initial design permittivity&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;eps_design&#39;</span><span class="p">,</span>      <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>   <span class="s1">&#39;function of (x,y,z) giving initial design permittivity&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_reltol&#39;</span><span class="p">,</span>     <span class="mf">1.0e-6</span><span class="p">,</span>   <span class="s1">&#39;convergence tolerance for terminating timestepping&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_timeout&#39;</span><span class="p">,</span>      <span class="mf">10.0</span><span class="p">,</span>   <span class="s1">&#39;max runtime in units of last_source_time&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_interval&#39;</span><span class="p">,</span>     <span class="mf">0.25</span><span class="p">,</span>   <span class="s1">&#39;meep time between DFT convergence checks in units of last_source_time&#39;</span><span class="p">),</span>
@@ -252,9 +270,9 @@
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;element_length&#39;</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>    <span class="s1">&#39;finite-element discretization length&#39;</span><span class="p">),</span>
 
     <span class="c1">#--------------------------------------------------</span>
-    <span class="c1">#- options affecting gradient-desscent optimizer</span>
+    <span class="c1">#- options affecting gradient-descent optimizer</span>
     <span class="c1">#--------------------------------------------------</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span>          <span class="mf">1.0</span><span class="p">,</span>     <span class="s1">&#39;initial value of gradient relaxation parameter&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span>          <span class="mf">1.0</span><span class="p">,</span>     <span class="s1">&#39;initial value of alpha (update relaxation parameter)&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha_min&#39;</span><span class="p">,</span>      <span class="mf">1.0e-3</span><span class="p">,</span>  <span class="s1">&#39;minimum value of alpha&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha_max&#39;</span><span class="p">,</span>      <span class="mf">10.0</span><span class="p">,</span>    <span class="s1">&#39;maximum value of alpha&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;boldness&#39;</span><span class="p">,</span>       <span class="mf">1.25</span><span class="p">,</span>    <span class="s1">&#39;sometimes you just gotta live a little (explain me)&#39;</span><span class="p">),</span>
@@ -262,12 +280,22 @@
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;max_iters&#39;</span><span class="p">,</span>      <span class="mi">100</span><span class="p">,</span>     <span class="s1">&#39;max number of optimization iterations&#39;</span><span class="p">),</span>
 
     <span class="c1">#--------------------------------------------------</span>
-    <span class="c1"># options affecting outputs</span>
+    <span class="c1"># output files, logging, console, visualization, dashboard</span>
     <span class="c1">#--------------------------------------------------</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;filebase&#39;</span><span class="p">,</span>         <span class="s1">&#39;&#39;</span><span class="p">,</span>    <span class="s1">&#39;base name of output files (empty string --&gt; autodetermined)&#39;</span><span class="p">),</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span>      <span class="s1">&#39;True&#39;</span><span class="p">,</span>    <span class="s1">&#39;produce more output&#39;</span><span class="p">),</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;visualize&#39;</span><span class="p">,</span>    <span class="s1">&#39;True&#39;</span><span class="p">,</span>    <span class="s1">&#39;produce visualization graphics&#39;</span><span class="p">),</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;silence_meep&#39;</span><span class="p">,</span> <span class="s1">&#39;True&#39;</span><span class="p">,</span>    <span class="s1">&#39;suppress MEEP console output&#39;</span><span class="p">)</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;filebase&#39;</span><span class="p">,</span>                <span class="s1">&#39;&#39;</span><span class="p">,</span>         <span class="s1">&#39;base name of output files&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;silence_meep&#39;</span><span class="p">,</span>           <span class="kc">True</span><span class="p">,</span>        <span class="s1">&#39;suppress MEEP console messages when timestepping&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;loglevel&#39;</span><span class="p">,</span>               <span class="s1">&#39;info&#39;</span><span class="p">,</span>      <span class="s2">&quot;[&#39;info&#39;|&#39;debug&#39;]&quot;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;visualization&#39;</span><span class="p">,</span>          <span class="s1">&#39;auto&#39;</span><span class="p">,</span>      <span class="s2">&quot;[&#39;on&#39;|&#39;off&#39;|&#39;auto&#39;] to enable/disable/automate graphical visualization&quot;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">,</span>              <span class="s1">&#39;auto&#39;</span><span class="p">,</span>      <span class="s2">&quot;[&#39;on&#39;|&#39;off&#39;|&#39;auto&#39;] to enable/disable/automate GUI dashboard&quot;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_size&#39;</span><span class="p">,</span>         <span class="mf">0.5</span><span class="p">,</span>         <span class="s1">&#39;GUI dashboard size relative to screen size&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_position&#39;</span><span class="p">,</span>     <span class="s1">&#39;top right&#39;</span><span class="p">,</span> <span class="s1">&#39;GUI dashboard position&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_font_family&#39;</span><span class="p">,</span>  <span class="s1">&#39;Fantasque Sans Mono&#39;</span><span class="p">,</span> <span class="s1">&#39;GUI dashboard font family&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_font_scale&#39;</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>         <span class="s1">&#39;GUI dashboard font scale factor&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_on_top&#39;</span><span class="p">,</span>       <span class="kc">True</span><span class="p">,</span>        <span class="s1">&#39;GUI dashboard stays on top of other windows&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_cpu_interval&#39;</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span>        <span class="s1">&#39;GUI dashboard CPU usage update interval (ms)&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_host&#39;</span><span class="p">,</span>         <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;GUI dashboard server hostname&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_port&#39;</span><span class="p">,</span>         <span class="mi">37673</span><span class="p">,</span>       <span class="s1">&#39;GUI dashboard server port&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_loglevel&#39;</span><span class="p">,</span>     <span class="s1">&#39;info&#39;</span><span class="p">,</span>      <span class="s2">&quot;&#39;&#39;info&#39; | &#39;debug&#39;&quot;</span><span class="p">)</span>
 <span class="p">]</span>
 </pre></div>
 

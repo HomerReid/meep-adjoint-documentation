@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; meep.adjoint 1.0 documentation</title>
+  <title>Overview: module code &mdash; meep_adjoint 1.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/toggle_visibility.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> meep.adjoint
+            <a href="../index.html" class="icon icon-home"> meep_adjoint
           
 
           
@@ -80,18 +81,33 @@
               
             
             
-              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Overview/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Examples/index.html">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Visualization/index.html">Visualization Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../TestSuite/index.html">Test suite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../API/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/LowLevel.html"> Low-level (internal) API</a></li>
 </ul>
 
             
@@ -106,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">meep.adjoint</a>
+          <a href="../index.html">meep_adjoint</a>
         
       </nav>
 
@@ -153,21 +169,14 @@
            <div itemprop="articleBody">
             
   <h1>All modules for which code is available</h1>
-<ul><li><a href="collections.html">collections</a></li>
-<li><a href="meep_adjoint/adjoint_options.html">meep_adjoint.adjoint_options</a></li>
-<li><a href="meep_adjoint/basis.html">meep_adjoint.basis</a></li>
+<ul><li><a href="meep_adjoint.html">meep_adjoint</a></li>
+<ul><li><a href="meep_adjoint/adjoint_options.html">meep_adjoint.adjoint_options</a></li>
 <li><a href="meep_adjoint/dft_cell.html">meep_adjoint.dft_cell</a></li>
-<li><a href="meep_adjoint/finite_element_basis.html">meep_adjoint.finite_element_basis</a></li>
 <li><a href="meep_adjoint/objective.html">meep_adjoint.objective</a></li>
 <li><a href="meep_adjoint/optimization_problem.html">meep_adjoint.optimization_problem</a></li>
-<li><a href="meep_adjoint/option_almanac.html">meep_adjoint.option_almanac</a></li>
 <li><a href="meep_adjoint/timestepper.html">meep_adjoint.timestepper</a></li>
-<li><a href="meep_adjoint/visualization.html">meep_adjoint.visualization</a></li>
 <li><a href="meep_adjoint/visualization_options.html">meep_adjoint.visualization_options</a></li>
-<li><a href="namedtuple_Grid.html">namedtuple_Grid</a></li>
-<li><a href="namedtuple_OptionTemplate.html">namedtuple_OptionTemplate</a></li>
-<li><a href="namedtuple_QRule.html">namedtuple_QRule</a></li>
-</ul>
+</ul></ul>
 
            </div>
            

@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; meep.adjoint 1.0 documentation</title>
+  <title>Index &mdash; meep_adjoint 1.0 documentation</title>
   
 
   
@@ -26,6 +26,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/toggle_visibility.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -51,7 +52,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> meep.adjoint
+            <a href="index.html" class="icon icon-home"> meep_adjoint
           
 
           
@@ -81,18 +82,33 @@
               
             
             
-              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Overview/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Examples/index.html">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Visualization/index.html">Visualization Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TestSuite/index.html">Test suite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="API/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API/LowLevel.html"> Low-level (internal) API</a></li>
 </ul>
 
             
@@ -107,7 +123,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">meep.adjoint</a>
+          <a href="index.html">meep_adjoint</a>
         
       </nav>
 
@@ -159,17 +175,11 @@
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
- <a href="#_"><strong>_</strong></a>
- | <a href="#A"><strong>A</strong></a>
- | <a href="#B"><strong>B</strong></a>
- | <a href="#C"><strong>C</strong></a>
+ <a href="#Symbols"><strong>Symbols</strong></a>
  | <a href="#D"><strong>D</strong></a>
- | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
- | <a href="#H"><strong>H</strong></a>
  | <a href="#M"><strong>M</strong></a>
- | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#Q"><strong>Q</strong></a>
@@ -178,142 +188,24 @@
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
- | <a href="#W"><strong>W</strong></a>
- | <a href="#X"><strong>X</strong></a>
- | <a href="#Y"><strong>Y</strong></a>
- | <a href="#Z"><strong>Z</strong></a>
  
 </div>
-<h2 id="_">_</h2>
+<h2 id="Symbols">Symbols</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/basis.html#meep_adjoint.basis.GridFunc.__call__">__call__() (meep_adjoint.basis.GridFunc method)</a>
-
-      <ul>
-        <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.DFTCell.__call__">(meep_adjoint.dft_cell.DFTCell method)</a>
+      <li><a href="meep_adjoint/docs/tutorial/index.html#term-1-initialization-defining-the-problem-and-initializing-the-solver"><strong>1. Initialization: Defining the problem and initializing the solver</strong></a>, <a href="tutorial/index.html#term-1-initialization-defining-the-problem-and-initializing-the-solver"><strong>[1]</strong></a>
 </li>
-        <li><a href="API/objective.html#meep_adjoint.objective.ObjectiveFunction.__call__">(meep_adjoint.objective.ObjectiveFunction method)</a>
+      <li><a href="meep_adjoint/docs/tutorial/index.html#term-1-source-region-location-of-excitation-sources"><strong>1. source_region: Location of excitation sources</strong></a>, <a href="tutorial/index.html#term-1-source-region-location-of-excitation-sources"><strong>[1]</strong></a>
 </li>
-        <li><a href="API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.__call__">(meep_adjoint.optimization_problem.OptimizationProblem method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionAlmanac.__call__">(meep_adjoint.option_almanac.OptionAlmanac method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.__getnewargs__">__getnewargs__() (meep_adjoint.dft_cell.Grid method)</a>
-
-      <ul>
-        <li><a href="API/objective.html#meep_adjoint.objective.QRule.__getnewargs__">(meep_adjoint.objective.QRule method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate.__getnewargs__">(meep_adjoint.option_almanac.OptionTemplate method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/basis.html#meep_adjoint.basis.Basis.__init__">__init__() (meep_adjoint.basis.Basis method)</a>
-
-      <ul>
-        <li><a href="API/basis.html#meep_adjoint.basis.GridFunc.__init__">(meep_adjoint.basis.GridFunc method)</a>
-</li>
-        <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.DFTCell.__init__">(meep_adjoint.dft_cell.DFTCell method)</a>
-</li>
-        <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Subregion.__init__">(meep_adjoint.dft_cell.Subregion method)</a>
-</li>
-        <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.FiniteElementBasis.__init__">(meep_adjoint.finite_element_basis.FiniteElementBasis method)</a>
-</li>
-        <li><a href="API/objective.html#meep_adjoint.objective.ObjectiveFunction.__init__">(meep_adjoint.objective.ObjectiveFunction method)</a>
-</li>
-        <li><a href="API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.__init__">(meep_adjoint.optimization_problem.OptimizationProblem method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionAlmanac.__init__">(meep_adjoint.option_almanac.OptionAlmanac method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.__new__">__new__() (meep_adjoint.dft_cell.Grid static method)</a>
-
-      <ul>
-        <li><a href="API/objective.html#meep_adjoint.objective.QRule.__new__">(meep_adjoint.objective.QRule static method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate.__new__">(meep_adjoint.option_almanac.OptionTemplate static method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.__repr__">__repr__() (meep_adjoint.dft_cell.Grid method)</a>
-
-      <ul>
-        <li><a href="API/objective.html#meep_adjoint.objective.QRule.__repr__">(meep_adjoint.objective.QRule method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate.__repr__">(meep_adjoint.option_almanac.OptionTemplate method)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/basis.html#meep_adjoint.basis.Basis.__weakref__">__weakref__ (meep_adjoint.basis.Basis attribute)</a>
-
-      <ul>
-        <li><a href="API/basis.html#meep_adjoint.basis.GridFunc.__weakref__">(meep_adjoint.basis.GridFunc attribute)</a>
-</li>
-        <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.DFTCell.__weakref__">(meep_adjoint.dft_cell.DFTCell attribute)</a>
-</li>
-        <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Subregion.__weakref__">(meep_adjoint.dft_cell.Subregion attribute)</a>
-</li>
-        <li><a href="API/objective.html#meep_adjoint.objective.ObjectiveFunction.__weakref__">(meep_adjoint.objective.ObjectiveFunction attribute)</a>
-</li>
-        <li><a href="API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.__weakref__">(meep_adjoint.optimization_problem.OptimizationProblem attribute)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionAlmanac.__weakref__">(meep_adjoint.option_almanac.OptionAlmanac attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="API/adjoint_options.html#meep_adjoint.adjoint_options._adjoint_options">_adjoint_options (in module meep_adjoint.adjoint_options)</a>
-</li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid._asdict">_asdict() (meep_adjoint.dft_cell.Grid method)</a>
-
-      <ul>
-        <li><a href="API/objective.html#meep_adjoint.objective.QRule._asdict">(meep_adjoint.objective.QRule method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate._asdict">(meep_adjoint.option_almanac.OptionTemplate method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/adjoint_options.html#meep_adjoint.adjoint_options._init_adjoint_options">_init_adjoint_options() (in module meep_adjoint.adjoint_options)</a>
-</li>
-      <li><a href="API/visualization_options.html#meep_adjoint.visualization_options._init_visualization_options">_init_visualization_options() (in module meep_adjoint.visualization_options)</a>
-</li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid._make">_make() (meep_adjoint.dft_cell.Grid class method)</a>
-
-      <ul>
-        <li><a href="API/objective.html#meep_adjoint.objective.QRule._make">(meep_adjoint.objective.QRule class method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate._make">(meep_adjoint.option_almanac.OptionTemplate class method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid._replace">_replace() (meep_adjoint.dft_cell.Grid method)</a>
-
-      <ul>
-        <li><a href="API/objective.html#meep_adjoint.objective.QRule._replace">(meep_adjoint.objective.QRule method)</a>
-</li>
-        <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate._replace">(meep_adjoint.option_almanac.OptionTemplate method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/visualization_options.html#meep_adjoint.visualization_options._subdict">_subdict() (in module meep_adjoint.visualization_options)</a>
+      <li><a href="meep_adjoint/docs/tutorial/index.html#term-2-interactive-exploration-single-point-calculations-and-visualization"><strong>2. Interactive exploration: Single-point calculations and visualization</strong></a>, <a href="tutorial/index.html#term-2-interactive-exploration-single-point-calculations-and-visualization"><strong>[1]</strong></a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="A">A</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/visualization.html#meep_adjoint.visualization.abs2">abs2() (in module meep_adjoint.visualization)</a>
+      <li><a href="meep_adjoint/docs/tutorial/index.html#term-2-objective-regions-declaring-sites-at-which-we-want-frequency-domain-fields-and-associated-physical-quantities"><strong>2. objective_regions: Declaring sites at which we want frequency-domain fields and associated physical quantities</strong></a>, <a href="tutorial/index.html#term-2-objective-regions-declaring-sites-at-which-we-want-frequency-domain-fields-and-associated-physical-quantities"><strong>[1]</strong></a>
 </li>
-  </ul></td>
-</tr></table>
-
-<h2 id="B">B</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/basis.html#meep_adjoint.basis.Basis">Basis (class in meep_adjoint.basis)</a>
+      <li><a href="meep_adjoint/docs/tutorial/index.html#term-3-automation-machine-driven-iterative-design-optimization"><strong>3. Automation: Machine-driven iterative design optimization</strong></a>, <a href="tutorial/index.html#term-3-automation-machine-driven-iterative-design-optimization"><strong>[1]</strong></a>
 </li>
-  </ul></td>
-</tr></table>
-
-<h2 id="C">C</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/objective.html#meep_adjoint.objective.QRule.code">code() (meep_adjoint.objective.QRule property)</a>
+      <li><a href="meep_adjoint/docs/tutorial/index.html#term-3-design-region-informing-meep-adjoint-where-it-is-allowed-to-vary-the-permittivity"><strong>3. design_region: Informing `meep_adjoint` where it is allowed to vary the permittivity</strong></a>, <a href="tutorial/index.html#term-3-design-region-informing-meep-adjoint-where-it-is-allowed-to-vary-the-permittivity"><strong>[1]</strong></a>
 </li>
   </ul></td>
 </tr></table>
@@ -321,25 +213,7 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate.default">default() (meep_adjoint.option_almanac.OptionTemplate property)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.DFTCell">DFTCell (class in meep_adjoint.dft_cell)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="E">E</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionAlmanac.enforce_type">enforce_type() (meep_adjoint.option_almanac.OptionAlmanac method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.ExpressionFromPyFunc">ExpressionFromPyFunc() (in module meep_adjoint.finite_element_basis)</a>
-</li>
-      <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.ExpressionFromString">ExpressionFromString() (in module meep_adjoint.finite_element_basis)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.DFTCell">DFTCell (class in meep_adjoint)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -347,11 +221,7 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.FiniteElementBasis">FiniteElementBasis (class in meep_adjoint.finite_element_basis)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.FunctionFromSamples">FunctionFromSamples() (in module meep_adjoint.finite_element_basis)</a>
+      <li><a href="meep_adjoint/docs/overview/index.html#term-for-use-in-computing-power-fluxes-mode-expansion-coefficients-and-other-frequency-domain"><strong>for use in computing power fluxes, mode-expansion coefficients, and other frequency-domain</strong></a>, <a href="overview/index.html#term-for-use-in-computing-power-fluxes-mode-expansion-coefficients-and-other-frequency-domain"><strong>[1]</strong></a>
 </li>
   </ul></td>
 </tr></table>
@@ -359,31 +229,23 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/adjoint_options.html#meep_adjoint.adjoint_options.get_adjoint_option">get_adjoint_option() (in module meep_adjoint.adjoint_options)</a>
+      <li><a href="API/HighLevel.html#meep_adjoint.get_adjoint_option">get_adjoint_option() (in module meep_adjoint)</a>
 </li>
-      <li><a href="API/objective.html#meep_adjoint.objective.ObjectiveFunction.get_dfdq">get_dfdq() (meep_adjoint.objective.ObjectiveFunction method)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.TimeStepper.get_adjoint_sources">get_adjoint_sources() (TimeStepper method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper.get_adjoint_sources">[1]</a>
 </li>
-      <li><a href="API/visualization_options.html#meep_adjoint.visualization_options.get_visualization_option">get_visualization_option() (in module meep_adjoint.visualization_options)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.ObjectiveFunction.get_dfdq">get_dfdq() (ObjectiveFunction method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.ObjectiveFunction.get_dfdq">[1]</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/visualization_options.html#meep_adjoint.visualization_options.get_visualization_options">get_visualization_options() (in module meep_adjoint.visualization_options)</a>
-</li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid">Grid (class in meep_adjoint.dft_cell)</a>
-</li>
-      <li><a href="API/basis.html#meep_adjoint.basis.GridFunc">GridFunc (class in meep_adjoint.basis)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="H">H</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/visualization.html#meep_adjoint.visualization.happy_cb">happy_cb() (in module meep_adjoint.visualization)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.DFTCell.get_EH_slice">get_EH_slice() (DFTCell method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.get_EH_slice">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate.help">help() (meep_adjoint.option_almanac.OptionTemplate property)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.DFTCell.get_EH_slices">get_EH_slices() (DFTCell method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.get_EH_slices">[1]</a>
+</li>
+      <li><a href="API/LowLevel.html#meep_adjoint.DFTCell.get_eigenmode_slices">get_eigenmode_slices() (DFTCell method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.get_eigenmode_slices">[1]</a>
+</li>
+      <li><a href="API/HighLevel.html#meep_adjoint.get_visualization_option">get_visualization_option() (in module meep_adjoint)</a>
+</li>
+      <li><a href="API/HighLevel.html#meep_adjoint.get_visualization_options">get_visualization_options() (in module meep_adjoint)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -391,45 +253,7 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.make_dolfin_callable">make_dolfin_callable() (in module meep_adjoint.finite_element_basis)</a>
-</li>
-      <li><a href="API/objective.html#meep_adjoint.objective.make_qrule">make_qrule() (in module meep_adjoint.objective)</a>
-</li>
-      <li><a href="API/adjoint_options.html#module-meep_adjoint.adjoint_options">meep_adjoint.adjoint_options (module)</a>
-</li>
-      <li><a href="API/basis.html#module-meep_adjoint.basis">meep_adjoint.basis (module)</a>
-</li>
-      <li><a href="API/dft_cell.html#module-meep_adjoint.dft_cell">meep_adjoint.dft_cell (module)</a>
-</li>
-      <li><a href="API/finite_element_basis.html#module-meep_adjoint.finite_element_basis">meep_adjoint.finite_element_basis (module)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/objective.html#module-meep_adjoint.objective">meep_adjoint.objective (module)</a>
-</li>
-      <li><a href="API/optimization_problem.html#module-meep_adjoint.optimization_problem">meep_adjoint.optimization_problem (module)</a>
-</li>
-      <li><a href="API/option_almanac.html#module-meep_adjoint.option_almanac">meep_adjoint.option_almanac (module)</a>
-</li>
-      <li><a href="API/timestepper.html#module-meep_adjoint.timestepper">meep_adjoint.timestepper (module)</a>
-</li>
-      <li><a href="API/visualization.html#module-meep_adjoint.visualization">meep_adjoint.visualization (module)</a>
-</li>
-      <li><a href="API/visualization_options.html#module-meep_adjoint.visualization_options">meep_adjoint.visualization_options (module)</a>
-</li>
-      <li><a href="API/objective.html#meep_adjoint.objective.QRule.mode">mode() (meep_adjoint.objective.QRule property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="N">N</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate.name">name() (meep_adjoint.option_almanac.OptionTemplate property)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/objective.html#meep_adjoint.objective.QRule.ncell">ncell() (meep_adjoint.objective.QRule property)</a>
+      <li><a href="index.html#module-meep_adjoint">meep_adjoint (module)</a>, <a href="meep_adjoint/docs/index.html#module-meep_adjoint">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -437,15 +261,13 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/objective.html#meep_adjoint.objective.ObjectiveFunction">ObjectiveFunction (class in meep_adjoint.objective)</a>
-</li>
-      <li><a href="API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem">OptimizationProblem (class in meep_adjoint.optimization_problem)</a>
+      <li><a href="meep_adjoint/docs/overview/index.html#term-objective-functions-we-refer-to-them-as-objective-regions"><strong>objective functions, we refer to them as objective regions.</strong></a>, <a href="overview/index.html#term-objective-functions-we-refer-to-them-as-objective-regions"><strong>[1]</strong></a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionAlmanac">OptionAlmanac (class in meep_adjoint.option_almanac)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.ObjectiveFunction">ObjectiveFunction (class in meep_adjoint)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.ObjectiveFunction">[1]</a>
 </li>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionTemplate">OptionTemplate (class in meep_adjoint.option_almanac)</a>
+      <li><a href="API/HighLevel.html#meep_adjoint.OptimizationProblem">OptimizationProblem (class in meep_adjoint)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -453,23 +275,7 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/basis.html#meep_adjoint.basis.Basis.parameterized_function">parameterized_function() (meep_adjoint.basis.Basis method)</a>
-
-      <ul>
-        <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.FiniteElementBasis.parameterized_function">(meep_adjoint.finite_element_basis.FiniteElementBasis method)</a>
-</li>
-      </ul></li>
-      <li><a href="API/visualization.html#meep_adjoint.visualization.plot_eps">plot_eps() (in module meep_adjoint.visualization)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/visualization.html#meep_adjoint.visualization.plot_geometry">plot_geometry() (in module meep_adjoint.visualization)</a>
-</li>
-      <li><a href="API/visualization.html#meep_adjoint.visualization.plot_subregion">plot_subregion() (in module meep_adjoint.visualization)</a>
-</li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.points">points() (meep_adjoint.dft_cell.Grid property)</a>
-</li>
-      <li><a href="API/finite_element_basis.html#meep_adjoint.finite_element_basis.FiniteElementBasis.project">project() (meep_adjoint.finite_element_basis.FiniteElementBasis method)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.TimeStepper.prepare">prepare() (TimeStepper method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper.prepare">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -477,7 +283,7 @@
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/objective.html#meep_adjoint.objective.QRule">QRule (class in meep_adjoint.objective)</a>
+      <li><a href="meep_adjoint/docs/overview/index.html#term-quantities-used-in-characterizing-device-performance-because-these-regions-are-used-to-evaluate"><strong>quantities used in characterizing device performance.  Because these regions are used to evaluate</strong></a>, <a href="overview/index.html#term-quantities-used-in-characterizing-device-performance-because-these-regions-are-used-to-evaluate"><strong>[1]</strong></a>
 </li>
   </ul></td>
 </tr></table>
@@ -485,13 +291,13 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/timestepper.html#meep_adjoint.timestepper.rel_diff">rel_diff() (in module meep_adjoint.timestepper)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.DFTCell.register">register() (DFTCell method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.register">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/optimization_problem.html#meep_adjoint.optimization_problem.rescale_sources">rescale_sources() (in module meep_adjoint.optimization_problem)</a>
+      <li><a href="example_gallery/router.html#module-router.py">router.py (module)</a>
 </li>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.OptionAlmanac.revise">revise() (meep_adjoint.option_almanac.OptionAlmanac method)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.TimeStepper.run">run() (TimeStepper method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper.run">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -499,15 +305,19 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/adjoint_options.html#meep_adjoint.adjoint_options.set_adjoint_option_defaults">set_adjoint_option_defaults() (in module meep_adjoint.adjoint_options)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.DFTCell.save_fields">save_fields() (DFTCell method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.save_fields">[1]</a>
 </li>
-      <li><a href="API/visualization_options.html#meep_adjoint.visualization_options.set_visualization_option_defaults">set_visualization_option_defaults() (in module meep_adjoint.visualization_options)</a>
+      <li><a href="API/HighLevel.html#meep_adjoint.set_adjoint_option_defaults">set_adjoint_option_defaults() (in module meep_adjoint)</a>
+</li>
+      <li><a href="API/HighLevel.html#meep_adjoint.set_option_defaults">set_option_defaults() (in module meep_adjoint)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.shape">shape() (meep_adjoint.dft_cell.Grid property)</a>
+      <li><a href="API/HighLevel.html#meep_adjoint.set_visualization_option_defaults">set_visualization_option_defaults() (in module meep_adjoint)</a>
 </li>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Subregion">Subregion (class in meep_adjoint.dft_cell)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.Subregion">Subregion (class in meep_adjoint)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.Subregion">[1]</a>
+</li>
+      <li><a href="API/LowLevel.html#meep_adjoint.DFTCell.subtract_incident_fields">subtract_incident_fields() (DFTCell method)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.subtract_incident_fields">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -515,7 +325,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/visualization.html#meep_adjoint.visualization.texify">texify() (in module meep_adjoint.visualization)</a>
+      <li><a href="API/LowLevel.html#meep_adjoint.TimeStepper">TimeStepper (class in meep_adjoint)</a>, <a href="meep_adjoint/docs/API/LowLevel.html#meep_adjoint.TimeStepper">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -523,11 +333,7 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.update_design">update_design() (meep_adjoint.optimization_problem.OptimizationProblem method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/option_almanac.html#meep_adjoint.option_almanac.uq">uq() (in module meep_adjoint.option_almanac)</a>
+      <li><a href="API/HighLevel.html#meep_adjoint.OptimizationProblem.update_design">update_design() (OptimizationProblem method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -535,45 +341,7 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/visualization_options.html#meep_adjoint.visualization_options.VISUALIZATION_OPTION_TEMPLATES">VISUALIZATION_OPTION_TEMPLATES (in module meep_adjoint.visualization_options)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/visualization_options.html#meep_adjoint.visualization_options.VISUALIZATION_OPTIONS">VISUALIZATION_OPTIONS (in module meep_adjoint.visualization_options)</a>
-</li>
-      <li><a href="API/optimization_problem.html#meep_adjoint.optimization_problem.OptimizationProblem.visualize">visualize() (meep_adjoint.optimization_problem.OptimizationProblem method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="W">W</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.weights">weights() (meep_adjoint.dft_cell.Grid property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="X">X</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.xtics">xtics() (meep_adjoint.dft_cell.Grid property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Y">Y</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.ytics">ytics() (meep_adjoint.dft_cell.Grid property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Z">Z</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/dft_cell.html#meep_adjoint.dft_cell.Grid.ztics">ztics() (meep_adjoint.dft_cell.Grid property)</a>
+      <li><a href="API/HighLevel.html#meep_adjoint.OptimizationProblem.visualize">visualize() (OptimizationProblem method)</a>
 </li>
   </ul></td>
 </tr></table>

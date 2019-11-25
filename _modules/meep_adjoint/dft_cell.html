@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>meep_adjoint.dft_cell &mdash; meep.adjoint 1.0 documentation</title>
+  <title>meep_adjoint.dft_cell &mdash; meep_adjoint 1.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/toggle_visibility.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> meep.adjoint
+            <a href="../../index.html" class="icon icon-home"> meep_adjoint
           
 
           
@@ -80,18 +81,33 @@
               
             
             
-              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Overview/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Examples/index.html">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Visualization/index.html">Visualization Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../TestSuite/index.html">Test suite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../API/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/LowLevel.html"> Low-level (internal) API</a></li>
 </ul>
 
             
@@ -106,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">meep.adjoint</a>
+          <a href="../../index.html">meep_adjoint</a>
         
       </nav>
 
@@ -139,6 +155,8 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../meep_adjoint.html">meep_adjoint</a> &raquo;</li>
+        
       <li>meep_adjoint.dft_cell</li>
     
     
@@ -155,22 +173,21 @@
            <div itemprop="articleBody">
             
   <h1>Source code for meep_adjoint.dft_cell</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot; this file is mostly convenience wrappers around various objects in core pymeep</span>
+<span></span><span class="sd">&quot;&quot;&quot;Mostly convenience wrappers around various objects in core pymeep.</span>
 
-<span class="sd">    v3, V3 convert between mp.Vector3 and simple lists or np.arrays of coordinates</span>
+<span class="sd">   v3, V3 convert between mp.Vector3 and simple lists or np.arrays of coordinates</span>
 
-<span class="sd">    Grid repackages &#39;array metadata&#39; with some convenient redundancy</span>
+<span class="sd">   Grid repackages &#39;array metadata&#39; with some convenient redundancy</span>
 
-<span class="sd">    Subregion replaces the 6 separate pymeep data structures used</span>
-<span class="sd">    to describe grid subregions (&#39;FluxRegion&#39;, &#39;FieldsRegion&#39;, etc.)</span>
+<span class="sd">   Subregion replaces the 6 separate pymeep data structures used</span>
+<span class="sd">   to describe grid subregions (&#39;FluxRegion&#39;, &#39;FieldsRegion&#39;, etc.)</span>
 
-<span class="sd">    DFTCell similarly replaces the 5 separate data structures used</span>
-<span class="sd">    to describe sets of frequency-domain field components.</span>
+<span class="sd">   DFTCell similarly replaces the 5 separate data structures used</span>
+<span class="sd">   to describe sets of frequency-domain field components.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
-<span class="nb">dir</span><span class="p">(</span><span class="n">mp</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
 
@@ -190,26 +207,27 @@
 
 
 <span class="k">def</span> <span class="nf">V3</span><span class="p">(</span><span class="n">a1</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pack vector for passage to core meep routines.&quot;&quot;&quot;</span>
     <span class="n">v</span><span class="o">=</span><span class="n">v3</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
 
 <span class="k">def</span> <span class="nf">v3</span><span class="p">(</span><span class="n">a1</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Unpack vector returned by core meep routine.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span><span class="o">+</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="p">])</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">a1</span><span class="o">.</span><span class="n">__array__</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">])</span>
 
-
-
 <span class="c1">######################################################################</span>
 <span class="c1"># fix a bug in libmeep</span>
 <span class="c1">######################################################################</span>
 <span class="k">def</span> <span class="nf">fix_array_metadata</span><span class="p">(</span><span class="n">xyzw</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;fixes for the perenially buggy get_array_metadata routine in core meep.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">size</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">==</span><span class="mf">0.0</span> <span class="ow">and</span> <span class="n">xyzw</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="n">center</span><span class="p">[</span><span class="n">d</span><span class="p">]:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;correcting for bug in get_array_metadata: </span><span class="si">{}</span><span class="s1">=</span><span class="si">{}</span><span class="s1">--&gt;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">[</span><span class="n">d</span><span class="p">],</span><span class="n">xyzw</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">center</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span>
+<span class="c1">#            warnings.warn(&#39;correcting for bug in get_array_metadata: {}={}--&gt;{}&#39;.format(&#39;xyz&#39;[d],xyzw[d][0],center[d]))</span>
             <span class="n">xyzw</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">center</span><span class="p">[</span><span class="n">d</span><span class="p">]])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">xyzw</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xyzw</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
@@ -221,6 +239,24 @@
 <span class="n">Grid</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Grid&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;xtics&#39;</span><span class="p">,</span> <span class="s1">&#39;ytics&#39;</span><span class="p">,</span> <span class="s1">&#39;ztics&#39;</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">,</span> <span class="s1">&#39;weights&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">])</span>
 
 <span class="k">def</span> <span class="nf">make_grid</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">dims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct a Grid for a rectangular subregion.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    size : [list or numpy array]</span>
+<span class="sd">        size of region</span>
+<span class="sd">    center : [list or numpy array], optional</span>
+<span class="sd">        center of region, by default np.zeros(3)</span>
+<span class="sd">    dims : [list of integer], optional</span>
+<span class="sd">        numbers of grid points in each dimension, by default None</span>
+<span class="sd">    length : [float], optional</span>
+<span class="sd">        discretization lengthscale, by default None</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    New instance of Grid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">nd</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
     <span class="n">center</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">center</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="n">nd</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">size</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="n">nd</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -239,30 +275,59 @@
 
 
 <span class="k">def</span> <span class="nf">xyzw2grid</span><span class="p">(</span><span class="n">xyzw</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">Grid</span><span class="p">(</span> <span class="n">xyzw</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                 <span class="n">xyzw</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                 <span class="n">xyzw</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="sd">&quot;&quot;&quot;Construct Grid from lists of points and weights.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Grid</span><span class="p">(</span><span class="n">xyzw</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xyzw</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xyzw</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
                 <span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">Vector3</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xyzw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">xyzw</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">xyzw</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
-                 <span class="n">xyzw</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
-                 <span class="n">xyzw</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
-               <span class="p">)</span>
+                 <span class="n">xyzw</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">xyzw</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Subregion"><a class="viewcode-back" href="../../API/dft_cell.html#meep_adjoint.dft_cell.Subregion">[docs]</a><span class="k">class</span> <span class="nc">Subregion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Specification of grid subregion</span>
+<div class="viewcode-block" id="Subregion"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.Subregion">[docs]</a><span class="k">class</span> <span class="nc">Subregion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Subregion of computational cell.</span>
 
-<span class="sd">        A Subregion is a finite hyperrectangular spatial region contained</span>
-<span class="sd">        within the meep computational cell.</span>
-<span class="sd">        A subregion may be of codimension 1 (i.e. it is a line in 2D</span>
-<span class="sd">        or a plane in 3D), in which case it has a normal direction.</span>
-<span class="sd">        Codim-1 subregions are used to define eigenmode sources and</span>
-<span class="sd">        to evaluate Poynting fluxes and eigenmode expansion coefficients.</span>
+<span class="sd">    A Subregion is a finite hyperrectangular region of space contained</span>
+<span class="sd">    within the extents of the FDTD computational grid.</span>
 
-<span class="sd">        Alternatively, the subregion may be of codimension 0, i.e.</span>
-<span class="sd">        it is a full rectangle (2D) or box (3D), or of dimemsion 0, i.e.</span>
-<span class="sd">        a point.</span>
+<span class="sd">    A Subregion may be of codimension 1 (i.e. it is a line in 2D</span>
+<span class="sd">    or a plane in 3D), in which case it has a normal direction.</span>
+<span class="sd">    Codim-1 subregions are used to define eigenmode sources and</span>
+<span class="sd">    to evaluate Poynting fluxes and eigenmode expansion coefficients.</span>
+
+<span class="sd">    Alternatively, the subregion may be of codimension 0 [i.e.</span>
+<span class="sd">    it is a full rectangle (2D) or box (3D)], or of dimension 0 [i.e.</span>
+<span class="sd">    it is a point]. The normal direction is undefined in these cases.</span>
+
+<span class="sd">    A Subregion has a name (str), which is user-assigned or autogenerated</span>
+<span class="sd">    if left unspecified.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    ``Subregion`` is a common replacement for ``FluxRegion``, ``EnergyRegion``,</span>
+<span class="sd">    and the other similar data structures in :program:`libmeep`.</span>
+<span class="sd">    Its advantages are that (a) it eliminates redundant code and cumbersome API conventions</span>
+<span class="sd">    imposed by the coexistence of multiple distinct data structures all describing the</span>
+<span class="sd">    same thing, and that (b) it adds a user-assignable name field, which would be</span>
+<span class="sd">    convenient to have already in core :program:`pymeep`</span>
+<span class="sd">    but is essential in ``meep_adjoint`` to allow objective quantities to be</span>
+<span class="sd">    assigned names that identify the objective region for which they are defined.</span>
+
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        xmin : array-like, optional</span>
+<span class="sd">            minimal corner, by default None</span>
+<span class="sd">        xmax : array-like, optional</span>
+<span class="sd">            maximal corner, by default None</span>
+<span class="sd">        center : array-like, optional</span>
+<span class="sd">            center, by default ``ORIGIN``</span>
+<span class="sd">        size : array-like, optional</span>
+<span class="sd">            size, by default None</span>
+<span class="sd">        normal : array-like, optional</span>
+<span class="sd">            normal direction for codim-1 regions, by default None</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            arbitrary caller-chosen label; autogenerated if not specified</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Subregion.__init__"><a class="viewcode-back" href="../../API/dft_cell.html#meep_adjoint.dft_cell.Subregion.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">ORIGIN</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">ORIGIN</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="n">normal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">xmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">xmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span><span class="p">)</span>   <span class="o">=</span> <span class="p">(</span><span class="n">v3</span><span class="p">(</span><span class="n">xmin</span><span class="p">),</span> <span class="n">v3</span><span class="p">(</span><span class="n">xmax</span><span class="p">))</span>
@@ -270,54 +335,60 @@
         <span class="k">elif</span> <span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">v3</span><span class="p">(</span><span class="n">center</span><span class="p">),</span> <span class="n">v3</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
            <span class="bp">self</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span>   <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">+</span> <span class="n">sgn</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span>  <span class="k">for</span> <span class="n">sgn</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dir</span> <span class="k">if</span> <span class="n">normal</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">normal</span><span class="p">),</span> <span class="n">name</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dir</span> <span class="k">if</span> <span class="n">normal</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">normal</span><span class="p">),</span> <span class="n">name</span></div>
+
 
 <span class="n">dft_cell_names</span><span class="o">=</span><span class="p">[]</span>
 
-<div class="viewcode-block" id="DFTCell"><a class="viewcode-back" href="../../API/dft_cell.html#meep_adjoint.dft_cell.DFTCell">[docs]</a><span class="k">class</span> <span class="nc">DFTCell</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Simpler data structure for frequency-domain fields in MEEP</span>
 
-<span class="sd">        The instantiating data of a DFTCell are a grid subregion, a set of</span>
-<span class="sd">        field components, and a list of frequencies. These metadata fields</span>
-<span class="sd">        remain constant throughout the lifetime of a DFTCell.</span>
-<span class="sd">        In addition to the metadata, instances of DFTCell allocate</span>
-<span class="sd">        internal arrays of DFT registers in which the specified components of the</span>
-<span class="sd">        frequency-domain fields at the specified grid points and frequencies</span>
-<span class="sd">        are accumulated over the course of a MEEP timestepping run. These</span>
-<span class="sd">        registers are reset to zero at the beginning of the next timestepping</span>
-<span class="sd">        run, but in the meantime you can use the ``save_fields`` method</span>
-<span class="sd">        to save an internally cached snapshot of the fields computed on a</span>
-<span class="sd">        given timestepping run.</span>
+<div class="viewcode-block" id="DFTCell"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell">[docs]</a><span class="k">class</span> <span class="nc">DFTCell</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simpler data structure for frequency-domain fields in MEEP</span>
 
-<span class="sd">        Note: for now, all arrays are stored in memory. For large calculations with</span>
-<span class="sd">        many DFT frequencies this may become impractical. TODO: disk caching.</span>
+<span class="sd">       The instantiating data of a DFTCell are a grid subregion, a set of</span>
+<span class="sd">       field components, and a list of frequencies. These metadata fields</span>
+<span class="sd">       remain constant throughout the lifetime of a DFTCell.</span>
+<span class="sd">       In addition to the metadata, instances of DFTCell allocate</span>
+<span class="sd">       internal arrays of DFT registers in which the specified components of the</span>
+<span class="sd">       frequency-domain fields at the specified grid points and frequencies</span>
+<span class="sd">       are accumulated over the course of a MEEP timestepping run. These</span>
+<span class="sd">       registers are reset to zero at the beginning of the next timestepping</span>
+<span class="sd">       run, but in the meantime you can use the ``save_fields`` method</span>
+<span class="sd">       to save an internally cached snapshot of the fields computed on a</span>
+<span class="sd">       given timestepping run.</span>
 
-<span class="sd">        The internally-stored frequency-domain fields at a single frequency</span>
-<span class="sd">        may be fetched via the get_EH_slice (single component) or</span>
-<span class="sd">        get_EH_slices (all components) methods. By default these routines</span>
-<span class="sd">        return slices of the currently active fields (i.e. the fields computed</span>
-<span class="sd">        on the most recent timestepping run), but they accept an optional</span>
-<span class="sd">        parameter specifying the label of a data set stored by a call to</span>
-<span class="sd">        ``save_fields`` after a previous timestepping run.</span>
+<span class="sd">       Note: for now, all arrays are stored in memory. For large calculations with</span>
+<span class="sd">       many DFT frequencies it might make sense to implement a disk-caching scheme.</span>
 
-<span class="sd">        For convenience, DFTCell also offers a get_eigenmode_slices() method that</span>
-<span class="sd">        computes and returns eigenfield profiles in the same format as DFT fields.</span>
+<span class="sd">       The internally-stored frequency-domain fields at a single frequency</span>
+<span class="sd">       may be fetched via the get_EH_slice (single component) or</span>
+<span class="sd">       get_EH_slices (all components) methods. By default these routines</span>
+<span class="sd">       return slices of the currently active fields (i.e. the fields computed</span>
+<span class="sd">       on the most recent timestepping run), but they accept an optional</span>
+<span class="sd">       parameter specifying the label of a data set stored by a call to</span>
+<span class="sd">       ``save_fields`` after a previous timestepping run.</span>
 
-<span class="sd">        DFTCells also know how to crunch their internally-stored field-component</span>
-<span class="sd">        data to compute various physical quantities of interest, such as</span>
-<span class="sd">        Poynting fluxes and field energies. We consider this the primary</span>
-<span class="sd">        functionality exported by DFTCell, and thus implement it as the</span>
-<span class="sd">        __call__ method of the class.</span>
+<span class="sd">       For convenience, DFTCell also offers a get_eigenmode_slices() method that</span>
+<span class="sd">       computes and returns eigenfield profiles in the same format as DFT fields.</span>
 
-<span class="sd">        DFTCell replaces the DftFlux, DftFields, DftNear2Far, DftForce, DftLdos,</span>
-<span class="sd">        and DftObj structures in core pymeep.</span>
+<span class="sd">       DFTCells also know how to crunch their internally-stored field-component</span>
+<span class="sd">       data to compute various physical quantities of interest, such as</span>
+<span class="sd">       Poynting fluxes and field energies. We consider this the primary</span>
+<span class="sd">       functionality exported by DFTCell, and thus implement it as the</span>
+<span class="sd">       __call__ method of the class.</span>
+
+<span class="sd">       DFTCell replaces the DftFlux, DftFields, DftNear2Far, DftForce, DftLdos,</span>
+<span class="sd">       and DftObj structures in core pymeep.</span>
+
+<span class="sd">       Parameters</span>
+<span class="sd">       ----------</span>
+<span class="sd">       region : Subregion</span>
+<span class="sd">           Subregion of computational cell in which to compute frequency-domain field components.</span>
+<span class="sd">       components : list of meep components (i.e. [mp.Ex, mp.Hy]), optional</span>
+<span class="sd">           Field components to compute.</span>
+<span class="sd">       fcen, df, nfreq: float, float, int</span>
+<span class="sd">           Set of frequencies at which to compute FD fields.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1">######################################################################</span>
-    <span class="c1">######################################################################</span>
-    <span class="c1">######################################################################</span>
-<div class="viewcode-block" id="DFTCell.__init__"><a class="viewcode-back" href="../../API/dft_cell.html#meep_adjoint.dft_cell.DFTCell.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fcen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nfreq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fcen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nfreq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">region</span>     <span class="o">=</span> <span class="n">region</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normal</span>     <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">normal</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">celltype</span>   <span class="o">=</span> <span class="s1">&#39;flux&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;fields&#39;</span>
@@ -334,7 +405,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">eigencache</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1"># cache of eigenmode field data to avoid redundant recalculations</span>
 
         <span class="k">global</span> <span class="n">dft_cell_names</span>
-
         <span class="k">if</span> <span class="n">region</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">region</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">celltype</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -350,13 +420,17 @@
         <span class="c1"># object; it only depends on the resolution and extents of the Yee grid</span>
         <span class="c1"># and thus logically belongs in `vec.cpp` or another code module that</span>
         <span class="c1"># exists independently of fields, structures, etc.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="c1">######################################################################</span>
-    <span class="c1"># &#39;register&#39; the cell with a MEEP timestepping simulation to request</span>
-    <span class="c1"># computation of frequency-domain fields</span>
-    <span class="c1">######################################################################</span>
-    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="DFTCell.register"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.register">[docs]</a>    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; &#39;Register&#39; the cell in a MEEP simulation to request computation of frequency-domain fields.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sim : mp.Simulation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sim</span> <span class="o">=</span> <span class="n">sim</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">celltype</span> <span class="o">==</span> <span class="s1">&#39;flux&#39;</span><span class="p">:</span>
             <span class="n">flux_region</span>  <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">FluxRegion</span><span class="p">(</span><span class="n">V3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">center</span><span class="p">),</span><span class="n">V3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">size</span><span class="p">),</span><span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">normal</span><span class="p">)</span>
@@ -368,69 +442,127 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">xyzw</span><span class="o">=</span><span class="n">sim</span><span class="o">.</span><span class="n">get_array_metadata</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">V3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">center</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">V3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">collapse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">snap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">fix_array_metadata</span><span class="p">(</span><span class="n">xyzw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">xyzw2grid</span><span class="p">(</span><span class="n">xyzw</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">xyzw2grid</span><span class="p">(</span><span class="n">xyzw</span><span class="p">)</span></div>
 
     <span class="c1">######################################################################</span>
-    <span class="c1"># Compute an array of frequency-domain field amplitudes, i.e. a</span>
-    <span class="c1"># frequency-domain array slice, for a single field component at a</span>
-    <span class="c1"># single frequency in the current simulation. This is like</span>
-    <span class="c1"># mp.get_dft_array(), but &#39;zero-padded:&#39; when the low-level DFT object</span>
-    <span class="c1"># does not have data for the requested component (perhaps because it vanishes</span>
-    <span class="c1"># identically by symmetry), this routine returns an array of the expected</span>
-    <span class="c1"># dimensions with all zero entries, instead of a rank-0 array that prints</span>
-    <span class="c1"># out as a single preposterously large or small floating-point number,</span>
-    <span class="c1"># which is the not-very-user-friendly behavior of mp.get_dft_array().</span>
     <span class="c1">######################################################################</span>
-    <span class="k">def</span> <span class="nf">get_EH_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="DFTCell.get_EH_slice"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.get_EH_slice">[docs]</a>    <span class="k">def</span> <span class="nf">get_EH_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch array of frequency-domain amplitudes for a single field component.</span>
+
+<span class="sd">        Compute an array of frequency-domain field amplitudes, i.e. a</span>
+<span class="sd">        frequency-domain array slice, for a single field component at a</span>
+<span class="sd">        single frequency in the current simulation. This is like</span>
+<span class="sd">        mp.get_dft_array(), but &#39;zero-padded:&#39; when the low-level DFT object</span>
+<span class="sd">        does not have data for the requested component (perhaps because it vanishes</span>
+<span class="sd">        identically by symmetry), this routine returns an array of the expected</span>
+<span class="sd">        dimensions with all zero entries, instead of a rank-0 array that prints</span>
+<span class="sd">        out as a single preposterously large or small floating-point number,</span>
+<span class="sd">         which is the not-very-user-friendly behavior of mp.get_dft_array().</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        c : (mp.component)</span>
+<span class="sd">            Field component to fetch.</span>
+<span class="sd">        nf : int, optional</span>
+<span class="sd">            Frequency index, by default 0</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.array</span>
+<span class="sd">            Complex-valued array giving field amplitude at grid points.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">EH</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">get_dft_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dft_obj</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">nf</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">EH</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">EH</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EH</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">EH</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
 
-    <span class="c1">######################################################################</span>
-    <span class="c1"># Return a 1D array (list) of arrays of frequency-domain field amplitudes,</span>
-    <span class="c1"># one for each component in this DFTCell, at a single frequency in a</span>
-    <span class="c1"># single MEEP simulation. The simulation in question may be the present,</span>
-    <span class="c1"># ongoing simulation (if label==None), in which case the array slices are</span>
-    <span class="c1"># read directly from the currently active meep DFT object; or it may be a</span>
-    <span class="c1"># previous simulation (identified by label) for which</span>
-    <span class="c1"># DFTCell::save_fields(label) was called at the end of timestepping.</span>
-    <span class="c1">######################################################################</span>
-    <span class="k">def</span> <span class="nf">get_EH_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DFTCell.get_EH_slices"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.get_EH_slices">[docs]</a>    <span class="k">def</span> <span class="nf">get_EH_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch arrays of frequency-domain field amplitudes for all stored components.</span>
+
+<span class="sd">        Return a 1D array (list) of arrays of frequency-domain field amplitudes,</span>
+<span class="sd">        one for each component in this DFTCell, at a single frequency in a</span>
+<span class="sd">        single MEEP simulation. The simulation in question may be the present,</span>
+<span class="sd">        ongoing simulation (if label==None), in which case the array slices are</span>
+<span class="sd">        read directly from the currently active meep DFT object; or it may be a</span>
+<span class="sd">        previous simulation (identified by label) for which</span>
+<span class="sd">        DFTCell::save_fields(label) was called at the end of timestepping.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : [str], optional</span>
+<span class="sd">            Label of saved data to retrieve.</span>
+<span class="sd">        nf : int, optional</span>
+<span class="sd">            Frequency index, by default 0</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of np.array</span>
+<span class="sd">            Arrays of field-component amplitudes at grid points</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            if no data exists for the specified label.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_EH_slice</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span> <span class="p">]</span>
         <span class="k">elif</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">EH_cache</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">EH_cache</span><span class="p">[</span><span class="n">label</span><span class="p">][</span><span class="n">nf</span><span class="p">]</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;DFTCell </span><span class="si">{}</span><span class="s2"> has no saved data for label &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;DFTCell </span><span class="si">{}</span><span class="s2"> has no saved data for label &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span></div>
 
 
-    <span class="c1">######################################################################</span>
-    <span class="c1"># substract incident from total fields to yield scattered fields</span>
-    <span class="c1">######################################################################</span>
-    <span class="k">def</span> <span class="nf">subtract_incident_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">EHT</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="DFTCell.subtract_incident_fields"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.subtract_incident_fields">[docs]</a>    <span class="k">def</span> <span class="nf">subtract_incident_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">EHT</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Substract incident from total fields to yield scattered fields.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        EHT : list of arrays of field component amplitudes, as</span>
+<span class="sd">              returned by get_EH_slices, for the **total** fields</span>
+<span class="sd">        nf : int, optional</span>
+<span class="sd">             frequency index, by default 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">EHI</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_EH_slices</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;incident&#39;</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">nc</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
-            <span class="n">EHT</span><span class="p">[</span><span class="n">nc</span><span class="p">]</span> <span class="o">-=</span> <span class="n">EHI</span><span class="p">[</span><span class="n">nc</span><span class="p">]</span>
+            <span class="n">EHT</span><span class="p">[</span><span class="n">nc</span><span class="p">]</span> <span class="o">-=</span> <span class="n">EHI</span><span class="p">[</span><span class="n">nc</span><span class="p">]</span></div>
 
 
-    <span class="c1">####################################################################</span>
-    <span class="c1"># This routine tells the DFTCell to create and save an archive of</span>
-    <span class="c1"># the frequency-domain array slices for the present simulation---i.e.</span>
-    <span class="c1"># to copy the frequency-domain field data out of the sim.dft_obj</span>
-    <span class="c1"># structure and into an appropriate data buffer in the DFTCell,</span>
-    <span class="c1"># before the sim.dft_obj data vanish when sim is reset for the next run.</span>
-    <span class="c1"># This routine should be called after timestepping is complete. The</span>
-    <span class="c1"># given label is used to identify the stored data for future retrieval.</span>
-    <span class="c1">######################################################################</span>
-    <span class="k">def</span> <span class="nf">save_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">EH_cache</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_EH_slices</span><span class="p">(</span><span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">)</span> <span class="k">for</span> <span class="n">nf</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">freqs</span><span class="p">))]</span>
+<div class="viewcode-block" id="DFTCell.save_fields"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.save_fields">[docs]</a>    <span class="k">def</span> <span class="nf">save_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Save current values of grid fields internally for later use.</span>
+
+<span class="sd">        This routine tells the DFTCell to create and save an archive of</span>
+<span class="sd">        the frequency-domain array slices for the present simulation---i.e.</span>
+<span class="sd">        to copy the frequency-domain field data out of the sim.dft_obj</span>
+<span class="sd">        structure and into an appropriate data buffer in the DFTCell,</span>
+<span class="sd">        before the sim.dft_obj data vanish when sim is reset for the next run.</span>
+<span class="sd">        This routine should be called after timestepping is complete. The</span>
+<span class="sd">        given label is used to identify the stored data for future retrieval.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : str</span>
+<span class="sd">            Label assigned to data set, used subsequently for retrieval.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EH_cache</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_EH_slices</span><span class="p">(</span><span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">)</span> <span class="k">for</span> <span class="n">nf</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">freqs</span><span class="p">))]</span></div>
 
 
-    <span class="c1">######################################################################</span>
-    <span class="c1"># Return a 1D array (list) of arrays of field amplitudes for all</span>
-    <span class="c1"># tangential E,H components at a single frequency---just like</span>
-    <span class="c1"># get_EH_slices()---except that the sliced E and H fields are the</span>
-    <span class="c1"># fields of eigenmode #mode.</span>
-    <span class="c1">######################################################################</span>
-    <span class="k">def</span> <span class="nf">get_eigenmode_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="DFTCell.get_eigenmode_slices"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.DFTCell.get_eigenmode_slices">[docs]</a>    <span class="k">def</span> <span class="nf">get_eigenmode_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Like get_EH_slices, but for eigenmode fields.</span>
+
+<span class="sd">        Return a 1D array (list) of arrays of field amplitudes for all</span>
+<span class="sd">        tangential E,H components at a single frequency---just like</span>
+<span class="sd">        get_EH_slices()---except that the sliced E and H fields are the</span>
+<span class="sd">        fields of eigenmode #mode.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mode : int</span>
+<span class="sd">            Eigenmode index.</span>
+<span class="sd">        nf : int, optional</span>
+<span class="sd">            Frequency index, by default 0</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        list of np.arrays (same format as returned by get_EH_slices)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># look for data in cache</span>
         <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;M</span><span class="si">{}</span><span class="s1">.F</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span><span class="n">nf</span><span class="p">)</span>
@@ -451,19 +583,28 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigencache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">eigencache</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span><span class="o">=</span><span class="n">eh_slices</span>
 
-        <span class="k">return</span> <span class="n">eh_slices</span>
+        <span class="k">return</span> <span class="n">eh_slices</span></div>
 
 
-    <span class="c1">######################################################################</span>
-    <span class="c1"># compute an objective quantity, i.e. an eigenmode</span>
-    <span class="c1"># coefficient or a scattered or total power.</span>
-    <span class="c1">######################################################################</span>
-<div class="viewcode-block" id="DFTCell.__call__"><a class="viewcode-back" href="../../API/dft_cell.html#meep_adjoint.dft_cell.DFTCell.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qcode</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Compute and return the value of an objective quantity.</span>
-<span class="sd">            Args:</span>
-<span class="sd">                qcode: string identifying the quantity (&#39;S&#39; for flux, etc.)</span>
-<span class="sd">                mode:  eigenmode index, only needed for some quantities</span>
-<span class="sd">                nf:    frequency index</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qcode</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute and return the value of an objective quantity.</span>
+
+<span class="sd">        Computes an objective quantity, i.e. an eigenmode</span>
+<span class="sd">        coefficient or a scattered or total power.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        qcode : [str]</span>
+<span class="sd">            Objective quantity code.</span>
+<span class="sd">        mode : int, optional</span>
+<span class="sd">            Eigenmode index, by default 0</span>
+<span class="sd">        nf : int, optional</span>
+<span class="sd">            Frequency index, by default 0</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float64 or complex128</span>
+<span class="sd">            value of objective quantity</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">w</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
         <span class="n">EH</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_EH_slices</span><span class="p">(</span><span class="n">nf</span><span class="o">=</span><span class="n">nf</span><span class="p">)</span>
@@ -490,7 +631,34 @@
                <span class="n">q</span>  <span class="o">+=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">mu</span><span class="o">*</span><span class="n">H2</span><span class="p">)</span>
            <span class="k">return</span> <span class="n">q</span>
         <span class="k">else</span><span class="p">:</span> <span class="c1"># TODO: support other types of objectives quantities?</span>
-            <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;DFTCell </span><span class="si">{}</span><span class="s1">: unsupported quantity type </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">qcode</span><span class="p">))</span></div></div>
+            <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;DFTCell </span><span class="si">{}</span><span class="s1">: unsupported quantity type </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">qcode</span><span class="p">))</span></div>
+
+
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">rescale_sources</span><span class="p">(</span><span class="n">sources</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scale the overall amplitude of a spatial source distribution to compensate</span>
+<span class="sd">       for the frequency dependence of its temporal envelope.</span>
+
+<span class="sd">       In a MEEP calculation driven by sources with a pulsed temporal envelope T(t),</span>
+<span class="sd">       the amplitudes of all frequency-f DFT fields will be proportional to</span>
+<span class="sd">       T^tilde (f), the Fourier transform of the envelope. Here we divide</span>
+<span class="sd">       the overall amplitude of the source by T^tilde(f_c) (where f_c = center</span>
+<span class="sd">       frequency), which exactly cancels the extra scale factor for DFT</span>
+<span class="sd">       fields at f_c.</span>
+
+<span class="sd">       Args:</span>
+<span class="sd">           sources: list of mp.Sources</span>
+
+<span class="sd">       Returns:</span>
+<span class="sd">           none (the rescaling is done in-place)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+        <span class="n">envelope</span><span class="p">,</span> <span class="n">fcen</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">src</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">frequency</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">envelope</span><span class="p">,</span> <span class="s2">&quot;fourier_transform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">/=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">fourier_transform</span><span class="p">(</span><span class="n">fcen</span><span class="p">)</span>
+
 </pre></div>
 
            </div>

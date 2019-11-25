@@ -1,0 +1,701 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction and Overview &mdash; meep_adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../_static/toggle_visibility.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> meep_adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../API/LowLevel.html"> Low-level (internal) API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">meep_adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction and Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/meep_adjoint/docs/overview/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="introduction-and-overview">
+<span id="theoverview"></span><h1>Introduction and Overview<a class="headerlink" href="#introduction-and-overview" title="Permalink to this headline">¶</a></h1>
+<p>This page offers a quick introduction to the theory and practice of
+<a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>, beginning with a basic backgrounder on adjoint
+methods in general, then considering some representative design-optimization
+problems and outlining typical workflows for tackling
+in <a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>.
+Adjoint experts will probably want to skim much of this before
+moving on to the detailed step-by-step <span class="xref std std-doc">tutorial</span>,
+but are first encouraged at least to glance at our conventions for
+what constitute the
+<a href="#id1"><span class="problematic" id="id2">:doc:`essential defining ingredients of optimization problems &lt;OptProbIngredients_&gt;`_</span></a>.</p>
+<div class="section" id="background-automated-design-optimization-and-the-adjoint-method">
+<h2>Background: Automated design optimization and the adjoint method<a class="headerlink" href="#background-automated-design-optimization-and-the-adjoint-method" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="electromagnetic-design-optimization">
+<h3>Electromagnetic design optimization<a class="headerlink" href="#electromagnetic-design-optimization" title="Permalink to this headline">¶</a></h3>
+<p>A common task in electromagnetic engineering is to custom-tune the design
+of some component of a system—a waveguide taper, a power splitter,
+an input coupler, an antenna, etc.—to optimize the performance of the system
+as defined by some problem-specific metric. For our purposes,
+the performance metric will always be a physical quantity computed
+from frequency-domain electromagnetic fields—a <a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_fluxes">power flux</a>,
+an <a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#dft_energy">energy density</a>,
+an <a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_eigenmode_coefficients">eigenmode expansion coefficient</a>,
+or perhaps some mathematical function of one or more such
+quantities—which we will denote
+<span class="math notranslate nohighlight">\(f^\text{obj}\)</span> or simply <span class="math notranslate nohighlight">\(f\)</span> and refer to
+as the <em>objective function</em>.</p>
+<p>Meanwhile, the “design” entity that will be at our disposal
+to tweak and adjust in the service of optimizing <span class="math notranslate nohighlight">\(f^\text{obj}\)</span>
+will be just the spatially-varying scalar dielectric function
+<span class="math notranslate nohighlight">\(\epsilon^\text{des}(\mathbf x)\)</span> throughout some
+fixed subregion of the geometry (the <em>design region</em>
+<span class="math notranslate nohighlight">\(\mathcal{V}^\text{des}\)</span>).
+Of course, we will want to restrict consideration to designs that can actually be fabricated in the real world;
+at a minimum this means that the permittivity
+at each spatial point must satisfy the conditions imposed on
+physical materials by causality (which, for the
+simplest case of nondispersive dielectrics, are just that
+<span class="math notranslate nohighlight">\(\epsilon\)</span> be everywhere real-valued and <span class="math notranslate nohighlight">\(\ge 1\)</span>),
+but in some cases we might want to impose additional
+constraints—such as minimum linewidths—to reflect
+the limitations of practical fabrication techniques.</p>
+<p>Thus, the problems we consider will be of the
+general schematic form</p>
+<div class="math notranslate nohighlight">
+\[\text{ for } \mathbf{x} \in \mathcal{V}^\text{des},
+\text{ find }\epsilon^\text{des}(\mathbf{x})
+\text{ to optimize } f^\text{obj}
+\tag{1}\]</div>
+<p>subject to the constraints that
+<span class="math notranslate nohighlight">\(\epsilon^\text{des}\)</span> be physical
+and (optionally) fabricatable.</p>
+<div class="section" id="first-examples-holey-waveguide-and-optical-router">
+<h4>First Examples: Holey waveguide and optical router<a class="headerlink" href="#first-examples-holey-waveguide-and-optical-router" title="Permalink to this headline">¶</a></h4>
+<p>Here are two representative examples that we will use
+for illustrative purposes throughout this documentation
+(and for diagnostic purposes in the <a class="reference external" href="../TestSuite/index">test suite</a>).</p>
+<p>First, the <strong>Holey Waveguide</strong> is a <em>toy</em> problem that fits the form
+of <code class="xref eq docutils literal notranslate"><span class="pre">formulation</span></code>: a simple section of waveguide, nearly pristine,
+but containing one region from which the dielectric material has been
+scooped out, leaving a hole:</p>
+<img alt="meep_adjoint/docs/overview/HoleyWaveguideGeometry.png" src="meep_adjoint/docs/overview/HoleyWaveguideGeometry.png" />
+<p>In the presence of the hole, a wave entering the waveguide section
+from the left will be partially reflected, so that not all of the
+power it carries it will exit from the right. The design-optimization
+problem is to optimize the permittivity distribution in the hole region
+to maximize output power (for fixed input power). Obviously the correct
+answer is just to fill in the hole uniformly with the waveguide
+material, and the ability to figure this out is a simple,
+easy-to-debug test of the efficacy any optimization paradigm.</p>
+<p>A less trivial example is the <strong>Cross Router,</strong> in which we
+envision 4 waveguides conjoined by a central hub region,
+whose design we will adjust to route signals from one port
+to another:</p>
+<img alt="meep_adjoint/docs/overview/RouterGeometry_Iter0.png" src="meep_adjoint/docs/overview/RouterGeometry_Iter0.png" />
+</div>
+<div class="section" id="examples">
+<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[\epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\]</div>
+<p>naively, this would give us uncountably many degrees of
+freedom and allow permittivity functions of
+arbitrarily rapid spatial variation, but such a design
+space would be both mathematically unwieldy and technologically
+unrealistic (in view of the finite lithographic linewidths
+and other constraints posed by real-world fabrication methods),
+whereupon in general we will approximate the design function
+as a finite expansion of the form</p>
+<div class="math notranslate nohighlight">
+\[\epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\{b_d(\mathbf{x})\}, d=1,\cdots,D\)</span> is some conveniently-chosen
+set of <span class="math notranslate nohighlight">\(D\)</span></p>
+<blockquote>
+<div><p>example in the <a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> <span class="xref std std-doc">example gallery</span>,
+the task is to design the central hub region to steer
+incoming power arriving via the <strong>West</strong> input waveguide port
+entirely to the <strong>North</strong> output waveguide port, ideally with zero
+leakage power emitted from the <strong>South</strong> and <strong>East</strong></p>
+<p>To formulate this problem mathematically, suppose we
+represent the unknown design function as an expansion in some
+convenient finite set of basis functions:</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned} \epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\\
+Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the **West** input waveguide port
+ to the **North** output wav ple, in the :doc:`cross router &lt;Examples/cross_router&gt;`
+ example in the :mod:`meep_adjoint` :doc:`example gallery &lt;Examples/index&gt;`,
+ the task is to design the central hub region to steer
+ incoming power arriving via the **West** input waveguide port
+ entirely to the **North** output waveguide port, ideally with zero
+ leakage power emitted from the **South** and **East**\\ To formulate this problem mathematically, suppose we
+ represent the unknown design function as an expansion in some
+ convenient finite set of basis functions:\end{aligned}\end{align} \]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned} \epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\\
+Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the **West** input waveguide port
+ to the **North** output wav ple, in the :doc:`cross router &lt;Examples/cross_router&gt;`
+ example in the :mod:`meep_adjoint` :doc:`example gallery &lt;Examples/index&gt;`,
+ the task is to design the central hub region to steer
+ incoming power arriving via the **West** input waveguide port
+ entirely to the **North** output waveguide port, ideally with zero
+ leakage power emitted from the **South** and **East**\\ To formulate this problem mathematically, suppose we
+ represent the unknown design function as an expansion in some
+ convenient finite set of basis functions:\end{aligned}\end{align} \]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned} \epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\\
+Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the **West** input waveguide port
+ to the **North** output wav ple, in the :doc:`cross router &lt;Examples/cross_router&gt;`
+ example in the :mod:`meep_adjoint` :doc:`example gallery &lt;Examples/index&gt;`,
+ the task is to design the central hub region to steer
+ incoming power arriving via the **West** input waveguide port
+ entirely to the **North** output waveguide port, ideally with zero
+ leakage power emitted from the **South** and **East**\\ To formulate this problem mathematically, suppose we
+ represent the unknown design function as an expansion in some
+ convenient finite set of basis functions:\end{aligned}\end{align} \]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned} \epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\\
+Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the **West** input waveguide port
+ to the **North** output wav ple, in the :doc:`cross router &lt;Examples/cross_router&gt;`
+ example in the :mod:`meep_adjoint` :doc:`example gallery &lt;Examples/index&gt;`,
+ the task is to design the central hub region to steer
+ incoming power arriving via the **West** input waveguide port
+ entirely to the **North** output waveguide port, ideally with zero
+ leakage power emitted from the **South** and **East**\\ To formulate this problem mathematically, suppose we
+ represent the unknown design function as an expansion in some
+ convenient finite set of basis functions:\end{aligned}\end{align} \]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned} \epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\\
+Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the **West** input waveguide port
+ to the **North** output wav ple, in the :doc:`cross router &lt;Examples/cross_router&gt;`
+ example in the :mod:`meep_adjoint` :doc:`example gallery &lt;Examples/index&gt;`,
+ the task is to design the central hub region to steer
+ incoming power arriving via the **West** input waveguide port
+ entirely to the **North** output waveguide port, ideally with zero
+ leakage power emitted from the **South** and **East**\\ To formulate this problem mathematically, suppose we
+ represent the unknown design function as an expansion in some
+ convenient finite set of basis functions:\end{aligned}\end{align} \]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned} \epsilon^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\\
+Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the **West** input waveguide port
+ to the **North** output wav  ^\text{design}(\mathbf x)\approx
+\sum_{d=1}^D \beta_d b_d(\mathbf x)\\
+Then, for given fixed values of the input power, operating
+frequency, and other parameters, the ia the **West** input waveguide port
+ to the **North** output wav  scalar basis functions defined for\end{aligned}\end{align} \]</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{x}\in\mathcal{V}^\text{design}\)</span>.
+This restricts the space of possible design functions to the span
+of the <span class="math notranslate nohighlight">\(\{b_d\}\)</span> and reduces our mathematical problem to
+finding values for the <span class="math notranslate nohighlight">\(\{\beta_d\}\)</span> coefficients
+that optimize the objective function—subject, of course, to
+appropriate physicality constraints on $epsilon$.
+If we restrict consideration to nondispersive media, the
+conditions for a physical permittivity are simply
+<span class="math notranslate nohighlight">\(\text{Re }\epsilon\ge 1, \text{Im }\epsilon = 0\)</span>,
+and the mathematical formulation of our design challenge
+takes the form</p>
+<div class="math notranslate nohighlight" id="equation-opt-prob">
+<span class="eqno">(1)<a class="headerlink" href="#equation-opt-prob" title="Permalink to this equation">¶</a></span>\[ \begin{align}\begin{aligned} \text{find } \boldsymbol{\beta} \in \mathbb{R}^D
+ \text{ such that }
+ f^\text{obj}(\boldsymbol{\beta}) = \text{optimum},\\ \text{subject to}
+ \sum_{d=1}^D \beta_d b_d(\mathbf x) \ge 1,
+  \,\,\,\, \forall \,\,\,\, \mathbf{x} \in \mathcal{V}^\text{design}\end{aligned}\end{align} \]</div>
+<p>This is a $D$-dimensional optimization problem subject to linear
+inequality constraints.[#]_</p>
+<p>We will shortly present a smorgasbord of examples; for now,
+perhaps a good one to have in mind is the
+[hole cloak ](#HoleCloak) discussed below, in which a
+chunk of material has been removed from an otherwise perfect waveguide
+section, ruining the otherwise perfectly unidirectional (no scattering or reflection)
+flow of power from a source at one end of the guide to a sink at the other;
+our task is to tweak the permittivity in an annular region
+surrounding the defect (the <em>cloak</em>) so as to restore
+as much as possible the reflectionless transfer of power
+across the waveguide—thus hiding or “cloaking”
+the presence of defect from external detection.</p>
+<p>Now, for a given a candidate design <span class="math notranslate nohighlight">\(\epsilon^{\text{trial}}(\mathbf{x})\)</span>,
+it’s clear that we can use <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code>—<em>core</em><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code>,
+that is, no fancy new packages required—to evaluate
+the objective function and assess the candidate’s performance: we simply
+<strong>(1)</strong> create a <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code> geometry with <code class="xref py py-obj docutils literal notranslate"><span class="pre">GeometricObjects</span></code> for
+the waveguides and a <code class="xref py py-obj docutils literal notranslate"><span class="pre">Block</span></code> with <span class="math notranslate nohighlight">\(\epsilon\sup{trial}\)</span> as a
+<a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#eps_func">spatially-varying permittivity function</a> in the design region,
+<strong>(2)</strong> add <a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#FluxSpectra">DFT cells</a> to tabulate the frequency-domain
+Poynting flux entering and departing the cloak region,
+<strong>(3)</strong> <a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#run-and-step-functions">timestep</a> until the frequency-domain
+fields converge, then <strong>(4)</strong> use post-processing routines like
+` <code class="docutils literal notranslate"><span class="pre">get_fluxes()</span></code> &lt;<a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_fluxes">GetFluxes</a>&gt;`_
+or
+` <code class="docutils literal notranslate"><span class="pre">get_eigenmode_coefficients</span></code> &lt;<a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#get_eigenmode_coefficients">EigenCoefficients</a>&gt;`_
+to get the quantities needed to evaluate the objective function.
+This is a totally standard application of canonical <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code>
+functionality, and it has the effect of converting our engineering
+design problem into a pure numerical optimization problem: given
+a</p>
+<p>Thus, for the cost of one full <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code> timestepping
+run we obtain the value of our objective function at one point
+in the parameter space of possible inputs.</p>
+</div>
+</div>
+<div class="section" id="but-function-values-alone-aren-t-enough-for-efficient-optimization">
+<h3>…but function <em>values</em> alone aren’t enough for efficient optimization.<a class="headerlink" href="#but-function-values-alone-aren-t-enough-for-efficient-optimization" title="Permalink to this headline">¶</a></h3>
+<p>But <em>now</em> what do we do?! The difficulty is that the computation
+izinust described furnishes only the <em>value</em> of the objective function
+for a given input, not its <em>derivatives</em> with respect to the
+design variables—and thus yields zero insight into how we should
+tweak the design to improve performance.
+In simple cases we might hope to proceed on the basis of physical
+intuition, while
+for small problems with just a few parameters we might try our luck with a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Derivative-free_optimization">derivative-free optimization algorithm</a>;
+however, both of these approaches will run out of steam long before
+we scale up to
+the full complexity of a practical problem with thousands
+of degrees of freedom.
+Alternatively, we could get approximate derivative information by brute-force
+finite-differencing—slightly tweaking one design variable, repeating
+the full timestepping run, and asking how the results changed—but
+proceeding this way to compute derivatives with respect to all <span class="math notranslate nohighlight">\(D\)</span>
+design variables would require fully <span class="math notranslate nohighlight">\(D\)</span> separate timestepping runs;
+for the problem sizes we have in mind, this would make calculating the
+objective-function gradient
+<em>several thousand times</em> more costly than calculating its value.
+So we face a dilemma: How can we obtain the derivative information
+necessary for effective optimization in a reasonable amount of time?
+This is where adjoints come to the rescue.</p>
+</div>
+<div class="section" id="meep-adjoint-is-a-tool-for-computing-objective-function-gradients">
+<h3><a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> is a tool for computing objective-function <em>gradients</em>.<a class="headerlink" href="#meep-adjoint-is-a-tool-for-computing-objective-function-gradients" title="Permalink to this headline">¶</a></h3>
+<p>The <em>adjoint method</em> of sensitivity analysis is a technique in which
+we exploit certain facts about the physics of a problem and the
+consequent mathematical structure—specifically, in this case, the
+linearity and reciprocity of Maxwell’s equations—to rearrange the
+calculation of derivatives in a way that yields an <em>enormous</em> speedup
+over the brute-force finite-difference approach. More specifically,
+after we have computed the objective-function value by doing
+the full <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code> timestepping run mentioned
+above—the “forward” run in adjoint-method parlance—we can magically
+compute its derivatives with respect to <em>all</em> design variables by doing
+just <em>one</em> additional timestepping run with a funny-looking choice
+of sources and outputs (the “adjoint” run).
+Thus, whereas gradient computation via finite-differencing is at least <span class="math notranslate nohighlight">\(D\)</span>
+times more expensive than computing the objective function value,
+with adjoints we get both value and gradient for roughly just <em>twice</em> the
+cost of the value alone. Such a bargain! At this modest cost, derivative-based
+optimization becomes entirely feasible.</p>
+</div>
+</div>
+<div class="section" id="examples-of-optimization-problems">
+<h2>Examples of optimization problems<a class="headerlink" href="#examples-of-optimization-problems" title="Permalink to this headline">¶</a></h2>
+<p>Throughout the <a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> documentation we will refer to a running collection of
+simple optimization problems to illustrate the mechanics of optimization,
+among which are the following; click the geometry images to view
+in higher resolution.</p>
+<div class="section" id="the-holey-waveguide">
+<h3>The Holey Waveguide<a class="headerlink" href="#the-holey-waveguide" title="Permalink to this headline">¶</a></h3>
+<p>By way of warm-up, a useful toy version of an optimization problem
+is an otherwise pristine length of dielectric slab waveguide in
+which a careless technician has torn a circular <code class="xref py py-obj docutils literal notranslate"><span class="pre">hole</span></code> of variable
+permittivity <span class="math notranslate nohighlight">\(\epsilon\sup{hole}\)</span>.</p>
+<p>&gt; :bookmark:{.center}
+&gt;
+&gt; ![zoomify](images/holey_waveguideGeometry.png)</p>
+<p>Incident power from an
+<a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#eigenmodesource">eigenmode source</a> (cyan line in figure)
+travels leftward through the waveguide, but is partially
+reflected by the hole, resulting in less than 100% power
+the waveguide output (as may be
+characterized in <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code>
+by observing power flux and/or
+eigenmode expansion coefficients at the two
+flux monitors, labeled <code class="xref py py-obj docutils literal notranslate"><span class="pre">east</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">west</span></code>).
+Our objective is to tweak the value of
+<span class="math notranslate nohighlight">\(\epsilon\sup{hole}\)</span> to maximize transmission
+as assessed by one of these metrics.
+The simplicity of this model makes it a useful
+initial warm-up and sanity check for making sure we know
+what we are doing in design optimization; for example,
+<a href="#id19"><span class="problematic" id="id20">`in this worked example &lt;AdjointVsFDTest_&gt;`_</span></a>
+we use it to confirm the numerical accuracy of
+adjoint-based gradients computed by <code class="xref py py-obj docutils literal notranslate"><span class="pre">mp.adjoint</span></code></p>
+</div>
+<div class="section" id="the-hole-cloak">
+<h3>The Hole Cloak<a class="headerlink" href="#the-hole-cloak" title="Permalink to this headline">¶</a></h3>
+<p>We obtain a more challenging variant of the holey-waveguide problem
+be supposing that the material in the hole region is <em>not</em> a
+tunable design parameter—it is fixed at vacuum, say, or
+perfect metal—but that we <em>are</em> allowed to vary the permittivity
+in an annular region surrounding the hole in such a way
+as to mimic the effect of filling in the hole, i.e. of hiding
+or “cloaking” the hole  as much as  possible from external</p>
+<blockquote>
+<div><p>detection.</p>
+</div></blockquote>
+<p>&gt; :bookmark:{.center}
+&gt;
+&gt; ![zoomify](images/HoleCloakBGeometry.png)</p>
+<p>For the hole-cloak optimization, the objective function
+will most likely the same as that considered above—namely,
+to maximize the Poynting flux through the flux monitor
+labeled <code class="xref py py-obj docutils literal notranslate"><span class="pre">east</span></code> (a quantity we label <span class="math notranslate nohighlight">\(S\subs{east}\)</span>)</p>
+<blockquote>
+<div><p>or perhaps to maximize the overlap coefficient</p>
+</div></blockquote>
+<p>between the actual fields passing through monitor
+<code class="docutils literal notranslate"><span class="pre">east</span></code> and the fields of (say)
+the <span class="math notranslate nohighlight">\(n\)</span>{P,M}_{n,text{east}}`
+with <span class="math notranslate nohighlight">\(P,M\)</span> standing for “plus and minus.”)
+On the other hand, the design space here is more
+complicated than for the simple hole, consisting
+of all possible scalar functions <span class="math notranslate nohighlight">\(\epsilon(r,\theta)\)</span>
+defined on the annular cloak region.</p>
+</div>
+<div class="section" id="the-cross-router">
+<h3>The cross-router<a class="headerlink" href="#the-cross-router" title="Permalink to this headline">¶</a></h3>
+<p>A different flavor of waveguide-optimization problem arises when we
+consider the <em>routing</em> of signals from given inputs to
+given destinations. One example is the <em>cross-router</em>, involving
+an intersection between :math:<a href="#id3"><span class="problematic" id="id4">`</span></a>x-<a href="#id5"><span class="problematic" id="id6">`</span></a>directed and :math:<a href="#id7"><span class="problematic" id="id8">`</span></a>y-<a href="#id9"><span class="problematic" id="id10">`</span></a>directed waveguides,
+with center region of variable permittivity that we may
+tweak to control the routing of power through it.</p>
+<p>&gt; :bookmark:{.center}
+&gt;
+&gt; ![zoomify](images/RouterGeometry_Iter0.png)</p>
+<p>Whereas in the previous examples there was more or less
+only one reasonable design objective one might realistically
+want to optimize,
+for a problem like this there are many possibilities.
+For example, given fixed input power supplied by an eigenmode
+source on the “western” branch (cyan line),
+we might be less interested in the absolute output
+power at any port and more concerned with
+achieving maximal <em>equality</em> of output
+power among the north, south, and east outputs,
+whereupon we might minimize an objective function of
+the form
+:math:<a href="#id11"><span class="problematic" id="id12">``</span></a>fsub{obj}  =</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>Big( Ssub{north} - Ssub{south}Big)^2</p>
+</div></blockquote>
+<p>+Big( Ssub{north} - Ssub{east}Big)^2</p>
+</div></blockquote>
+<ul>
+<li><p>Big( Ssub{east} - Ssub{south}Big)^2</p></li>
+</ul>
+</div></blockquote>
+<p>:math:``
+(or a similar functional form involving eigenmode
+coefficients).
+Alternatively, perhaps we don’t care what happens in
+the southern branch, but we really want the fields
+traveling past the <code class="xref py py-obj docutils literal notranslate"><span class="pre">north</span></code> monitor
+to have twice as much
+overlap with the forward-traveling 3rd eigenmode of that
+waveguide
+as the <code class="xref py py-obj docutils literal notranslate"><span class="pre">east</span></code> fields have with their backward-traveling
+2nd eigenmode:</p>
+<p>:math:`` fsub{obj} equiv Big( Psub{3,north} - 2Msub{2,east}Big)^2:math:``</p>
+<p>The point is that the definition of an optimization problem
+involves not only a set of physical quantities  (power fluxes, eigenmode coefficients,
+etc.) that we compute from <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code> calculations,
+but also a rule (the objective function <span class="math notranslate nohighlight">\(f\)</span>) for crunching those
+numbers in some specific way to define a single scalar figure of merit.</p>
+<p>In  <code class="xref py py-obj docutils literal notranslate"><span class="pre">mp.adjoint</span></code> we use the collective term <em>objective quantities</em>
+for the power fluxes, eigenmode coefficients, and other physical quantities
+needed to compute the objective function.
+Similarly, the special geometric subregions of
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code> geometries with
+which objective quantities are associated—the
+cross-sectional flux planes of <code class="xref py py-obj docutils literal notranslate"><span class="pre">DFTFlux</span></code> cells or
+field-energy boxes of <code class="xref py py-obj docutils literal notranslate"><span class="pre">DFTField</span></code> cells—-are known as <em>objective regions.</em></p>
+<p>The <a href="#id21"><span class="problematic" id="id22">`Example Gallery &lt;ExampleGallery.md_&gt;`_</span></a> includes a worked example
+of a full successful iterative optimization in which
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">mp.adjoint</span></code> begins with the design shown above and thoroughly rejiggers
+it over the course of 50 iterations to yield a device
+that efficiently routs power around a 90&amp;degree; bend
+from the eigenmode source (cyan line above)
+to the ‘north’ output port.</p>
+</div>
+<div class="section" id="the-asymmetric-splitter">
+<h3>The asymmetric splitter<a class="headerlink" href="#the-asymmetric-splitter" title="Permalink to this headline">¶</a></h3>
+<p>A <code class="xref py py-obj docutils literal notranslate"><span class="pre">splitter</span></code> seeks to divide incoming power from one source
+in some specific way among two or more destinations.,
+We will consider an asymmetric splitter in which power
+arriving from a single incoming waveguide is to be routed
+into two outgoing waveguides by varying the design of the
+central coupler region:</p>
+<p>&gt; :bookmark:{.center}
+&gt;
+&gt; ![zoomify](images/SplitterGeometry.png)</p>
+</div>
+</div>
+<div class="section" id="defining-elements-of-optimization-problems">
+<span id="optprobingredients"></span><h2>Defining elements of optimization problems<a class="headerlink" href="#defining-elements-of-optimization-problems" title="Permalink to this headline">¶</a></h2>
+<p>The examples above, distinct though they all are,
+the common set of ingredients required for a full
+specification of an optimization problem.</p>
+<p>In brief,</p>
+<dl class="glossary simple">
+<dt id="term-for-use-in-computing-power-fluxes-mode-expansion-coefficients-and-other-frequency-domain">for use in computing power fluxes, mode-expansion coefficients, and other frequency-domain</dt><dt id="term-quantities-used-in-characterizing-device-performance-because-these-regions-are-used-to-evaluate">quantities used in characterizing device performance.  Because these regions are used to evaluate</dt><dt id="term-objective-functions-we-refer-to-them-as-objective-regions">objective functions, we refer to them as <em>objective regions.</em></dt><dd></dd>
+</dl>
+<ul>
+<li><dl class="simple">
+<dt><strong>Design region:</strong> A specification of the region over which the material design is to be</dt><dd><p>optimized, i.e. the region in which the permittivity is given by the
+design quantity <span class="math notranslate nohighlight">\(\epsilon\sup{des}(\mathbf x)\)</span>.
+We refer to this as the <em>design region</em> <span class="math notranslate nohighlight">\(\mathcal{V}\sup{des}\)</span>.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Basis:</strong> Because the design variable <span class="math notranslate nohighlight">\(\epsilon\sup{des}(\mathbf x)\)</span></dt><dd><p>is a continuous function defined throughout a finite volume of space,
+technically it involves infinitely many degrees of freedom.
+To yield a finite-dimensional optimization problem, it is convenient
+to approximate <span class="math notranslate nohighlight">\(\epsilon\sup{des}\)</span> as a finite expansion in some
+convenient set of basis functions, i.e.
+:math:`` epsilon(mathbf x) equiv sum_{d=1}^N beta_d mathcal{b}_d(mathbf x),</p>
+<blockquote>
+<div><p>qquad mathbf xin mathcal{V}sup{des},</p>
+</div></blockquote>
+<p>:math:``
+where <span class="math notranslate nohighlight">\(\{\mathcal{b}_n(\mathbf x)\}\)</span> is a set of <span class="math notranslate nohighlight">\(D\)</span> scalar-valued
+basis functions defined for <span class="math notranslate nohighlight">\(\mathbf x\in\mathcal{V}\sup{des}\)</span>.
+The task of the optimizer then becomes to determine
+numerical values for the <span class="math notranslate nohighlight">\(N\)</span>-vector of coefficients
+<span class="math notranslate nohighlight">\(\boldsymbol{\beta}=\{\beta_n\},n=1,\cdots,N.\)</span></p>
+<p>For adjoint optimization in <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code>, the
+basis set is chosen by the user, either from among a predefined collection of
+common basis sets, or as an arbitrary user-defined basis set specified by
+subclassing an abstract base class in <code class="xref py py-obj docutils literal notranslate"><span class="pre">mp.adjoint.</span></code></p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id13"><span class="brackets">1</span></dt>
+<dd><p>Technically, equation (1) appears to be imposing uncountably many
+constraints (one for each point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in the design region)
+on our finite set of design variables; we will describe later how
+to extract a finite number of constraints for numerical optimization.</p>
+</dd>
+</dl>
+<dl class="footnote brackets">
+<dt class="label" id="f1"><span class="brackets">2</span></dt>
+<dd><p>At present, maximization is the only supported optimization; if your objective is actually to <em>minimize</em> some quantity, just define the objective function with a minus sign. (Eventually some users might appreciate a <code class="docutils literal notranslate"><span class="pre">--minimize</span></code> option that would do this internally.)</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

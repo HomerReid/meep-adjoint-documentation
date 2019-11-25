@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>meep_adjoint.objective &mdash; meep.adjoint 1.0 documentation</title>
+  <title>meep_adjoint.objective &mdash; meep_adjoint 1.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/toggle_visibility.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> meep.adjoint
+            <a href="../../index.html" class="icon icon-home"> meep_adjoint
           
 
           
@@ -80,18 +81,33 @@
               
             
             
-              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+              <p class="caption"><span class="caption-text">Documentation Home</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: Adjoint-solver module for pymeep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Overview/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Examples/index.html">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Visualization/index.html">Visualization Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Config/index.html">Configuration and customization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../TestSuite/index.html">Test suite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../API/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Overview and Invitation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_gallery/index.html">Example Gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">General reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_suite/index.html">Test suite</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../API/HighLevel.html"> High-level (public) API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API/LowLevel.html"> Low-level (internal) API</a></li>
 </ul>
 
             
@@ -106,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">meep.adjoint</a>
+          <a href="../../index.html">meep_adjoint</a>
         
       </nav>
 
@@ -139,6 +155,8 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../meep_adjoint.html">meep_adjoint</a> &raquo;</li>
+        
       <li>meep_adjoint.objective</li>
     
     
@@ -155,8 +173,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for meep_adjoint.objective</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;handling of objective functions and objective quantitieshj</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Handling of objective functions and objective quantities.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -168,26 +185,37 @@
 
 <span class="kn">import</span> <span class="nn">meep</span> <span class="k">as</span> <span class="nn">mp</span>
 
-
 <span class="n">QRule</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;QRule&#39;</span><span class="p">,</span> <span class="s1">&#39;code mode ncell&#39;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">dft_cell_names</span>
 
-<div class="viewcode-block" id="make_qrule"><a class="viewcode-back" href="../../API/objective.html#meep_adjoint.objective.make_qrule">[docs]</a><span class="k">def</span> <span class="nf">make_qrule</span><span class="p">(</span><span class="n">qname</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Decode objective-quantity name to yield rule for computing it.</span>
 
-<span class="sd">       A &#39;qrule&#39; is a recipe for computing a single objective quantity,</span>
-<span class="sd">       comprised of three elements: a code string identifying the physical</span>
-<span class="sd">       quantity (i.e. &#39;S&#39; for poynting flux, &#39;UE&#39; for electric-field energy,</span>
-<span class="sd">       etc), the integer index of the DFTCell whose fields are used to</span>
-<span class="sd">       compute the quantity, and an optional mode index for objective</span>
-<span class="sd">       quantities that involve eigenmodes.</span>
+<span class="k">def</span> <span class="nf">make_qrule</span><span class="p">(</span><span class="n">qname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decode objective-quantity name to yield rule for computing it.</span>
 
-<span class="sd">       qrules are constructed from the string names of</span>
-<span class="sd">       objective variables like &#39;P2_3&#39; or &#39;M1_north&#39; or &#39;s_0&#39;.</span>
+<span class="sd">    A &quot;qrule&quot; is a recipe for computing a single objective quantity,</span>
+<span class="sd">    comprised of three elements: a code string identifying the physical</span>
+<span class="sd">    quantity (i.e. &#39;S&#39; for poynting flux, &#39;UE&#39; for electric-field energy,</span>
+<span class="sd">    etc), the integer index of the DFTCell whose fields are used to</span>
+<span class="sd">    compute the quantity, and an optional mode index for objective</span>
+<span class="sd">    quantities that involve eigenmodes.</span>
+
+<span class="sd">    qrules are constructed from the string names of</span>
+<span class="sd">    objective variables like &#39;P2_3&#39; or &#39;M1_north&#39; or &#39;s_0&#39;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    qname : str</span>
+<span class="sd">        Name of objective quantity</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    qrule : QRule</span>
+<span class="sd">        Rule for computing the quantity.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;([A-Za-z]+)([\d]*)_([\w]+)&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;\1 \2 \3&#39;</span><span class="p">,</span><span class="n">qname</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;([A-Za-z]+)([\d]*)_([\w]+)&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;\1 \2 \3&#39;</span><span class="p">,</span><span class="n">qname</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span><span class="o">==</span><span class="mi">3</span><span class="p">:</span>
         <span class="n">code</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">cellstr</span> <span class="o">=</span> <span class="n">tokens</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
@@ -197,15 +225,15 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;syntax error in quantity name &#39;</span> <span class="o">+</span> <span class="n">qname</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cellstr</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
         <span class="n">ncell</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cellstr</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">cellstr</span><span class="o">+</span><span class="s1">&#39;_flux&#39;</span> <span class="ow">in</span> <span class="n">dft_cell_names</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">cellstr</span> <span class="o">+</span> <span class="s1">&#39;_flux&#39;</span> <span class="ow">in</span> <span class="n">dft_cell_names</span><span class="p">:</span>
         <span class="n">ncell</span> <span class="o">=</span> <span class="n">dft_cell_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cellstr</span><span class="o">+</span><span class="s1">&#39;_flux&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">cellstr</span><span class="o">+</span><span class="s1">&#39;_fields&#39;</span> <span class="ow">in</span> <span class="n">dft_cell_names</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">cellstr</span> <span class="o">+</span> <span class="s1">&#39;_fields&#39;</span> <span class="ow">in</span> <span class="n">dft_cell_names</span><span class="p">:</span>
         <span class="n">ncell</span> <span class="o">=</span> <span class="n">dft_cell_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cellstr</span><span class="o">+</span><span class="s1">&#39;_fields&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ncell</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">if</span> <span class="n">ncell</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">ncell</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">dft_cell_names</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;quantity </span><span class="si">{}</span><span class="s1">: non-existent DFT cell </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">qname</span><span class="p">,</span><span class="n">cellstr</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">QRule</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">ncell</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">QRule</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">ncell</span><span class="p">)</span>
 
 
 
@@ -229,62 +257,74 @@
 <span class="c1">#         return self.cell(self.code,mode=self.mode, nf=nf)</span>
 
 
+<div class="viewcode-block" id="ObjectiveFunction"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.ObjectiveFunction">[docs]</a><span class="k">class</span> <span class="nc">ObjectiveFunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Multivariate scalar-valued function defined by string expression.</span>
+
+<span class="sd">    An `ObjectiveFunction` is a scalar function</span>
+<span class="sd">    :math:`f^{obj}({q_n})`</span>
+<span class="sd">    of :math:`N` scalar variables :math:`\{ q_0, q_1, ..., q_{N-1}\}`,</span>
+<span class="sd">    where the :math:`{q_n}` are complex-valued in general and</span>
+<span class="sd">    :math:`f^{obj}` may be real- or complex-valued</span>
+<span class="sd">    (only the real part is referenced for optimization purposes).</span>
+
+<span class="sd">    An instance of `ObjectiveFunction` is specified by a</span>
+<span class="sd">    character string (the `fstr` input to the constructor)</span>
+<span class="sd">    that, upon parsing by `sympy.sympify`, is identified as</span>
+<span class="sd">    a mathematical expression depending on :math:`N` unknown</span>
+<span class="sd">    variables (which we call &quot;objective quantities&quot;).</span>
+<span class="sd">    The strings identified by `sympy` as the names of the</span>
+<span class="sd">    variables should obey `meep_adjoint` naming conventions for</span>
+<span class="sd">    objective quantities (in particular, they should</span>
+<span class="sd">    be parsable by `make_qrule` to yield a valid `qrule`).</span>
 
 
-<div class="viewcode-block" id="ObjectiveFunction"><a class="viewcode-back" href="../../API/objective.html#meep_adjoint.objective.ObjectiveFunction">[docs]</a><span class="k">class</span> <span class="nc">ObjectiveFunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Multivariate scalar-valued function defined by string expression.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        fstr : str</span>
+<span class="sd">            Mathematical expression defining objective function.</span>
 
-<span class="sd">        An ObjectiveFunction is a scalar function :math:`f({q_n})`</span>
-<span class="sd">        of :math:`N` scalar variables :math:`\{ q_0, q_1, ..., q_{N-1}\}`,</span>
-<span class="sd">        where the :math:`{q_n}` are complex-valued in general and</span>
-<span class="sd">        f may be real- or complex-valued.</span>
+<span class="sd">        extra_quantities: list of str, optional</span>
+<span class="sd">            Optional list of additional objective quantities to be computed</span>
+<span class="sd">            and returned each time the objective function is evaluated.</span>
 
-<span class="sd">        An instance of ObjectiveFunction is specified by a</span>
-<span class="sd">        character string (the fstr input to the constructor)</span>
-<span class="sd">        that, upon parsing by sympy.sympify, is identified as</span>
-<span class="sd">        a mathematical expression depending on :math:`N` unknown</span>
-<span class="sd">        variables (which we call &quot;objective quantities&quot;).</span>
-<span class="sd">        The strings identified by numpy as the names of the variables</span>
-<span class="sd">        should obey meep_adjoint syntax rules for the naming</span>
-<span class="sd">        of objective quantities (in particular, they should</span>
-<span class="sd">        be parsable by `make_qrule` to yield a valid qrule).</span>
+<span class="sd">    Class instances store the following data:</span>
 
-<span class="sd">        Class instances store the following data:</span>
+<span class="sd">        :`fexpr` (`sympy` expression):</span>
 
-<span class="sd">        fexpr: sympy expression constructed from fstr</span>
+<span class="sd">            `sympy` expression returned by `sympy.sympify(fstr)`</span>
 
-<span class="sd">        qsyms: list of sympy.Symbols identified by sympy</span>
-<span class="sd">               as the objective quantities, i.e. the inputs</span>
-<span class="sd">               on which f depends</span>
+<span class="sd">        :`qsyms` (list of `sympy.Symbol`):</span>
 
-<span class="sd">        qnames: list of strs giving the names of the objective</span>
-<span class="sd">                quantitiesrs giving the names of the objective</span>
+<span class="sd">            The variable (unknown) quantities on which the</span>
+<span class="sd">            objective function depends, as identified by</span>
+<span class="sd">            `sympy` upon parsing `fstr`.</span>
 
-<span class="sd">        qrules: list of &#39;qrule&#39; objects specifying how the</span>
-<span class="sd">                objective quantities are to be computed</span>
-<span class="sd">                from MEEP data (specifically, from frequency-</span>
-<span class="sd">                domain field data stored in DFTCells)</span>
+<span class="sd">        :`qnames` (list of `str`):</span>
 
-<span class="sd">        qvals: numpy array storing most recent updates of</span>
-<span class="sd">               objective-quantity values</span>
+<span class="sd">            names of objective quantities</span>
 
-<span class="sd">        riqsyms, riqvals: the same data content as</span>
-<span class="sd">              qsyms and qvalues, but with each complex-valued</span>
-<span class="sd">              &#39;q&#39; quantity split up into real-valued &#39;r&#39; and &#39;i&#39;</span>
-<span class="sd">              components. We do this to facilitate symbolic</span>
-<span class="sd">              differentiation of non-analytic functions</span>
-<span class="sd">              of the objective quantities such as :math:`|q_i|^2`</span>
-<span class="sd">              ---which, incidentally, would be written within fstr</span>
-<span class="sd">                like this: &#39;Abs(q_i)**2&#39;</span>
+<span class="sd">        :`qrules` (list of `QRule`):</span>
+
+<span class="sd">            rules specifying how the</span>
+<span class="sd">            objective quantities are to be computed</span>
+<span class="sd">            from FDTD data (specifically, from frequency-</span>
+<span class="sd">            domain field data stored in DFTCells)</span>
+
+<span class="sd">        :`qvals` (array-like):</span>
+<span class="sd">            cache storing most recently computed values of objective quantities</span>
+
+
+<span class="sd">        :`riqsyms`, `riqvals`:</span>
+
+<span class="sd">            as qsyms and qvalues, but with each complex-valued</span>
+<span class="sd">            &#39;q&#39; quantity split up into real-valued &#39;r&#39; and &#39;i&#39;</span>
+<span class="sd">            components. We do this to facilitate symbolic</span>
+<span class="sd">            differentiation of non-analytic functions of objective</span>
+<span class="sd">            quantities such as :math:`|q_i|^2`---which, incidentally,</span>
+<span class="sd">            would be written within `fstr` like this: &#39;Abs(q_i)**2&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="ObjectiveFunction.__init__"><a class="viewcode-back" href="../../API/objective.html#meep_adjoint.objective.ObjectiveFunction.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fstr</span><span class="o">=</span><span class="s1">&#39;S_0&#39;</span><span class="p">,</span> <span class="n">extra_quantities</span><span class="o">=</span><span class="p">[]):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Try to create a sympy expression from the given string and determine</span>
-<span class="sd">        names for all input variables (objective quantities) needed to</span>
-<span class="sd">        evaluate it.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fstr</span><span class="o">=</span><span class="s1">&#39;S_0&#39;</span><span class="p">,</span> <span class="n">extra_quantities</span><span class="o">=</span><span class="p">[]):</span>
         <span class="c1"># try to parse the function string to yield a sympy expression</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">fexpr</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span><span class="n">fstr</span><span class="p">)</span>
@@ -324,16 +364,29 @@
         <span class="k">for</span> <span class="n">nq</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qnames</span><span class="p">)):</span>
             <span class="n">df_drqn</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fexpr</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">riqsymbols</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">nq</span><span class="o">+</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">df_diqn</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fexpr</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">riqsymbols</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">nq</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dfexpr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">df_drqn</span> <span class="o">-</span> <span class="n">sympy</span><span class="o">.</span><span class="n">I</span><span class="o">*</span><span class="n">df_diqn</span> <span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dfexpr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">df_drqn</span> <span class="o">-</span> <span class="n">sympy</span><span class="o">.</span><span class="n">I</span><span class="o">*</span><span class="n">df_diqn</span> <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ObjectiveFunction.__call__"><a class="viewcode-back" href="../../API/objective.html#meep_adjoint.objective.ObjectiveFunction.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DFTCells</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compute objective quantities and the objective function.</span>
-<span class="sd">           Uses the given list of DFTCells to determine numerical</span>
-<span class="sd">           values for all objective quantities :math:`q_n`, then</span>
-<span class="sd">           uses these to evaluate the objective function :math:`f`.</span>
-<span class="sd">           The return value is an array of length (N+1), whose entries</span>
-<span class="sd">           are [ f q0 q1 ...q_{N-1} ]</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DFTCells</span><span class="p">,</span> <span class="n">nf</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute objective quantities and objective function.</span>
+
+<span class="sd">        Uses the given list of DFTCells to determine numerical</span>
+<span class="sd">        values for all objective quantities :math:`q_n`, then</span>
+<span class="sd">        uses these to evaluate the objective function :math:`f`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        DFTCells : list of :class:`dft_cell &lt;meep_adjoint.dft_cell&gt;`</span>
+<span class="sd">            List that should contain at least all DFT cells for which</span>
+<span class="sd">            objective quantities are defined.</span>
+<span class="sd">        nf : int, optional</span>
+<span class="sd">             Frequency index, by default 0</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Array-like</span>
+<span class="sd">            Array containing objective-function value followed by</span>
+<span class="sd">            values of all objective quantities:[ f q0 q1 ...q_{N-1} ]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># fetch updated values for all objective quantities</span>
@@ -346,13 +399,21 @@
         <span class="n">fval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fexpr</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="n">subs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">riqvals</span><span class="p">)</span>
         <span class="n">fval</span><span class="o">=</span><span class="nb">complex</span><span class="p">(</span><span class="n">fval</span><span class="p">)</span> <span class="k">if</span> <span class="n">fval</span><span class="o">.</span><span class="n">is_complex</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">fval</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">fval</span><span class="p">)]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qvals</span><span class="p">)</span> <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">fval</span><span class="p">)]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qvals</span><span class="p">)</span> <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ObjectiveFunction.get_dfdq"><a class="viewcode-back" href="../../API/objective.html#meep_adjoint.objective.ObjectiveFunction.get_dfdq">[docs]</a>    <span class="k">def</span> <span class="nf">get_dfdq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;return vector of partial derivatives \partial f / \partial q</span>
-<span class="sd">           using the values of the {q_n} that were cached on the</span>
-<span class="sd">           most recent invocation of __call__</span>
+<div class="viewcode-block" id="ObjectiveFunction.get_dfdq"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.ObjectiveFunction.get_dfdq">[docs]</a>    <span class="k">def</span> <span class="nf">get_dfdq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute first partial derivatives of objective function.</span>
+
+<span class="sd">        Compute the partial derivatives :math:`\partial f / \partial q_n`</span>
+<span class="sd">        using values of :math:`\{q_n\}` cached on most recent invocation</span>
+<span class="sd">        of `__call__` (which must have been invoked at least once before</span>
+<span class="sd">        this function can be called).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array-like</span>
+<span class="sd">            Array whose *n*th entry is :math:`\partial f/\partial q_n`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="n">df</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="n">subs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">riqvals</span><span class="p">)</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dfexpr</span> <span class="p">]</span> <span class="p">)</span></div></div>
 </pre></div>

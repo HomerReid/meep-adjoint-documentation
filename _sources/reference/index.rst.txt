@@ -1,0 +1,50 @@
+***********************************************************************************
+General reference
+***********************************************************************************
+
+This page documents various conventions and protocols adopted by :obj:`meep_adjoint`.
+
+================================================================================
+
+================================================================================
+
+================================================================================
+Tweaks to :codename:`meep` conventions
+================================================================================
+
+The :obj:`meep_adjoint` package introduces a few minor updates or revisions
+to some of the standard ways of doing business in :codename:`meep` and the |pymeep|.
+
+----------------------------------------------------------------------------------------------------------
+Unified handling and labeling of spatial regions: The :class:`Subregion <meep_adjoint:Subregion>` class:
+----------------------------------------------------------------------------------------------------------
+
+A historical idiosyncrasy of the |meep| C++ back-end engine, which was retained in the
+definition of the |pymeep_interface|, is the use of multiple (at least :ref:`seven <RegionTypes>` [#F1]_)
+distinct data structures to describe subregions of the computational geometry
+depending on the task at hand. :obj:`meep_adjoint` replaces *all* of these
+with the single new class :class:`Subregion<meep_adjoint:Subregion>`.
+
+as a replacement for the
+[#F1]_
+as a `meep_adjoint` defines the simple class :class:`Subregion<meep_adjoint:Subregion>`
+
+
+================================================================================
+Naming conventions for objective quantities
+================================================================================
+
+|thickline|
+
+.. topic:: Footnotes
+
+
+   .. _RegionTypes:
+
+   .. [#F1] 
+
+       Namely: `Volume`, `FluxRegion`, `FieldsRegion`, `Near2FarRegion`, `ForceRegion`, `EnergyRegion`, and
+       `ModeRegion`, and perhaps I am missing some.
+
+       def add_dft_fields(self, components, freq_min, freq_max, nfreq, where=None, center=None, size=None):
+       def _add_flux(self, fcen, df, nfreq, fluxes):
