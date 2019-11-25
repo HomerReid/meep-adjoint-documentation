@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>meep_adjoint: Adjoint-solver module for pymeep &mdash; meep.adjoint 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="meep_adjoint: Overview and Invitation" href="Overview/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> meep.adjoint
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">meep_adjoint: Adjoint-solver module for pymeep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview/index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Config/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TestSuite/index.html">Test suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">meep.adjoint</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code>: Adjoint-solver module for <strong class="program">pymeep</strong></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="meep-adjoint-adjoint-solver-module-for-pymeep">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code>: Adjoint-solver module for <strong class="program">pymeep</strong><a class="headerlink" href="#meep-adjoint-adjoint-solver-module-for-pymeep" title="Permalink to this headline">¶</a></h1>
+<p>This is the root of the documentation tree for <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint.</span></code>
+Jump directly to the module-wide <a class="reference internal" href="#tableofcontents"><span class="std std-ref">Table of Contents</span></a> below,
+or read on for a quick-start overview.</p>
+</div>
+<div class="section" id="what-does-this-module-do">
+<h1>What does this module do?<a class="headerlink" href="#what-does-this-module-do" title="Permalink to this headline">¶</a></h1>
+<p>You’ll find a longer answer in the <a class="reference internal" href="Overview/index.html"><span class="doc">Overview</span></a>
+(and a more succinct one in the <a class="reference internal" href="API/index.html"><span class="doc">API Reference</span></a>),
+but, in a nutshell: It extends the computational capabilities of the
+core <a href="http://meep.readthedocs.io">
+<b><font style="font-variant: small-caps; font-size: 110%">pymeep</font></b></a> library in a particular way that facilitates interaction
+with <a class="reference external" href="https://en.wikipedia.org/wiki/Category:Optimization_algorithms_and_methods">numerical optimization algorithms</a>, opening the door to
+intelligent design tools that automatically design devices to meet
+given performance specifications.</p>
+<div class="admonition-wait-what-exactly-does-the-module-do-again admonition">
+<p class="admonition-title">Wait, <em>what</em> exactly does the module do again?</p>
+<p>If that was a bit vague, we can be more specific about precisely what
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> does. Consider a typical design problem
+in which we seek to tune a device geometry to optimize some
+performance metric.
+For example, in the <a class="reference internal" href="Examples/cross_router.html"><span class="doc">cross router</span></a>
+example in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> <a class="reference internal" href="Examples/index.html"><span class="doc">example gallery</span></a>,
+the
+example in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> <a class="reference internal" href="Examples/index.html"><span class="doc">example gallery</span></a>,
+the task is to design the central hub region to steer
+incoming power arriving via the <strong>East</strong> input waveguide
+to output</p>
+<p>the task is to design the hub region toe steer incident
+power arriving from the</p>
+</div>
+<p>input is routed</p>
+<blockquote>
+<div><p>to the <strong>North</strong> output, allowing power to leak out through the
+<strong>West</strong> or <strong>South</strong> outputs.</p>
+<p>Thus, :program:pymeep allows our physical design problem
+to be packaged as a black-box numerical function
+<span class="math notranslate nohighlight">\(f(\boldsymbol{\beta})\)</span> suitable for passage to
+numerical optimizers
+Automated design optimization, here we come!</p>
+<p>There’s just one problem, which perhaps already
+occurred to you if you have any experience with high-dimensional
+optimization:</p>
+<p>and asks for the optimal
+Here <span class="math notranslate nohighlight">\(\epsilon(x)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\epsilon(\mathbf x)=\sum \beta_d b_d(\mathbf x)\]</div>
+<p>Now suppose some region of the material geometry is free
+to be tweaked</p>
+<p>you’re a device designer tasked with maximizing
+some performance metric $f$ expressed as a function of these
+output quantities—for example, we might put
+<span class="math notranslate nohighlight">\(f=S_2(\omega_3)\)</span> to maximize flux through the 2nda
+flux region at the 3rd frequency, or
+<span class="math notranslate nohighlight">\(f = (S_1(\omega_3) - S_2(\omega_3))^2\)</span>
+to maximize the <em>difference</em> between two fluxes, etc.</p>
+<p>For any given trial design function <span class="math notranslate nohighlight">\(\epsilon(\mathbf x)\)</span>
+we can use <code class="xref py py-mod docutils literal notranslate"><span class="pre">pymeep</span></code> to evaluate
+we create a <a href="#id1"><span class="problematic" id="id2">``</span></a>Simulation``_ with $epsilon^{text{trial}}$</p>
+<p>What <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> does is to add a</p>
+</div></blockquote>
+<div class="admonition-the-scope-of-program-meep-adjoint admonition">
+<p class="admonition-title">The scope of <strong class="program">meep_adjoint</strong></p>
+<p><strong>Q.</strong> Does this mean that the module <em>only</em> computes objective-function gradients? That is, it doesn’t actually do any optimization?</p>
+<p><strong>A.</strong> The <em>primary</em> mission of <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> is to compute objective-function gradients. This is the task the module guarantees to execute efficiently and accurately, and it’s one that’s self-contained, unambiguous, and easily <em>testable.</em> <a class="footnote-reference brackets" href="#id4" id="id3">1</a></p>
+<p>The larger question of how best to <em>use</em> gradient information for
+design automation—which involves questions such as which of the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Category:Optimization_algorithms_and_methods">myriad available gradient-based optimization algorithms</a> to use,
+and how to configure its tunable parameters—is officially beyond the
+purview of <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code>, and indeed is much too broad
+a problem to be treated with anything approaching comprehensiveness
+by any single module. We hope <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> will be
+helpful to <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code> users as they navigate this
+vast domain.</p>
+<p><strong>With all of that by way of disclaimer,</strong> however, we note that
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> does ship with one (rather simple-minded)
+implementation of an optimization algorithm—namely, a
+<span class="xref std std-doc">basic gradient-descent solver.</span>
+Per the discussion above, we make
+no claim as to the robustness or efficiency of this solver,
+and we encourage users to consider it a first step in the
+process of optimizing any geometry, to be replaced by more
+sophisticated solvers as necessary; but, having said that,
+we note that the simple built-in optimizer suffices to
+yield good results on all the problems considered in
+the <a class="reference internal" href="Examples/index.html"><span class="doc">example gallery</span></a>.</p>
+</div>
+</div>
+<div class="section" id="what-does-a-typical-workflow-look-like">
+<h1>What does a typical workflow look like?<a class="headerlink" href="#what-does-a-typical-workflow-look-like" title="Permalink to this headline">¶</a></h1>
+<p>You’ll find a full step-by-step walkthrough in the
+<a class="reference internal" href="Tutorial/index.html"><span class="doc">Tutorial</span></a> and additional guided case studies
+in the <a class="reference internal" href="Examples/index.html"><span class="doc">Example gallery</span></a>, but here is a
+quick rundown:</p>
+<p>1) <em>Initialization and Problem Definition:</em>
+You begin by creating an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">optimization_problem</span></code>
+This is the top-level python class exported by <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code>,
+analogous to the <a class="reference external" href="https://meep.readthedocs.io/en/latest">Simulation</a>
+class in the core <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep</span></code> module; it stores all data and state
+relevant to the progress of a design optimization, and
+you will access most <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> functionality
+via its class methods.</p>
+<p>2) <em>Interactive single-point calculations</em>  Before
+launching a full-blown iterative optimization run that
+could run for hours or days, you will probably want
+to run some sanity-check calculations involving your
+geometry. These include…**(section incomplete)**</p>
+<p>3) <em>Full iterative optimization</em>: Launch your optimization
+run and monitor its progress via graphical or other indicators.</p>
+<div class="section" id="how-is-the-documentation-structured">
+<h2>How is the documentation structured?<a class="headerlink" href="#how-is-the-documentation-structured" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="table-of-contents">
+<span id="tableofcontents"></span><h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">meep_adjoint Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">meep_adjoint: Adjoint-solver module for pymeep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview/index.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Overview/index.html#background-automated-design-optimization-and-the-adjoint-method">Background: Automated design optimization and the adjoint method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Config/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TestSuite/index.html">Test suite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Implementation/MathAndPhysicsOfAdjoints.html">Implementation I: Physics and math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Implementation/ClassHierarchy.html">Implementation II: Class hierarchy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Implementation/ClassHierarchy.html#the-class-hierarchy-in-a-nutshell">The class hierarchy in a nutshell</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="API/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="API/optimization_problem.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optimization_problem</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/timestepper.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timestepper</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/objective.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">objective</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/dft_cell.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft_cell</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">basis</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/finite_element_basis.html"><code class="xref py py-class docutils literal notranslate"><span class="pre">finite_element_basis</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/visualization.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/option_almanac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">option_almanac</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/adjoint_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">adjoint_options</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="API/visualization_options.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization_options</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>For example, one obvious test of the correctness
+of <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> is to estimate objective-function
+derivatives by numerical finite-differencing and compare to
+components of the adjoint-method gradient. This is the basis
+of one of the tests in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code> unit-test suite,
+and also of the <a class="reference internal" href="Examples/holey_waveguide.html"><span class="doc">holey waveguide</span></a>
+example in the <a class="reference internal" href="Examples/index.html"><span class="doc">example gallery.</span></a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Overview/index.html" class="btn btn-neutral float-right" title="meep_adjoint: Overview and Invitation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MEEP project
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
