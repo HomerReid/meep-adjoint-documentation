@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -175,7 +176,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="tutorial-walkthrough">
 <h1>Tutorial walkthrough<a class="headerlink" href="#tutorial-walkthrough" title="Permalink to this headline">¶</a></h1>
-<p>Having outlined on the <a class="reference internal" href="../../../overview/index.html#theoverview"><span class="std std-ref">previous page</span></a> some of the
+<p>Having outlined on the <a class="reference internal" href="../overview/index.html#theoverview"><span class="std std-ref">previous page</span></a> some of the
 big-picture story—how <a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> fits into the larger
 design-optimization ecosystem, and what you can expect to put into and
 get out of a typical session—on this page we get down to details.
@@ -392,9 +393,7 @@ script, or read on for a step-by-step discussion.</p>
 162
 163
 164
-165
-166
-167</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+165</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 
@@ -407,16 +406,6 @@ script, or read on for a step-by-step discussion.</p>
 
 <span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="k">import</span> <span class="p">(</span> <span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">Subregion</span><span class="p">,</span>
                            <span class="n">ORIGIN</span><span class="p">,</span> <span class="n">XHAT</span><span class="p">,</span> <span class="n">YHAT</span><span class="p">,</span> <span class="n">ZHAT</span><span class="p">,</span> <span class="n">E_CPTS</span><span class="p">,</span> <span class="n">H_CPTS</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">V3</span><span class="p">)</span>
-
-<span class="c1">######################################################################</span>
-<span class="c1"># override default settings for some meep_adjoint configuration options</span>
-<span class="c1">######################################################################</span>
-<span class="n">meep_adjoint</span><span class="o">.</span><span class="n">set_option_defaults</span><span class="p">(</span> <span class="p">{</span> <span class="s1">&#39;fcen&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
-                                    <span class="s1">&#39;dpml&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;dair&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-                                    <span class="s1">&#39;eps_func&#39;</span><span class="p">:</span> <span class="mf">6.0</span><span class="p">,</span>
-                                    <span class="s1">&#39;flux_region_fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-                                    <span class="s1">&#39;latex&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                                   <span class="p">})</span>
 
 <span class="c1">######################################################################</span>
 <span class="c1"># subroutine that initializes and returns an OptimizationProblem</span>
@@ -433,6 +422,18 @@ script, or read on for a step-by-step discussion.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">######################################################################</span>
+    <span class="c1"># set custom defaults for meep_adjoint package-wide options, then</span>
+    <span class="c1"># fetch values for a few such options we will need in this routine</span>
+    <span class="c1">######################################################################</span>
+    <span class="n">meep_adjoint</span><span class="o">.</span><span class="n">set_option_defaults</span><span class="p">(</span> <span class="p">{</span> <span class="s1">&#39;fcen&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+                                        <span class="s1">&#39;dpml&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;dair&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                                        <span class="s1">&#39;eps_design&#39;</span><span class="p">:</span> <span class="mf">6.0</span>
+                                      <span class="p">})</span>
+    <span class="n">fcen</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">)</span>
+    <span class="n">dpml</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">)</span>
+    <span class="n">dair</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">)</span>
+
+    <span class="c1">######################################################################</span>
     <span class="c1"># process script-specific command-line arguments...</span>
     <span class="c1">######################################################################</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
@@ -446,6 +447,8 @@ script, or read on for a step-by-step discussion.</p>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region side length&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--h&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;thickness in z-direction&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_wvg&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide permittivity&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--full_dft&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;tabulate and plot fields over full computational cell&#39;</span><span class="p">)</span>
 
     <span class="c1"># options affecting the type of device to design</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--splitter&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design equal splitter instead of right-angle router&#39;</span><span class="p">)</span>
@@ -461,13 +464,6 @@ script, or read on for a step-by-step discussion.</p>
     <span class="n">h</span>        <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">h</span>
     <span class="n">eps_wvg</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">eps_wvg</span>
     <span class="n">splitter</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">splitter</span>
-
-    <span class="c1">######################################################################</span>
-    <span class="c1"># ... and fetch values of some meep_adjoint options we will use</span>
-    <span class="c1">######################################################################</span>
-    <span class="n">fcen</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">)</span>
-    <span class="n">dpml</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">)</span>
-    <span class="n">dair</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">)</span>
 
     <span class="c1">##################################################</span>
     <span class="c1"># set up optimization problem</span>
@@ -530,15 +526,16 @@ script, or read on for a step-by-step discussion.</p>
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="c1"># objective function and extra objective quantities -------------------</span>
     <span class="c1">#----------------------------------------------------------------------</span>
-    <span class="n">router_objective</span> <span class="o">=</span> <span class="s1">&#39;Abs(P1_north)**2&#39;</span>
-    <span class="n">splitter_objective</span> <span class="o">=</span> <span class="s1">&#39;( Abs(P1_north) - Abs(P1_east) )**2 + ( Abs(P1_east) - Abs(M1_south) )**2&#39;</span>
-    <span class="n">objective</span> <span class="o">=</span> <span class="n">splitter_objective</span> <span class="k">if</span> <span class="n">splitter</span> <span class="k">else</span> <span class="n">router_objective</span>
+    <span class="n">fobj_router</span>   <span class="o">=</span> <span class="s1">&#39;|P1_north|^2&#39;</span>
+    <span class="n">fobj_splitter</span> <span class="o">=</span> <span class="s1">&#39;( |P1_north| - |P1_east| )^2 + ( |P1_east| - |M1_south| )^2&#39;</span>
+    <span class="n">objective_function</span> <span class="o">=</span> <span class="n">fobj_splitter</span> <span class="k">if</span> <span class="n">splitter</span> <span class="k">else</span> <span class="n">fobj_router</span>
     <span class="n">extra_quantities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S_north&#39;</span><span class="p">,</span> <span class="s1">&#39;S_south&#39;</span><span class="p">,</span> <span class="s1">&#39;S_east&#39;</span><span class="p">,</span> <span class="s1">&#39;S_west1&#39;</span><span class="p">,</span> <span class="s1">&#39;S_west2&#39;</span><span class="p">]</span>
 
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="c1">#- optional extra regions for visualization</span>
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="n">full_region</span> <span class="o">=</span> <span class="n">Subregion</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">ORIGIN</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">)</span>
+    <span class="n">extra_regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">full_region</span><span class="p">]</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">full_dft</span> <span class="k">else</span> <span class="p">[]</span>
 
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="c1">#----------------------------------------------------------------------</span>
@@ -547,11 +544,11 @@ script, or read on for a step-by-step discussion.</p>
      <span class="n">cell_size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">,</span>
      <span class="n">background_geometry</span><span class="o">=</span><span class="n">background_geometry</span><span class="p">,</span>
      <span class="n">source_region</span><span class="o">=</span><span class="n">source_region</span><span class="p">,</span>
-     <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
      <span class="n">objective_regions</span><span class="o">=</span><span class="n">objective_regions</span><span class="p">,</span>
-     <span class="n">extra_quantities</span><span class="o">=</span><span class="n">extra_quantities</span><span class="p">,</span>
      <span class="n">design_region</span><span class="o">=</span><span class="n">design_region</span><span class="p">,</span>
-     <span class="n">extra_regions</span><span class="o">=</span><span class="p">[</span><span class="n">full_region</span><span class="p">]</span>
+     <span class="n">extra_regions</span><span class="o">=</span><span class="n">extra_regions</span><span class="p">,</span>
+     <span class="n">objective_function</span><span class="o">=</span><span class="n">objective_function</span><span class="p">,</span>
+     <span class="n">extra_quantities</span><span class="o">=</span><span class="n">extra_quantities</span>
     <span class="p">)</span>
 
 
@@ -575,7 +572,7 @@ stages of a typical <a class="reference internal" href="../index.html#module-mee
 <blockquote>
 <div><dl class="glossary">
 <dt id="term-1-initialization-defining-the-problem-and-initializing-the-solver"><a class="reference internal" href="../../../tutorial/index.html#phase1"><span class="std std-ref">1. Initialization</span></a>: <em>Defining the problem and initializing the solver</em></dt><dd><p>The first step is to identify all of the
-<a class="reference internal" href="../../../overview/index.html#optprobingredients"><span class="std std-ref">ingredients needed to define our design-optimization problem</span></a>
+<a class="reference internal" href="../overview/index.html#optprobingredients"><span class="std std-ref">ingredients needed to define our design-optimization problem</span></a>
 and communicate them to <a class="reference internal" href="../index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> in the form of
 arguments passed to the <code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> constructor.
 The class instance we get back will furnish the

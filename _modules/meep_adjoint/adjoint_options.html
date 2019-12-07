@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -185,7 +186,10 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="kn">from</span> <span class="nn">.option_almanac</span> <span class="k">import</span> <span class="n">OptionTemplate</span><span class="p">,</span> <span class="n">OptionAlmanac</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
 
 <span class="n">_adjoint_options</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="sd">&quot;&quot;&quot; module-wide database of adjoint-related options, referenced only in this file&quot;&quot;&quot;</span>
@@ -194,7 +198,7 @@
 <span class="k">def</span> <span class="nf">_init_adjoint_options</span><span class="p">(</span><span class="n">custom_defaults</span><span class="o">=</span><span class="p">{},</span> <span class="n">search_env</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;internal routine for just-in-time options processing&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">_adjoint_options</span>
-    <span class="n">_adjoint_options</span> <span class="o">=</span> <span class="n">OptionAlmanac</span><span class="p">(</span><span class="n">adjoint_option_templates</span><span class="p">,</span>
+    <span class="n">_adjoint_options</span> <span class="o">=</span> <span class="n">OptionAlmanac</span><span class="p">(</span><span class="n">option_templates</span><span class="p">,</span>
                                      <span class="n">custom_defaults</span><span class="o">=</span><span class="n">custom_defaults</span><span class="p">,</span>
                                      <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;meep_adjoint.rc&#39;</span><span class="p">,</span>
                                      <span class="n">search_env</span><span class="o">=</span><span class="n">search_env</span><span class="p">)</span>
@@ -240,15 +244,15 @@
 
 
 <span class="c1">######################################################################</span>
-<span class="c1"># The rest of the file just defines the available options.</span>
+<span class="c1"># The rest of the file just defines the available options. (The</span>
+<span class="c1"># separation into categories is for documentation purposes only.)</span>
 <span class="c1">######################################################################</span>
 
-<span class="sd">&quot;&quot;&quot; definition of adjoint-related configuration options &quot;&quot;&quot;</span>
-<span class="n">adjoint_option_templates</span><span class="o">=</span> <span class="p">[</span>
-
-    <span class="c1">#--------------------------------------------------</span>
-    <span class="c1">#- options affecting FDTD geometries/calculations</span>
-    <span class="c1">#--------------------------------------------------</span>
+<span class="n">option_categories</span><span class="o">=</span><span class="p">{}</span>
+<span class="c1">#--------------------------------------------------</span>
+<span class="c1">#- options affecting FDTD geometries/calculations</span>
+<span class="c1">#--------------------------------------------------</span>
+<span class="n">option_categories</span><span class="p">[</span><span class="s1">&#39;Options affecting FDTD geometries/computation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;res&#39;</span><span class="p">,</span>              <span class="mf">20.0</span><span class="p">,</span>   <span class="s1">&#39;Yee grid resolution&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">,</span>              <span class="mf">0.0</span><span class="p">,</span>   <span class="s1">&#39;source center frequency&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;df&#39;</span><span class="p">,</span>                <span class="mf">0.0</span><span class="p">,</span>   <span class="s1">&#39;source frequency width&#39;</span><span class="p">),</span>
@@ -262,30 +266,40 @@
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_timeout&#39;</span><span class="p">,</span>      <span class="mf">10.0</span><span class="p">,</span>   <span class="s1">&#39;max runtime in units of last_source_time&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dft_interval&#39;</span><span class="p">,</span>     <span class="mf">0.25</span><span class="p">,</span>   <span class="s1">&#39;meep time between DFT convergence checks in units of last_source_time&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;complex_fields&#39;</span><span class="p">,</span>  <span class="kc">False</span><span class="p">,</span>   <span class="s1">&#39;use complex fields in forward calculation&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;reuse_simulation&#39;</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span>   <span class="s1">&#39;reuse (do not reallocate) simulation data structure&#39;</span><span class="p">)</span>
+ <span class="p">]</span>
 
     <span class="c1">#--------------------------------------------------</span>
-    <span class="c1">#- options affecting finite-element basis sets</span>
+    <span class="c1">#- options affecting basis-set expansions</span>
     <span class="c1">#--------------------------------------------------</span>
+<span class="n">option_categories</span><span class="p">[</span><span class="s1">&#39;Options affecting basis-set expansions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;beta_min&#39;</span><span class="p">,</span>        <span class="mf">0.0</span><span class="p">,</span>    <span class="s1">&#39;lower bound on basis expansion coefficient&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;beta_max&#39;</span><span class="p">,</span>     <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>    <span class="s1">&#39;upper bound on basis expansion coefficient&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;element_type&#39;</span><span class="p">,</span>   <span class="s1">&#39;CG 1&#39;</span><span class="p">,</span>  <span class="s1">&#39;finite-element family and degree&#39;</span><span class="p">),</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;element_length&#39;</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>    <span class="s1">&#39;finite-element discretization length&#39;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;element_length&#39;</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>    <span class="s1">&#39;finite-element discretization length&#39;</span><span class="p">)</span>
+<span class="p">]</span>
 
     <span class="c1">#--------------------------------------------------</span>
     <span class="c1">#- options affecting gradient-descent optimizer</span>
     <span class="c1">#--------------------------------------------------</span>
+<span class="n">option_categories</span><span class="p">[</span><span class="s1">&#39;Options affecting gradient-duhscent optimizer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span>          <span class="mf">1.0</span><span class="p">,</span>     <span class="s1">&#39;initial value of alpha (update relaxation parameter)&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha_min&#39;</span><span class="p">,</span>      <span class="mf">1.0e-3</span><span class="p">,</span>  <span class="s1">&#39;minimum value of alpha&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;alpha_max&#39;</span><span class="p">,</span>      <span class="mf">10.0</span><span class="p">,</span>    <span class="s1">&#39;maximum value of alpha&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;boldness&#39;</span><span class="p">,</span>       <span class="mf">1.25</span><span class="p">,</span>    <span class="s1">&#39;sometimes you just gotta live a little (explain me)&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;timidity&#39;</span><span class="p">,</span>       <span class="mf">0.75</span><span class="p">,</span>    <span class="s1">&#39;can</span><span class="se">\&#39;</span><span class="s1">t be too cautious in this dangerous world (explain me)&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;max_iters&#39;</span><span class="p">,</span>      <span class="mi">100</span><span class="p">,</span>     <span class="s1">&#39;max number of optimization iterations&#39;</span><span class="p">),</span>
+<span class="p">]</span>
 
     <span class="c1">#--------------------------------------------------</span>
     <span class="c1"># output files, logging, console, visualization, dashboard</span>
     <span class="c1">#--------------------------------------------------</span>
+<span class="n">option_categories</span><span class="p">[</span><span class="s1">&#39;Options affecting console/file/GUI output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;filebase&#39;</span><span class="p">,</span>                <span class="s1">&#39;&#39;</span><span class="p">,</span>         <span class="s1">&#39;base name of output files&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;silence_meep&#39;</span><span class="p">,</span>           <span class="kc">True</span><span class="p">,</span>        <span class="s1">&#39;suppress MEEP console messages when timestepping&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;loglevel&#39;</span><span class="p">,</span>               <span class="s1">&#39;info&#39;</span><span class="p">,</span>      <span class="s2">&quot;[&#39;info&#39;|&#39;debug&#39;]&quot;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;visualization&#39;</span><span class="p">,</span>          <span class="s1">&#39;auto&#39;</span><span class="p">,</span>      <span class="s2">&quot;[&#39;on&#39;|&#39;off&#39;|&#39;auto&#39;] to enable/disable/automate graphical visualization&quot;</span><span class="p">),</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;termcolors&#39;</span><span class="p">,</span>              <span class="kc">True</span><span class="p">,</span>       <span class="s2">&quot;output colorized terminal text&quot;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">,</span>              <span class="s1">&#39;auto&#39;</span><span class="p">,</span>      <span class="s2">&quot;[&#39;on&#39;|&#39;off&#39;|&#39;auto&#39;] to enable/disable/automate GUI dashboard&quot;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_size&#39;</span><span class="p">,</span>         <span class="mf">0.5</span><span class="p">,</span>         <span class="s1">&#39;GUI dashboard size relative to screen size&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_position&#39;</span><span class="p">,</span>     <span class="s1">&#39;top right&#39;</span><span class="p">,</span> <span class="s1">&#39;GUI dashboard position&#39;</span><span class="p">),</span>
@@ -295,8 +309,10 @@
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_cpu_interval&#39;</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span>        <span class="s1">&#39;GUI dashboard CPU usage update interval (ms)&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_host&#39;</span><span class="p">,</span>         <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;GUI dashboard server hostname&#39;</span><span class="p">),</span>
     <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_port&#39;</span><span class="p">,</span>         <span class="mi">37673</span><span class="p">,</span>       <span class="s1">&#39;GUI dashboard server port&#39;</span><span class="p">),</span>
-    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_loglevel&#39;</span><span class="p">,</span>     <span class="s1">&#39;info&#39;</span><span class="p">,</span>      <span class="s2">&quot;&#39;&#39;info&#39; | &#39;debug&#39;&quot;</span><span class="p">)</span>
+    <span class="n">OptionTemplate</span><span class="p">(</span><span class="s1">&#39;dashboard_loglevel&#39;</span><span class="p">,</span>     <span class="s1">&#39;info&#39;</span><span class="p">,</span>      <span class="s2">&quot;&#39;info&#39; | &#39;debug&#39;&quot;</span><span class="p">)</span>
 <span class="p">]</span>
+
+<span class="n">option_templates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span> <span class="p">[</span><span class="n">templates</span> <span class="k">for</span> <span class="p">(</span><span class="n">description</span><span class="p">,</span><span class="n">templates</span><span class="p">)</span> <span class="ow">in</span> <span class="n">option_categories</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span> <span class="p">))</span>
 </pre></div>
 
            </div>

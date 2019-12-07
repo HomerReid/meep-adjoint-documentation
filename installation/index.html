@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Configuration and customization" href="../customization/index.html" />
@@ -95,7 +96,16 @@
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-required-packages">1. Install required packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-create-a-conda-environment-containing-both-fenics-and-meep">1A. Create a conda environment containing both <span class="codename">fenics</span> and <span class="codename">meep</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-create-a-conda-environment-containing-fenics-then-build-meep-from-source">1B. Create a conda environment containing <span class="codename">fenics</span>, then build <span class="codename">meep</span> from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-meep-adjoint">2. Install <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-on-windows">3. Installation on windows</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../customization/index.html">Configuration and customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">General reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../visualization/index.html">Visualization Module</a></li>
@@ -177,6 +187,92 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> package consists of just a handful of python files (i.e. there
+are no C++ codes to compile or libraries to link), so the package installation
+is essentially instantaneous, <strong>assuming</strong> all prerequisite packages have been
+installed on your system.</p>
+<p><span class="strike">The only potential source of difficulty here is that getting the prerequisites
+to play nicely with each other is somewhat tricky.</span> <strong>Update, November 2019:</strong> Previously
+there was some difficulty in creating a Conda environment containing both the <a href="https://fenicsproject.org">
+<font style="font-variant: small-caps; font-size: 100%">fenics</font>
+</a>
+and <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> packages, which was evaded by building <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> from source. This approach is
+discussed in <a class="reference internal" href="#section1b"><span class="std std-ref">Section 1(b)</span></a> below. However, as of recently
+the conda difficulties seem to have gone away, and the easier approach of
+<a class="reference internal" href="#section1a"><span class="std std-ref">Section 1(a)</span></a> seems to be working generally.</p>
+<div class="section" id="install-required-packages">
+<h2>1. Install required packages<a class="headerlink" href="#install-required-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-create-a-conda-environment-containing-both-fenics-and-meep">
+<span id="section1a"></span><h3>1A. Create a conda environment containing both <span class="codename">fenics</span> and <span class="codename">meep</span><a class="headerlink" href="#a-create-a-conda-environment-containing-both-fenics-and-meep" title="Permalink to this headline">¶</a></h3>
+<p>The simplest way to proceed here is to create a <a href="https://conda.io/docs">
+<font style="font-variant: small-caps; font-size: 100%">conda</font>
+</a> environment containing all dependencies.
+(If you aren’t a condaficionado, <a class="reference external" href="https://meep.readthedocs.io/en/latest/Installation/">this backgrounder</a> in the <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> documentation is helpful.)
+For example, on my linux system running <a href="https://conda.io/docs">
+<font style="font-variant: small-caps; font-size: 100%">conda</font>
+</a> version 4.8.0rc0, the following commands
+suffice to create and activate a new environment named <code class="xref py py-obj docutils literal notranslate"><span class="pre">py37_for_meep_adjoint</span></code> (of course you can
+use any name you like):</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda create -n py37_for_meep_adjoint -c conda-canary -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 mpich fenics pymeep psutil
+$ conda activate py37_for_meep_adjoint
+<span class="o">(</span>py37_for_meep_adjoint<span class="o">)</span> $
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="b-create-a-conda-environment-containing-fenics-then-build-meep-from-source">
+<span id="section1b"></span><h3>1B. Create a conda environment containing <span class="codename">fenics</span>, then build <span class="codename">meep</span> from source<a class="headerlink" href="#b-create-a-conda-environment-containing-fenics-then-build-meep-from-source" title="Permalink to this headline">¶</a></h3>
+<p>At one point in the not-so-distant past, the conda-packaged versions of <span class="codename">fenics</span> and <span class="codename">meep</span> were
+incompatible and could not be present simultaneously in the same conda environment. The solution was to
+remove <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> from the conda environment  (retaining <a href="https://fenicsproject.org">
+<font style="font-variant: small-caps; font-size: 100%">fenics</font>
+</a>) then fetch the source
+distributions for <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> and its required support packages (<a href="https://github.com/NanoComp/libctl">
+<font style="font-variant: small-caps; font-size: 100%">libctl</font>
+</a> and <a href="https://github.com/NanoComp/mpb">
+<font style="font-variant: small-caps; font-size: 100%">mpb</font>
+</a>) and build from source.
+This is not too hard, but it requires installing a few extra <a href="https://conda.io/docs">
+<font style="font-variant: small-caps; font-size: 100%">conda</font>
+</a> packages to support the build from
+source, without which one tends to get errors arising from the compiler/linker suite attempting to use some headers/libraries
+from the conda installation and others from the system installation. The particular constellation of conda packages that
+needed to be in place to prevent this seemed to vary with time and could only be determined by an annoying trial-and-error
+process (try to build from source, get failure message, scrutinize log files to pinpoint missing conda packages,
+install, repeat). Hopefully this is now obviated by the apparent success of the method discussed above. If not,
+I will post a script that mostly automates the <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a> build-from-source process.</p>
+</div>
+</div>
+<div class="section" id="install-meep-adjoint">
+<h2>2. Install <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a><a class="headerlink" href="#install-meep-adjoint" title="Permalink to this headline">¶</a></h2>
+<p>Assuming you have created and activated a conda environment named <code class="xref py py-obj docutils literal notranslate"><span class="pre">py37_for_meep_adjoint</span></code>
+with all necessary dependencies, you can now go like this:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>py37_for_meep_adjoint<span class="o">)</span> $ git clone https://github.com/HomerReid/meep_adjoint
+<span class="o">(</span>py37_for_meep_adjoint<span class="o">)</span> $ <span class="nb">cd</span> meep_adjoint
+<span class="o">(</span>py37_for_meep_adjoint<span class="o">)</span> $ python setup.py install
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="installation-on-windows">
+<h2>3. Installation on windows<a class="headerlink" href="#installation-on-windows" title="Permalink to this headline">¶</a></h2>
+<p>Anybody who cares about this is almost certainly better situated than I to figure it out,
+but if there’s interest I’ll look into it.</p>
+</div>
 </div>
 
 

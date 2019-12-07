@@ -1,0 +1,63 @@
+.. csv-table:: Options affecting FDTD geometries/computation
+   :header: "Option", "Default", "Description"
+
+   `res`, 20.0, "Yee grid resolution"
+   `fcen`, 0.0, "source center frequency"
+   `df`, 0.0, "source frequency width"
+   `source_component`, Ez, "forward source component (str)"
+   `source_mode`, 1, "forward source eigenmode index"
+   `nfreq`, 1, "number of DFT frequencies"
+   `dpml`, -1.0, "PML width (-1 --> auto-select)"
+   `dair`, -1.0, "gap width between material bodies and PMLs (-1 --> auto-select)"
+   `eps_design`, 1.0, "function of (x,y,z) giving initial design permittivity"
+   `dft_reltol`, 1e-06, "convergence tolerance for terminating timestepping"
+   `dft_timeout`, 10.0, "max runtime in units of last_source_time"
+   `dft_interval`, 0.25, "meep time between DFT convergence checks in units of last_source_time"
+   `complex_fields`, False, "use complex fields in forward calculation"
+   `reuse_simulation`, False, "reuse (do not reallocate) simulation data structure"
+
+
+
+.. csv-table:: Options affecting basis-set expansions
+   :header: "Option", "Default", "Description"
+
+   `beta_min`, 0.0, "lower bound on basis expansion coefficient"
+   `beta_max`, inf, "upper bound on basis expansion coefficient"
+   `element_type`, CG 1, "finite-element family and degree"
+   `element_length`, 0.0, "finite-element discretization length"
+
+
+
+.. csv-table:: Options affecting gradient-duhscent optimizer
+   :header: "Option", "Default", "Description"
+
+   `alpha`, 1.0, "initial value of alpha (update relaxation parameter)"
+   `alpha_min`, 0.001, "minimum value of alpha"
+   `alpha_max`, 10.0, "maximum value of alpha"
+   `boldness`, 1.25, "sometimes you just gotta live a little (explain me)"
+   `timidity`, 0.75, "can't be too cautious in this dangerous world (explain me)"
+   `max_iters`, 100, "max number of optimization iterations"
+
+
+
+.. csv-table:: Options affecting console/file/GUI output
+   :header: "Option", "Default", "Description"
+
+   `filebase`, , "base name of output files"
+   `silence_meep`, True, "suppress MEEP console messages when timestepping"
+   `loglevel`, info, "['info'|'debug']"
+   `visualization`, auto, "['on'|'off'|'auto'] to enable/disable/automate graphical visualization"
+   `termcolors`, True, "output colorized terminal text"
+   `dashboard`, auto, "['on'|'off'|'auto'] to enable/disable/automate GUI dashboard"
+   `dashboard_size`, 0.5, "GUI dashboard size relative to screen size"
+   `dashboard_position`, top right, "GUI dashboard position"
+   `dashboard_font_family`, Fantasque Sans Mono, "GUI dashboard font family"
+   `dashboard_font_scale`, 1.0, "GUI dashboard font scale factor"
+   `dashboard_on_top`, True, "GUI dashboard stays on top of other windows"
+   `dashboard_cpu_interval`, 2000, "GUI dashboard CPU usage update interval (ms)"
+   `dashboard_host`, localhost, "GUI dashboard server hostname"
+   `dashboard_port`, 37673, "GUI dashboard server port"
+   `dashboard_loglevel`, info, "'info' | 'debug'"
+
+
+

@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Example gallery" href="../example_gallery/index.html" />
@@ -97,14 +98,22 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#the-phases-of-a-meep-adjoint-session-and-the-structure-of-this-tutorial">The phases of a <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code> session and the structure of this tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#phase-1-problem-definition-and-initialization-br-creating-an-optimizationproblem">Phase 1: Problem definition and initialization: <br> Creating an <code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fetch-values-for-local-script-specific-and-global-meep-adjoint-wide-configurable-options">Fetch values for local (script-specific) and global (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep-adjoint</span></code>-wide) configurable options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#set-up-the-computational-geometry">Set up the computational geometry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#define-the-fixed-material-geometry">Define the fixed material geometry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#delineate-functional-subregions">Delineate functional subregions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#define-the-objective-function">Define the objective function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-fetch-values-for-global-meep-adjoint-wide-and-local-script-specific-and-configurable-options">1A. Fetch values for global (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep-adjoint</span></code>-wide) and local (script-specific) and configurable options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-set-up-the-computational-cell-and-the-fixed-geometry">1B. Set up the computational cell and the fixed geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-delineate-functional-subregions">1C. Delineate functional subregions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#d-define-the-objective-function">1D. Define the objective function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#e-instantiate-the-optimizationproblem">1E. Instantiate the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#phase-2-interactive-exploration">Phase 2: Interactive exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-2-interactive-exploration">Phase 2: Interactive exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-visualizing-the-geometry">2A. Visualizing the geometry</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#b-updating-the-design-function">2B. Updating the design function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c-compute-objective-function-value-and-gradient">2C. Compute objective function value and gradient</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#d-displace-design-variables-in-direction-of-gradient-and-check-that-objective-function-improves">2D. Displace design variables in direction of gradient and check that objective function improves</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#phase-3-automated-optimization">Phase 3: Automated optimization</a></li>
 </ul>
 </li>
@@ -194,7 +203,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="tutorial-walkthrough">
 <h1>Tutorial walkthrough<a class="headerlink" href="#tutorial-walkthrough" title="Permalink to this headline">¶</a></h1>
-<p>Having outlined on the <a class="reference internal" href="../overview/index.html#theoverview"><span class="std std-ref">previous page</span></a> some of the
+<p>Having outlined on the <a class="reference internal" href="../meep_adjoint/docs/overview/index.html#theoverview"><span class="std std-ref">previous page</span></a> some of the
 big-picture story—how <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> fits into the larger
 design-optimization ecosystem, and what you can expect to put into and
 get out of a typical session—on this page we get down to details.
@@ -411,9 +420,7 @@ script, or read on for a step-by-step discussion.</p>
 162
 163
 164
-165
-166
-167</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+165</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 
@@ -426,16 +433,6 @@ script, or read on for a step-by-step discussion.</p>
 
 <span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="k">import</span> <span class="p">(</span> <span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">Subregion</span><span class="p">,</span>
                            <span class="n">ORIGIN</span><span class="p">,</span> <span class="n">XHAT</span><span class="p">,</span> <span class="n">YHAT</span><span class="p">,</span> <span class="n">ZHAT</span><span class="p">,</span> <span class="n">E_CPTS</span><span class="p">,</span> <span class="n">H_CPTS</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">V3</span><span class="p">)</span>
-
-<span class="c1">######################################################################</span>
-<span class="c1"># override default settings for some meep_adjoint configuration options</span>
-<span class="c1">######################################################################</span>
-<span class="n">meep_adjoint</span><span class="o">.</span><span class="n">set_option_defaults</span><span class="p">(</span> <span class="p">{</span> <span class="s1">&#39;fcen&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
-                                    <span class="s1">&#39;dpml&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;dair&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-                                    <span class="s1">&#39;eps_func&#39;</span><span class="p">:</span> <span class="mf">6.0</span><span class="p">,</span>
-                                    <span class="s1">&#39;flux_region_fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-                                    <span class="s1">&#39;latex&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                                   <span class="p">})</span>
 
 <span class="c1">######################################################################</span>
 <span class="c1"># subroutine that initializes and returns an OptimizationProblem</span>
@@ -452,6 +449,18 @@ script, or read on for a step-by-step discussion.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">######################################################################</span>
+    <span class="c1"># set custom defaults for meep_adjoint package-wide options, then</span>
+    <span class="c1"># fetch values for a few such options we will need in this routine</span>
+    <span class="c1">######################################################################</span>
+    <span class="n">meep_adjoint</span><span class="o">.</span><span class="n">set_option_defaults</span><span class="p">(</span> <span class="p">{</span> <span class="s1">&#39;fcen&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+                                        <span class="s1">&#39;dpml&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;dair&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                                        <span class="s1">&#39;eps_design&#39;</span><span class="p">:</span> <span class="mf">6.0</span>
+                                      <span class="p">})</span>
+    <span class="n">fcen</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">)</span>
+    <span class="n">dpml</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">)</span>
+    <span class="n">dair</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">)</span>
+
+    <span class="c1">######################################################################</span>
     <span class="c1"># process script-specific command-line arguments...</span>
     <span class="c1">######################################################################</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
@@ -465,6 +474,8 @@ script, or read on for a step-by-step discussion.</p>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region side length&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--h&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;thickness in z-direction&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_wvg&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide permittivity&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--full_dft&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;tabulate and plot fields over full computational cell&#39;</span><span class="p">)</span>
 
     <span class="c1"># options affecting the type of device to design</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--splitter&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design equal splitter instead of right-angle router&#39;</span><span class="p">)</span>
@@ -480,13 +491,6 @@ script, or read on for a step-by-step discussion.</p>
     <span class="n">h</span>        <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">h</span>
     <span class="n">eps_wvg</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">eps_wvg</span>
     <span class="n">splitter</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">splitter</span>
-
-    <span class="c1">######################################################################</span>
-    <span class="c1"># ... and fetch values of some meep_adjoint options we will use</span>
-    <span class="c1">######################################################################</span>
-    <span class="n">fcen</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">)</span>
-    <span class="n">dpml</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">)</span>
-    <span class="n">dair</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">)</span>
 
     <span class="c1">##################################################</span>
     <span class="c1"># set up optimization problem</span>
@@ -549,15 +553,16 @@ script, or read on for a step-by-step discussion.</p>
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="c1"># objective function and extra objective quantities -------------------</span>
     <span class="c1">#----------------------------------------------------------------------</span>
-    <span class="n">router_objective</span> <span class="o">=</span> <span class="s1">&#39;Abs(P1_north)**2&#39;</span>
-    <span class="n">splitter_objective</span> <span class="o">=</span> <span class="s1">&#39;( Abs(P1_north) - Abs(P1_east) )**2 + ( Abs(P1_east) - Abs(M1_south) )**2&#39;</span>
-    <span class="n">objective</span> <span class="o">=</span> <span class="n">splitter_objective</span> <span class="k">if</span> <span class="n">splitter</span> <span class="k">else</span> <span class="n">router_objective</span>
+    <span class="n">fobj_router</span>   <span class="o">=</span> <span class="s1">&#39;|P1_north|^2&#39;</span>
+    <span class="n">fobj_splitter</span> <span class="o">=</span> <span class="s1">&#39;( |P1_north| - |P1_east| )^2 + ( |P1_east| - |M1_south| )^2&#39;</span>
+    <span class="n">objective_function</span> <span class="o">=</span> <span class="n">fobj_splitter</span> <span class="k">if</span> <span class="n">splitter</span> <span class="k">else</span> <span class="n">fobj_router</span>
     <span class="n">extra_quantities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S_north&#39;</span><span class="p">,</span> <span class="s1">&#39;S_south&#39;</span><span class="p">,</span> <span class="s1">&#39;S_east&#39;</span><span class="p">,</span> <span class="s1">&#39;S_west1&#39;</span><span class="p">,</span> <span class="s1">&#39;S_west2&#39;</span><span class="p">]</span>
 
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="c1">#- optional extra regions for visualization</span>
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="n">full_region</span> <span class="o">=</span> <span class="n">Subregion</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">ORIGIN</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">)</span>
+    <span class="n">extra_regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">full_region</span><span class="p">]</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">full_dft</span> <span class="k">else</span> <span class="p">[]</span>
 
     <span class="c1">#----------------------------------------------------------------------</span>
     <span class="c1">#----------------------------------------------------------------------</span>
@@ -566,11 +571,11 @@ script, or read on for a step-by-step discussion.</p>
      <span class="n">cell_size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">,</span>
      <span class="n">background_geometry</span><span class="o">=</span><span class="n">background_geometry</span><span class="p">,</span>
      <span class="n">source_region</span><span class="o">=</span><span class="n">source_region</span><span class="p">,</span>
-     <span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
      <span class="n">objective_regions</span><span class="o">=</span><span class="n">objective_regions</span><span class="p">,</span>
-     <span class="n">extra_quantities</span><span class="o">=</span><span class="n">extra_quantities</span><span class="p">,</span>
      <span class="n">design_region</span><span class="o">=</span><span class="n">design_region</span><span class="p">,</span>
-     <span class="n">extra_regions</span><span class="o">=</span><span class="p">[</span><span class="n">full_region</span><span class="p">]</span>
+     <span class="n">extra_regions</span><span class="o">=</span><span class="n">extra_regions</span><span class="p">,</span>
+     <span class="n">objective_function</span><span class="o">=</span><span class="n">objective_function</span><span class="p">,</span>
+     <span class="n">extra_quantities</span><span class="o">=</span><span class="n">extra_quantities</span>
     <span class="p">)</span>
 
 
@@ -594,7 +599,7 @@ stages of a typical <a class="reference internal" href="../meep_adjoint/docs/ind
 <blockquote>
 <div><dl class="glossary">
 <dt id="term-1-initialization-defining-the-problem-and-initializing-the-solver"><a class="reference internal" href="#phase1"><span class="std std-ref">1. Initialization</span></a>: <em>Defining the problem and initializing the solver</em></dt><dd><p>The first step is to identify all of the
-<a class="reference internal" href="../overview/index.html#optprobingredients"><span class="std std-ref">ingredients needed to define our design-optimization problem</span></a>
+<a class="reference internal" href="../meep_adjoint/docs/overview/index.html#optprobingredients"><span class="std std-ref">ingredients needed to define our design-optimization problem</span></a>
 and communicate them to <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> in the form of
 arguments passed to the <code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> constructor.
 The class instance we get back will furnish the
@@ -750,13 +755,28 @@ to construct a single-element list passed as the
 </a></p>
 <div class="default-hidden docutils container" id="parms2">
 <dl class="field-list simple">
-<dt class="field-odd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">objective</span></code></dt>
-<dd class="field-odd"><p>Character string specifying a mathematical expression
-involving one or more objective quantities.</p>
+<dt class="field-odd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">objective_regions</span></code></dt>
+<dd class="field-odd"><p>List of <a class="reference internal" href="../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.Subregion" title="meep_adjoint.Subregion"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code></a>
+structures for all objective region. (A <code class="xref py py-obj docutils literal notranslate"><span class="pre">Subregion</span></code>
+in <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> is basically just
+what would be a <code class="docutils literal notranslate"><span class="pre">FluxRegion</span></code> or <code class="docutils literal notranslate"><span class="pre">EnergyRegion</span></code>
+or another similar structure in <a href="https://github.com/NanoComp/meep">
+<font style="font-variant: small-caps; font-size: 100%">meep</font>
+</a>,
+except that each <code class="xref py py-obj docutils literal notranslate"><span class="pre">Subregion</span></code> has a unique <em>name</em>,
+such as <code class="xref py py-obj docutils literal notranslate"><span class="pre">north</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">east</span></code> for flux monitors
+on the various I/O ports of the router geometry.)</p>
 </dd>
-<dt class="field-even"><code class="xref py py-obj docutils literal notranslate"><span class="pre">objective_regions</span></code></dt>
-<dd class="field-even"><p>List of <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code> structures for all
-objective regions.</p>
+<dt class="field-even"><code class="xref py py-obj docutils literal notranslate"><span class="pre">objective_function</span></code></dt>
+<dd class="field-even"><p>Character string specifying a mathematical expression
+involving one or more
+<a class="reference internal" href="../reference/index.html#objective-quantities"><span class="std std-ref">objective quantities</span></a>.</p>
+</dd>
+<dt class="field-odd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extra_quantities</span></code></dt>
+<dd class="field-odd"><p>An optional list of additional objective quantities
+for which to compute and report values in addition
+to the objective function and the objective quantities
+needed to compute it.</p>
 </dd>
 </dl>
 </div>
@@ -786,57 +806,180 @@ and returns a new instance of
 referring both to <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a>-specific command-line arguments
 and <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>-wide
 <span class="xref std std-doc">configuration options</span>
-for various pieces of information. In this section of the tutorial
-we walk through the <code class="xref py py-obj docutils literal notranslate"><span class="pre">init_problem</span></code> routine,</p>
-<div class="section" id="fetch-values-for-local-script-specific-and-global-meep-adjoint-wide-configurable-options">
-<h3>Fetch values for local (script-specific) and global (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep-adjoint</span></code>-wide) configurable options<a class="headerlink" href="#fetch-values-for-local-script-specific-and-global-meep-adjoint-wide-configurable-options" title="Permalink to this headline">¶</a></h3>
-<p>The function begins by parsing command-line arguments to <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+for various pieces of information. What follows is a detailed
+walk through this routine with a blow-by-blow analysis of the
+various initialization tasks it handles.</p>
+<div class="section" id="a-fetch-values-for-global-meep-adjoint-wide-and-local-script-specific-and-configurable-options">
+<h3>1A. Fetch values for global (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep-adjoint</span></code>-wide) and local (script-specific) and configurable options<a class="headerlink" href="#a-fetch-values-for-global-meep-adjoint-wide-and-local-script-specific-and-configurable-options" title="Permalink to this headline">¶</a></h3>
+<p>Like most <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> driver scripts, <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> makes use
+of user-configured settings for both
+general-purpose (problem-independent)
+<span class="xref std std-doc">configuration options</span>
+defined by <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>
+and problem-specific options defined by <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a>.</p>
+<p>Examples of the former include the options <code class="xref py py-obj docutils literal notranslate"><span class="pre">fcen</span></code>
+(center frequency of forward sources), <code class="xref py py-obj docutils literal notranslate"><span class="pre">dpml</span></code> (thickness
+of PML layers), and <code class="xref py py-obj docutils literal notranslate"><span class="pre">dair</span></code> (thickness of air gaps between
+material bodies and PML layers)
+In lines 37-39 below we query <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> for its
+current values of those options (note that <code class="xref py py-obj docutils literal notranslate"><span class="pre">adj_opt</span></code> is
+short for <a class="reference internal" href="../API/HighLevel.html#meep_adjoint.get_adjoint_option" title="meep_adjoint.get_adjoint_option"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint.get_adjoint_option</span></code></a>).</p>
+<p>Just before this, in lines 33-36, we call <code class="xref py py-obj docutils literal notranslate"><span class="pre">set_option_defaults</span></code>
+to update some of the hard-coded default option values in
+<a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> to values that make more sense for the router
+problem. Note that this step only affects the <em>default</em> option
+settings, which are still overridden by command-line arguments
+or configuration files. For more on this, see the
+<span class="xref std std-doc">configuration section</span> of this
+documentation tree.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span>     <span class="kn">import</span> <span class="nn">meep</span> <span class="kn">as</span> <span class="nn">mp</span>
+     <span class="kn">import</span> <span class="nn">meep_adjoint</span>
+     <span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="kn">import</span> <span class="n">get_adjoint_option</span> <span class="k">as</span> <span class="n">adj_opt</span>
+     <span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="kn">import</span> <span class="n">get_visualization_option</span> <span class="k">as</span> <span class="n">vis_opt</span>
 
-<span class="c1"># options affecting the geometry of the router</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_east&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of EAST waveguide stub&#39;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_west&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of WEST waveguide stub&#39;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_north&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of NORTH waveguide stub&#39;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_south&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of SOUTH waveguide stub&#39;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_stub&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide stub length&#39;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region side length&#39;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--h&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;thickness in z-direction&#39;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_wvg&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide permittivity&#39;</span><span class="p">)</span>
+     <span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="kn">import</span> <span class="p">(</span> <span class="n">OptimizationProblem</span><span class="p">,</span> <span class="n">Subregion</span><span class="p">,</span>
+                                <span class="n">ORIGIN</span><span class="p">,</span> <span class="n">XHAT</span><span class="p">,</span> <span class="n">YHAT</span><span class="p">,</span> <span class="n">ZHAT</span><span class="p">,</span> <span class="n">E_CPTS</span><span class="p">,</span> <span class="n">H_CPTS</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">V3</span><span class="p">)</span>
 
-<span class="c1"># options affecting the type of device to design</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--splitter&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design equal splitter instead of right-angle router&#39;</span><span class="p">)</span>
+     <span class="c1">######################################################################</span>
+     <span class="c1"># subroutine that initializes and returns an OptimizationProblem</span>
+     <span class="c1"># structure for the router geometry</span>
+     <span class="c1">######################################################################</span>
+     <span class="k">def</span> <span class="nf">init_problem</span><span class="p">():</span>
+         <span class="sd">&quot;&quot;&quot; Initialize four-way router optimization problem.</span>
 
-<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="sd">         Args:</span>
+<span class="sd">             None (reads command-line options from sys.argv).</span>
 
-<span class="n">w_east</span>   <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_east</span>
-<span class="n">w_west</span>   <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_west</span>
-<span class="n">w_north</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_north</span>
-<span class="n">w_south</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_south</span>
-<span class="n">l_stub</span>   <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span>
-<span class="n">l_design</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">l_design</span>
-<span class="n">h</span>        <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">h</span>
-<span class="n">eps_wvg</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">eps_wvg</span>
-<span class="n">splitter</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">splitter</span>
+<span class="sd">         Returns:</span>
+<span class="sd">             New instance of meep_adjoint.OptimizationProblem()</span>
+<span class="sd">         &quot;&quot;&quot;</span>
+
+         <span class="c1">######################################################################</span>
+         <span class="c1"># set custom defaults for meep_adjoint package-wide options, then</span>
+         <span class="c1"># fetch values for a few such options we will need in this routine</span>
+         <span class="c1">######################################################################</span>
+         <span class="n">meep_adjoint</span><span class="o">.</span><span class="n">set_option_defaults</span><span class="p">(</span> <span class="p">{</span> <span class="s1">&#39;fcen&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+                                             <span class="s1">&#39;dpml&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;dair&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                                             <span class="s1">&#39;eps_design&#39;</span><span class="p">:</span> <span class="mf">6.0</span>
+                                           <span class="p">})</span>
+         <span class="n">fcen</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">)</span>
+         <span class="n">dpml</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">)</span>
+         <span class="n">dair</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">)</span>
 </pre></div>
-</div>
-<p>We also fetch the current values of some <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a>
-<a class="reference internal" href="../customization/index.html"><span class="doc">configuration options</span></a> whose
-values we will need to initialize the geometry:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="kn">import</span> <span class="n">get_adjoint_option</span> <span class="k">as</span> <span class="n">adj_opt</span>
+</td></tr></table></div>
+<p>Then (lines 45-71) we follow the usual <code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse</span></code> procedure to
+define a number of options specific to the router geometry—such
+as the widths or permittivity of the waveguides—and parse
+<a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> command-line arguments for their settings.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
 
-<span class="n">fcen</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">)</span>   <span class="c1"># center source frequency</span>
-<span class="n">dpml</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dpml&#39;</span><span class="p">)</span>   <span class="c1"># width of PML layers</span>
-<span class="n">dair</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;dair&#39;</span><span class="p">)</span>   <span class="c1"># width of air gaps</span>
+ <span class="c1"># options affecting the geometry of the router</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_east&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of EAST waveguide stub&#39;</span><span class="p">)</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_west&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of WEST waveguide stub&#39;</span><span class="p">)</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_north&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of NORTH waveguide stub&#39;</span><span class="p">)</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--w_south&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;width of SOUTH waveguide stub&#39;</span><span class="p">)</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_stub&#39;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide stub length&#39;</span><span class="p">)</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--l_design&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design region side length&#39;</span><span class="p">)</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--h&#39;</span><span class="p">,</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;thickness in z-direction&#39;</span><span class="p">)</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eps_wvg&#39;</span><span class="p">,</span>  <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>  <span class="n">help</span><span class="o">=</span><span class="s1">&#39;waveguide permittivity&#39;</span><span class="p">)</span>
+
+ <span class="c1"># options affecting the type of device to design</span>
+ <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--splitter&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;design equal splitter instead of right-angle router&#39;</span><span class="p">)</span>
+
+ <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+ <span class="n">w_east</span>   <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_east</span>
+ <span class="n">w_west</span>   <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_west</span>
+ <span class="n">w_north</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_north</span>
+ <span class="n">w_south</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">w_south</span>
+ <span class="n">l_stub</span>   <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span>
+ <span class="n">l_design</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">l_design</span>
+ <span class="n">h</span>        <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">h</span>
+ <span class="n">eps_wvg</span>  <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">eps_wvg</span>
+ <span class="n">splitter</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">splitter</span>
 </pre></div>
+</td></tr></table></div>
+<div class="admonition-mining-command-line-options-for-global-and-local-options admonition">
+<p class="admonition-title">Mining command-line options for global and local options</p>
+<p>Note that the command-line options to <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> may be used to specify
+values for both <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> options (like <code class="xref py py-obj docutils literal notranslate"><span class="pre">fcen</span></code>) and for
+<a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> options (like <code class="xref py py-obj docutils literal notranslate"><span class="pre">w_south</span></code>). How do the two sets of options,
+parsed at different times by separate parsers in distinct modules,
+coexist on the <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> command line?</p>
+<p>Answer: <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> takes a first crack at <code class="xref py py-obj docutils literal notranslate"><span class="pre">sys.argv</span></code>, handling and removing
+all arguments it understands, and leaving arguments it doesn’t recognize
+untouched in their original sequence within <code class="xref py py-obj docutils literal notranslate"><span class="pre">sys.argv</span></code>. (It uses
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">Argparser.parse_known_args</span></code> instead of <code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_args</span></code>)
+This happens when
+<a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> initializes its databases of user-configurable options,
+which it does on a just-in-time basis the first time an option value is queried;
+in the present case, that happens on line 36, well before <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> takes
+its own crack at <code class="xref py py-obj docutils literal notranslate"><span class="pre">sys.argv</span></code> (on line 60).</p>
+<p>One difference between <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> configuration options and <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a>
+commmand-line options is that the former may also be set in configuration files.
+See the <a class="reference internal" href="../customization/index.html"><span class="doc">customization section of this documentation</span></a>
+for more information.</p>
 </div>
-<p>(As discussed in more detail <a class="reference internal" href="../customization/index.html"><span class="doc">here</span></a>, values
-for <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> configuration options may be specified via command-line
-arguments like <code class="xref py py-obj docutils literal notranslate"><span class="pre">--fcen</span> <span class="pre">1.3</span></code>—which are automatically processed and removed
-from <code class="xref py py-obj docutils literal notranslate"><span class="pre">sys.argv</span></code> when <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> is imported—or by lines like
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">fcen=1.3</span></code> in configuration files, or in other ways.)</p>
 </div>
-<div class="section" id="set-up-the-computational-geometry">
-<h3>Set up the computational geometry<a class="headerlink" href="#set-up-the-computational-geometry" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="b-set-up-the-computational-cell-and-the-fixed-geometry">
+<h3>1B. Set up the computational cell and the fixed geometry<a class="headerlink" href="#b-set-up-the-computational-cell-and-the-fixed-geometry" title="Permalink to this headline">¶</a></h3>
 <p>The next steps are standard initialization procedures familiar to anyone
 who has ever initialized a <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#the-simulation-class"> <code>Simulation</code> </a>. First we do a little arithmetic
 to compute the dimensions of the computational cell based on the current
@@ -873,11 +1016,10 @@ level, obviating the need for users to define e.g. a <code class="docutils liter
 in every <code class="docutils literal notranslate"><span class="pre">meep_adjoint</span></code> script they write.</p>
 </div>
 </div></blockquote>
-</div>
-<div class="section" id="define-the-fixed-material-geometry">
-<h3>Define the fixed material geometry<a class="headerlink" href="#define-the-fixed-material-geometry" title="Permalink to this headline">¶</a></h3>
 <p>Next we construct a list of <code class="docutils literal notranslate"><span class="pre">GeometricObject</span></code> structures to describe the fixed
-portion of the material geometry. This is just like the list of objects
+portion of the material geometry—that is, everything except for the design region
+in which we are allowed to tweak the permittivity
+This is just like the list of objects
 one constructs and passes as the <code class="docutils literal notranslate"><span class="pre">geometry</span></code> parameter to the <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#the-simulation-class"> <code>Simulation</code> </a>
 constructor in the core <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/">
 <font style="font-variant: small-caps; font-size: 100%">meep</font>
@@ -922,8 +1064,8 @@ to come after the design-region object in the global list.</p>
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="delineate-functional-subregions">
-<h3>Delineate functional subregions<a class="headerlink" href="#delineate-functional-subregions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="c-delineate-functional-subregions">
+<h3>1C. Delineate functional subregions<a class="headerlink" href="#c-delineate-functional-subregions" title="Permalink to this headline">¶</a></h3>
 <p>Next we will delineate various subregions of the computational cell as being of particular significance.
 Again, this step will be familiar to anyone who has ever defined a
 <code class="docutils literal notranslate"><span class="pre">FluxRegion</span></code> (or <code class="docutils literal notranslate"><span class="pre">FieldRegion</span></code> or <code class="docutils literal notranslate"><span class="pre">ForceRegion</span></code> or
@@ -978,7 +1120,9 @@ region. The first two of these will be familiar to anyone who has ever
 created a <a href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#the-simulation-class"> <code>Simulation</code> </a>, while the third is optimization-specific
 and has no analogue in core <a href="https://github.com/NanoComp/meep">
 <font style="font-variant: small-caps; font-size: 100%">meep</font>
-</a>.</p>
+</a>. (As an optional fourth category,
+you can also provide a list of “extra” subregions belonging to none
+of the above categories).</p>
 <blockquote>
 <div><dl class="glossary">
 <dt id="term-1-source-region-location-of-excitation-sources">1. <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_region</span></code>: Location of excitation sources</dt><dd><p>When creating an <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> for a simulation model in
@@ -990,26 +1134,29 @@ then it will be used, together with package-wide configuration options
 like <code class="xref py py-obj docutils literal notranslate"><span class="pre">fcen</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_component</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_mode</span></code>, internally
 within <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> to construct appropriate <code class="docutils literal notranslate"><span class="pre">Source</span></code> structures
 for forward FDTD simulations.</p>
+<div class="admonition-source-region-is-a-convenience-shortcut-for-sources admonition">
+<p class="admonition-title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_region</span></code> is a convenience shortcut for <code class="xref py py-obj docutils literal notranslate"><span class="pre">sources</span></code></p>
 <p>The use of <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_region</span></code> together with global configuration variables
 to define sources is actually a convenience option provided as a
-shortcut for simple source configurations; the more general
-way to define forward sources for your problem is to instantiate a
-list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">MeepSource</span></code> structures and pass it as the
+shortcut for simple source configurations.[#f3]_
+The more general way to define forward sources for your problem is
+to instantiate a list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">MeepSource</span></code> structures and pass it as the
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">sources</span></code> parameter to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> constructor, in
 which case you would <code class="xref py py-obj docutils literal notranslate"><span class="pre">not</span></code> specify <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_region</span></code>.</p>
+</div>
 </dd>
 <dt id="term-2-objective-regions-declaring-sites-at-which-we-want-frequency-domain-fields-and-associated-physical-quantities">2. <code class="xref py py-obj docutils literal notranslate"><span class="pre">objective_regions</span></code>: <em>Declaring sites at which we want frequency-domain fields and associated physical quantities</em></dt><dd><p>Next we specify all the subregions over which we will ask the FDTD solver to tabulate
 frequency-domain fields. This is another step that will be familiar to anybody who has
 ever written a core <a href="https://github.com/NanoComp/meep">
 <font style="font-variant: small-caps; font-size: 100%">meep</font>
-</a> script, but again with slightly different–simpler!–mechanics. In a core
+</a> script, but again with slightly different (simpler!) mechanics. In a core
 <a href="https://github.com/NanoComp/meep">
 <font style="font-variant: small-caps; font-size: 100%">meep</font>
 </a> script, for each subregion of interest we would execute a two-step procedure:</p>
 <blockquote>
 <div><ol class="arabic">
-<li><p>We would first define the subregion of interest by creating object like <code class="docutils literal notranslate"><span class="pre">FluxRegion</span></code> or <code class="docutils literal notranslate"><span class="pre">FieldRegion</span></code> or <code class="docutils literal notranslate"><span class="pre">EnergyRegion</span></code>,
-depending on the functional objective we have in mind.</p></li>
+<li><p>We would first define the subregion of interest by creating a <code class="docutils literal notranslate"><span class="pre">FluxRegion</span></code> or <code class="docutils literal notranslate"><span class="pre">FieldRegion</span></code>
+or <code class="docutils literal notranslate"><span class="pre">EnergyRegion</span></code> (or other specialized subregion class) depending on the functional objective we have in mind.</p></li>
 <li><p>Then we would pass this object as a parameter to an API method like <code class="xref py py-obj docutils literal notranslate"><span class="pre">Simulation.add_flux</span></code>
 or <code class="xref py py-obj docutils literal notranslate"><span class="pre">Simulation.add_energy</span></code> to request computation of frequency-domain Poynting fluxes or energy densities
 for the given region.</p></li>
@@ -1058,16 +1205,95 @@ at the origin:</p>
 <span class="n">design_region</span> <span class="o">=</span> <span class="n">Subregion</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;design&#39;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">design_center</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">design_size</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Just as <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_region`is</span> <span class="pre">a</span> <span class="pre">convenience</span> <span class="pre">shortcut</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">more</span> <span class="pre">general</span>
-<span class="pre">`sources</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">design_region</span></code> is a convenience shortcut for the more general
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">basis</span></code>.</p>
+<div class="admonition-design-region-is-a-convenience-shortcut-for-basis admonition">
+<p class="admonition-title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">design_region</span></code> is a convenience shortcut for <code class="xref py py-obj docutils literal notranslate"><span class="pre">basis</span></code></p>
+<p>Just as <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_region</span></code> is a convenience shortcut for the more general
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">sources</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">design_region</span></code> is a convenience shortcut for the more general
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">basis</span></code> parameter to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> constructor. If <code class="xref py py-obj docutils literal notranslate"><span class="pre">design_region</span></code>
+is specified, it is used together with the <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> configuration
+options <code class="xref py py-obj docutils literal notranslate"><span class="pre">element_type</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">element_length</span></code> to construct a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteElementBasis</span></code> for the given region with elements of the
+given type and length. If you have a non-rectangular design region and/or
+non-finite-element basis set, just instantiate your own instance of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Basis</span></code>
+and pass it as the <code class="xref py py-obj docutils literal notranslate"><span class="pre">basis</span></code> parameter to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> constructor.</p>
+</div>
+</dd>
+<dt id="term-4-extra-regions-additional-subregions-not-covered-by-the-above">4. <code class="xref py py-obj docutils literal notranslate"><span class="pre">extra_regions</span></code>: Additional subregions not covered by the above</dt><dd><p>In some cases you may want to specify additional subregions of the
+computational cell, not covered by any of the above categories,
+for which to request computation of frequency-domain fields.
+The optional <code class="xref py py-obj docutils literal notranslate"><span class="pre">extra_regions</span></code> parameter may be used to pass a list
+of such regions. (<strong>API Note:</strong> This is technically superfluous, as
+extra subregions could just be tacked on to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">objective_regions</span></code>
+list, but maybe retaining <code class="xref py py-obj docutils literal notranslate"><span class="pre">extra_regions</span></code> will make codes easier to
+read and understand?)</p>
 </dd>
 </dl>
 </div></blockquote>
 </div>
-<div class="section" id="define-the-objective-function">
-<span id="defining-the-objective-function"></span><h3>Define the objective function<a class="headerlink" href="#define-the-objective-function" title="Permalink to this headline">¶</a></h3>
-<p>The last item</p>
+<div class="section" id="d-define-the-objective-function">
+<span id="defining-the-objective-function"></span><h3>1D. Define the objective function<a class="headerlink" href="#d-define-the-objective-function" title="Permalink to this headline">¶</a></h3>
+<p>The last item to specify is the objective function that we are trying to maximize. This is just
+a character string, passed as the <code class="xref py py-obj docutils literal notranslate"><span class="pre">f_obj</span></code> parameter to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> constructor,
+defining a mathematical function in which one or more
+<a class="reference internal" href="../reference/index.html#objective-quantities"><span class="std std-ref">objective quantities</span></a> appear as variables. <a class="footnote-reference brackets" href="#f4" id="id3">4</a>
+(As discussed
+<a class="reference internal" href="../reference/index.html#objective-quantities"><span class="std std-ref">here</span></a>, objective quantities have canonical names like
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">S_North</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">UE_Box</span></code> formed by pairing a physical-quantity code–such as <code class="xref py py-obj docutils literal notranslate"><span class="pre">S</span></code> for Poynting flux or
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">UE</span></code> for electric-field energy—with the name of a subregion as specified by the <code class="xref py py-obj docutils literal notranslate"><span class="pre">--name</span></code>
+parameter to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code> constructor.)</p>
+<p>For the right-angle router, our goal is simply to maximize power outflux through the <strong>North</strong>
+waveguide port, so we could take the objective function to be just the Poynting flux
+(<a class="reference internal" href="../reference/index.html#objectivequantitycodes"><span class="std std-ref">objective quantity code</span></a>: <code class="xref py py-obj docutils literal notranslate"><span class="pre">S</span></code>) measured
+at the objective region we named <strong>North</strong>, i.e.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fobj_router</span> <span class="o">=</span> <span class="s1">&#39;S_North&#39;</span>
+</pre></div>
+</div>
+<p>This is about as simple as an objective function can possibly get, and attempts at automated
+optimization with this objective do in fact produce somewhat improved designs. However, as
+it happens, there is an alternative way to define an objective function  for this problem
+that yields <em>significantly</em> better final outcomes: instead of optimizing for maximal power
+outflux, we optimize for maximal overlap with the forward-traveling eigenmode of the
+<strong>North</strong> waveguide, taking the objective function to be the
+squared modulus of the eigenmode expansion coefficient for forward-traveling mode 1
+(<a class="reference internal" href="../reference/index.html#objectivequantitycodes"><span class="std std-ref">objective quantity code</span></a>: <code class="xref py py-obj docutils literal notranslate"><span class="pre">P1</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">F1</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fobj_router</span> <span class="o">=</span> <span class="s1">&#39;|P1_North|^2&#39;</span>
+</pre></div>
+</div>
+<p>So these are the objective functions to choose if we want our optimized design
+to be a right-angle router. On the other hand, if instead we want a three-way
+symmetric <em>splitter</em> with maximal equality of output power from north, south,
+and east, then we need an objective function that penalizes discrepancies
+in outgoing flux—something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fobj_splitter</span> <span class="o">=</span> <span class="s1">&#39;-( S_north - S_east )^2  -( S_east - S_south )^2 - (S_south - S_north)^2</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fobj_splitter</span> <span class="o">=</span> <span class="s1">&#39;-( |P1_north| - |P1_east| )^2  -( |P1_east| - |M1_south| )^2 -(|M1_south| - |P1_north|)^2&#39;</span>
+</pre></div>
+</div>
+<p>In <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> we select one or another of these objective functions depending on
+command-line arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">objective_function</span> <span class="o">=</span> <span class="n">fobj_splitter</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">splitter</span> <span class="k">else</span> <span class="n">fobj_router</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="e-instantiate-the-optimizationproblem">
+<h3>1E. Instantiate the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code><a class="headerlink" href="#e-instantiate-the-optimizationproblem" title="Permalink to this headline">¶</a></h3>
+<p>The final step is to invoke the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> constructor with the various
+parameter values initialized above. In <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> this is done at the end of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">init_problem</span></code>
+routine, which returns the new class instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="n">OptimizationProblem</span><span class="p">(</span>
+ <span class="n">cell_size</span><span class="o">=</span><span class="n">cell_size</span><span class="p">,</span>
+ <span class="n">background_geometry</span><span class="o">=</span><span class="n">background_geometry</span><span class="p">,</span>
+ <span class="n">source_region</span><span class="o">=</span><span class="n">source_region</span><span class="p">,</span>
+ <span class="n">objective_regions</span><span class="o">=</span><span class="n">objective_regions</span><span class="p">,</span>
+ <span class="n">design_region</span><span class="o">=</span><span class="n">design_region</span><span class="p">,</span>
+ <span class="n">extra_regions</span><span class="o">=</span><span class="p">[</span><span class="n">full_region</span><span class="p">]</span>
+ <span class="n">objective_problem</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+ <span class="n">extra_quantities</span><span class="o">=</span><span class="n">extra_quantities</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="phase-2-interactive-exploration">
@@ -1086,20 +1312,57 @@ following phase to make reasonable choices for various parameters
 controlling the automated design iteration.</p></li>
 </ul>
 </div></blockquote>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>81
-82
-83
-84
-85
-86</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">lcen</span>          <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">fcen</span>
-<span class="n">dpml</span>          <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lcen</span> <span class="k">if</span> <span class="n">dpml</span><span class="o">==-</span><span class="mf">1.0</span> <span class="k">else</span> <span class="n">dpml</span>
-<span class="n">design_length</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">l_design</span>
-<span class="n">sx</span> <span class="o">=</span> <span class="n">sy</span>       <span class="o">=</span> <span class="n">dpml</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span> <span class="o">+</span> <span class="n">design_length</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">l_stub</span> <span class="o">+</span> <span class="n">dpml</span>
-<span class="n">sz</span>            <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">h</span><span class="o">==</span><span class="mf">0.0</span> <span class="k">else</span> <span class="n">dpml</span> <span class="o">+</span> <span class="n">dair</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">h</span> <span class="o">+</span> <span class="n">dair</span> <span class="o">+</span> <span class="n">dpml</span>
-<span class="n">cell_size</span>     <span class="o">=</span> <span class="p">[</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">]</span>
+<p>We begin the interactive phase by invoking the <code class="xref py py-obj docutils literal notranslate"><span class="pre">init_problem</span></code>
+routine in the <a class="reference internal" href="../example_gallery/router.html#module-router.py" title="router.py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">router.py</span></code></a> script, which executes the initialization
+procedure detailed above and returns a new instance of
+<a class="reference internal" href="../API/HighLevel.html#meep_adjoint.OptimizationProblem" title="meep_adjoint.OptimizationProblem"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">router</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">init_problem</span><span class="p">()</span>
 </pre></div>
-</td></tr></table></div>
-<p>Howdage foryaf! Time to write this section.</p>
+</div>
+<p>Now our python session contains a new
+<code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code> named <code class="xref py py-obj docutils literal notranslate"><span class="pre">prob</span></code>.</p>
+<div class="section" id="a-visualizing-the-geometry">
+<h3>2A. Visualizing the geometry<a class="headerlink" href="#a-visualizing-the-geometry" title="Permalink to this headline">¶</a></h3>
+<p>The most basic sanity check is to inspect a graphical visualization
+of the problem geometry to make sure the problem we specified is the
+one we wanted. For this purpose, the <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> package contains
+a built-in <a class="reference internal" href="../visualization/index.html"><span class="doc">visualization module</span></a> that
+reduces the task of visualizing a geometry to a one-liner:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span><span class="o">.</span><span class="n">visualize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should produce an image like the following:</p>
+<img alt="../_images/RouterGeometry0.png" src="../_images/RouterGeometry0.png" />
+<p>This</p>
+<blockquote>
+<div><div class="admonition-customizing-the-visualization admonition">
+<p class="admonition-title">Customizing the visualization</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">visualize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+<div class="section" id="b-updating-the-design-function">
+<h4>2B. Updating the design function<a class="headerlink" href="#b-updating-the-design-function" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">update_design</span><span class="p">(</span><span class="n">design</span><span class="o">=</span><span class="s1">&#39;2 + cos(3*x)*sin(2*y)&#39;</span><span class="p">)</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">visualize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="c-compute-objective-function-value-and-gradient">
+<h4>2C. Compute objective function value and gradient<a class="headerlink" href="#c-compute-objective-function-value-and-gradient" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fq</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">prob</span><span class="p">(</span><span class="n">need_gradient</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="p">,</span> <span class="n">gradf</span> <span class="o">=</span> <span class="n">prob</span><span class="p">(</span><span class="n">need_value</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="d-displace-design-variables-in-direction-of-gradient-and-check-that-objective-function-improves">
+<h4>2D. Displace design variables in direction of gradient and check that objective function improves<a class="headerlink" href="#d-displace-design-variables-in-direction-of-gradient-and-check-that-objective-function-improves" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
 </div>
 <div class="section" id="phase-3-automated-optimization">
 <h2>Phase 3: Automated optimization<a class="headerlink" href="#phase-3-automated-optimization" title="Permalink to this headline">¶</a></h2>
@@ -1116,6 +1379,17 @@ for the eigenmode of the given index; in this case the
 <p>Otherwise (i.e. <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_mode==0</span></code>), the source is an ordinary
 <code class="docutils literal notranslate"><span class="pre">Source</span></code> with component determined by the value of
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">source_component</span></code> (which should be a string like <code class="docutils literal notranslate"><span class="pre">Ex</span></code> or <code class="docutils literal notranslate"><span class="pre">Hy</span></code>).</p>
+</dd>
+<dt class="label" id="f3"><span class="brackets">3</span></dt>
+<dd><p>Specifically, eigenmode sources—or volume sources with spatially
+uniform amplitude—lying within a single <code class="xref py py-obj docutils literal notranslate"><span class="pre">SubRegion</span></code> and having
+Gaussian temporal envelope.</p>
+</dd>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id3">4</a></span></dt>
+<dd><p>It is perfectly legal to define objective functions that don’t
+depend on any objective quantities, but then the objective-function
+value would be independent of the design variables and the optimization
+problem would be trivial.</p>
 </dd>
 </dl>
 </div>

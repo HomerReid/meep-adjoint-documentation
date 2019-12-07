@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Example gallery &mdash; meep_adjoint 1.0 documentation</title>
+  <title>&lt;no title&gt; &mdash; meep_adjoint 1.0 documentation</title>
   
 
   
@@ -38,9 +38,7 @@
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Installation" href="../installation/index.html" />
-    <link rel="prev" title="Tutorial walkthrough" href="../tutorial/index.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,15 +87,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">meep_adjoint: A python package for adjoint sensitivity analysis in MEEP</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Overview and Invitation</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../overview/index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_gallery/index.html">Example Gallery</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../customization/index.html">Configuration and customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Configuration and customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">General reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../visualization/index.html">Visualization Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test_suite/index.html">Test suite</a></li>
@@ -156,13 +154,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Example gallery</li>
+      <li>&lt;no title&gt;</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/example_gallery/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/customization/sec_vis_opt_docs.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,24 +174,107 @@
            <div itemprop="articleBody">
             
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="example-gallery">
-<h1>Example gallery<a class="headerlink" href="#example-gallery" title="Permalink to this headline">¶</a></h1>
-</div>
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><table class="docutils align-default" id="id3">
+<caption><span class="caption-text">Sectioned visualization options</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmap</span></code></p></td>
+<td><p>plasma</p></td>
+<td><p>default colormap</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>default transparency</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fontsize</span></code></p></td>
+<td><p>25</p></td>
+<td><p>font size for labels and titles</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">shading</span></code></p></td>
+<td><p>gouraud</p></td>
+<td><p>shading style</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">interp</span></code></p></td>
+<td><p>gaussian</p></td>
+<td><p>interpolation method</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">method</span></code></p></td>
+<td><p>contourf</p></td>
+<td><p>contourf | imshow <a href="#id1"><span class="problematic" id="id2">|</span></a>pcolormesh</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">contours</span></code></p></td>
+<td><p>100</p></td>
+<td><p>number of contours</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">linecolor</span></code></p></td>
+<td><p>#ff0000</p></td>
+<td><p>default line color</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">linewidth</span></code></p></td>
+<td><p>4.0</p></td>
+<td><p>default line width</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">linestyle</span></code></p></td>
+<td><ul>
+<li></li>
+</ul>
+</td>
+<td><p>default line style</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fillcolor</span></code></p></td>
+<td><p>#ffffff</p></td>
+<td><p>default fill color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmin</span></code></p></td>
+<td><p>-inf</p></td>
+<td><p>colormap minimum</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmax</span></code></p></td>
+<td><p>inf</p></td>
+<td><p>colormap maximum</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zmin</span></code></p></td>
+<td><p>0.6</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zmax</span></code></p></td>
+<td><p>0.8</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cb_pad</span></code></p></td>
+<td><p>0.04</p></td>
+<td><p>colorbar padding</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cb_shrink</span></code></p></td>
+<td><p>0.6</p></td>
+<td><p>colorbar shrink factor</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">latex</span></code></p></td>
+<td><p>True</p></td>
+<td><p>LaTeX text formatting</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></p></td>
+<td><p>True</p></td>
+<td><p>display plots on screen</p></td>
+</tr>
+</tbody>
+</table>
 
 
            </div>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../installation/index.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../tutorial/index.html" class="btn btn-neutral float-left" title="Tutorial walkthrough" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

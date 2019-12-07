@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Introduction and Overview" href="overview/index.html" /> 
@@ -401,14 +402,17 @@ run and monitor its progress via graphical or other indicators.</p>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#the-phases-of-a-meep-adjoint-session-and-the-structure-of-this-tutorial">The phases of a <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code> session and the structure of this tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#phase-1-problem-definition-and-initialization-br-creating-an-optimizationproblem">Phase 1: Problem definition and initialization: <br> Creating an <code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#fetch-values-for-local-script-specific-and-global-meep-adjoint-wide-configurable-options">Fetch values for local (script-specific) and global (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep-adjoint</span></code>-wide) configurable options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#set-up-the-computational-geometry">Set up the computational geometry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#define-the-fixed-material-geometry">Define the fixed material geometry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#delineate-functional-subregions">Delineate functional subregions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#define-the-objective-function">Define the objective function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#a-fetch-values-for-global-meep-adjoint-wide-and-local-script-specific-and-configurable-options">1A. Fetch values for global (<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep-adjoint</span></code>-wide) and local (script-specific) and configurable options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#b-set-up-the-computational-cell-and-the-fixed-geometry">1B. Set up the computational cell and the fixed geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#c-delineate-functional-subregions">1C. Delineate functional subregions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#d-define-the-objective-function">1D. Define the objective function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#e-instantiate-the-optimizationproblem">1E. Instantiate the <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#phase-2-interactive-exploration">Phase 2: Interactive exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#phase-2-interactive-exploration">Phase 2: Interactive exploration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial/index.html#a-visualizing-the-geometry">2A. Visualizing the geometry</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#phase-3-automated-optimization">Phase 3: Automated optimization</a></li>
 </ul>
 </li>
@@ -418,29 +422,49 @@ run and monitor its progress via graphical or other indicators.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation/index.html#install-required-packages">1. Install required packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation/index.html#a-create-a-conda-environment-containing-both-fenics-and-meep">1A. Create a conda environment containing both <span class="codename">fenics</span> and <span class="codename">meep</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation/index.html#b-create-a-conda-environment-containing-fenics-then-build-meep-from-source">1B. Create a conda environment containing <span class="codename">fenics</span>, then build <span class="codename">meep</span> from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation/index.html#install-meep-adjoint">2. Install <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/index.html#installation-on-windows">3. Installation on windows</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="customization/index.html">Configuration and customization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="customization/index.html#what-are-the-configurable-options-how-do-they-affect-the-behavior-of-the-package">What are the configurable options? How do they affect the behavior of the package?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization/index.html#how-do-i-set-option-values">How do I set option values?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization/index.html#api-routines-for-querying-current-values-of-configuration-options">API routines for querying current values of configuration options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization/index.html#implementation">Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization/index.html#options">Options</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="customization/index.html#general-overview">General overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="customization/index.html#adjoint-options">Adjoint options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="customization/index.html#trying-csv-tables">Trying csv tables…</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#how-do-i-fetch-current-option-settings-from-meep-adjoint-driver-scripts">How do I fetch current option settings from <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code> driver scripts?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#how-does-meep-adjoint-determine-settings-for-configuration-options">How does <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code> determine settings for configuration options?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#id1">Adjoint options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization/index.html#id2">Visualization options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization/index.html#sectioned-visualization-options">Sectioned visualization options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization/index.html#other-visualization-options">Other visualization options</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">General reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reference/index.html#tweaks-to-meep-conventions">Tweaks to <span class="codename">meep</span> conventions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/index.html#unified-handling-and-labeling-of-spatial-regions-the-subregion-class">Unified handling and labeling of spatial regions: The <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code> class:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/index.html#tweaks-to-meep-conventions">1. Tweaks to <span class="codename">meep</span> conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/index.html#a-pythonic-representation-of-spatial-vectors">1a. Pythonic representation of spatial vectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/index.html#b-unified-handling-and-labeling-of-spatial-regions-the-subregion-class">1b. Unified handling and labeling of spatial regions: The <code class="xref py py-class docutils literal notranslate"><span class="pre">Subregion</span></code> class</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/index.html#naming-conventions-for-objective-quantities">Naming conventions for objective quantities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/index.html#objective-quantities-and-naming-conventions">2. Objective quantities and naming conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/index.html#expansion-bases-built-in-and-user-defined-function-spaces-for-material-designs">3. Expansion bases: Built-in and user-defined function spaces for material designs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/index.html#a-the-basis-abstract-base-class">3a. The <code class="xref py py-class docutils literal notranslate"><span class="pre">Basis</span></code> abstract base class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/index.html#b-finiteelementbasis-a-built-in-basis-for-general-purpose-use">3b. <code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteElementBasis</span></code>: A built-in basis for general-purpose use</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/index.html#c-subclassing-basis-to-define-your-own-customized-basis">3c.  Subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Basis</span></code> to define your own customized basis</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="visualization/index.html">Visualization Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/index.html#ways-to-specify-functions">4. Ways to specify functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualization/index.html">Visualization Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualization/index.html#visualization-in-executive-mode">Visualization in executive mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization/index.html#visualization-in-expert-mode">Visualization in expert mode</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="test_suite/index.html">Test suite</a></li>
 </ul>
 </div>

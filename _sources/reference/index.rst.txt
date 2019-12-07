@@ -5,34 +5,232 @@ General reference
 This page documents various conventions and protocols adopted by :obj:`meep_adjoint`.
 
 ================================================================================
-
+1. Tweaks to :codename:`meep` conventions
 ================================================================================
 
-================================================================================
-Tweaks to :codename:`meep` conventions
-================================================================================
-
-The :obj:`meep_adjoint` package introduces a few minor updates or revisions
-to some of the standard ways of doing business in :codename:`meep` and the |pymeep|.
+The :obj:`meep_adjoint` package introduces minor revisions
+of some of the standard ways of doing business in :codename:`meep` and the |pymeep|.
 
 ----------------------------------------------------------------------------------------------------------
-Unified handling and labeling of spatial regions: The :class:`Subregion <meep_adjoint:Subregion>` class:
+1a. Pythonic representation of spatial vectors
 ----------------------------------------------------------------------------------------------------------
 
-A historical idiosyncrasy of the |meep| C++ back-end engine, which was retained in the
+Many functions in `meep` and `meep_adjoint` have input parameters or return values describing
+coordinates of spatial points or components of spatial vectors. |pymeep| typically requires that
+these be packaged in the form of a
+`specialized data structure <https://meep.readthedocs.io/en/latest/Python_User_Interface/#vector3>`_,
+but this seems cumbersome and un-pythonic when one could simply use a list or `np.array` of integers
+or floating-point numbers. `meep_adjoint` accepts lists or `np.arrays` for all spatial-vector
+function parameters, using internal wrapper routines to shield users from the need to convert back
+and forth to `mp.Vector3`.
+
+----------------------------------------------------------------------------------------------------------
+1b. Unified handling and labeling of spatial regions: The :class:`Subregion <meep_adjoint:Subregion>` class
+----------------------------------------------------------------------------------------------------------
+
+An idiosyncrasy of the |meep| C++ back-end, library, which was retained in the
 definition of the |pymeep_interface|, is the use of multiple (at least :ref:`seven <RegionTypes>` [#F1]_)
 distinct data structures to describe subregions of the computational geometry
-depending on the task at hand. :obj:`meep_adjoint` replaces *all* of these
-with the single new class :class:`Subregion<meep_adjoint:Subregion>`.
+depending on the task at hand. :obj:`meep_adjoint` replaces all of these
+with the single new class :class:`Subregion<meep_adjoint:Subregion>`. In addition to eliminating
+redundancies in the code and API, the `Subregion` class has a string-valued `name` field
+that facilitates the identification of subregions and underlies the canonical naming convention
+for objective quantities, as described next.
+(For more about `Subregions`, consult the :class:`Subregions<API reference>`.)
 
-as a replacement for the
-[#F1]_
-as a `meep_adjoint` defines the simple class :class:`Subregion<meep_adjoint:Subregion>`
 
+.. _objective_quantities:
 
 ================================================================================
-Naming conventions for objective quantities
+2. Objective quantities and naming conventions
 ================================================================================
+`meep_adjoint` uses the term *objective quantity* to refer to
+frequency-domain Poynting fluxes, electromagnetic field energies,
+and other frequency-domain quantities computed from frequency-domain
+fields in subregions of the spatial FDTD grid.
+(A subregion over which objective quantities are defined is
+called an *objective region*.)
+Each objective quantity has a unique label consisting of two
+character strings---a one- or two-character code identifying the
+physical quantity (flux, energy, etc.), and a string label
+identifying the subregion---separated by an underscore.
+The subregion label is just the string passed as the `name`
+parameter to the `Subregion` constructor, while the 
+codes identifying various physical quantities are
+tabulated here:
+
+.. _ObjectiveQuantityCodes:
+
+.. csv-table:: Codes for physical quantities
+   :header: "Code", "Quantity"
+
+   ``S``,                        Poynting flux
+   ``UE``,                       electric-field energy
+   ``UH`` or ``UM``,             magnetic-field energy
+   ``UT`` or ``UEH`` or ``UEM``, total (electric + magnetic) field energy
+   ``P3`` or ``F3``,             expansion coefficient for forward-traveling (``plus'') eigenmode #3
+   ``M7`` or ``B7``,             expansion coefficient for backward-traveling (``minus'') eigenmode #7
+
+
+For example, if our geometry contains an objective region
+named `North`, then the following objective quantities (among others)
+are implicitly defined and may appear in the mathematical 
+expression defining the objective function:
+
+    + `S_North`, the Poynting flux through the region
+
+    + `UM_North`, the magnetic-field energy integrated over the region
+
+    + `P1_North`, the eigenmode expansion coefficient for the forward-traveling wave of eigenmode 1
+
+    + `M2_North`, the eigenmode expansion coefficient for the backward-traveling wave of eigenmode 2
+
+
+**Note:** Needless to say, not all physical quantities
+are sensible, or even defined, for all subregions. For example,
+Poynting fluxes and eigenmode coefficients are only defined for
+:ref:`subregions of codimension one with a specified normal
+direction <meep_adjoint.dft_cell.Subregion>`, while 
+field-energy quantities are typically associated with
+codimension-zero subregions. For example, if your simulation
+contains a codim-1 subregion named `FluxMon`
+and a codim-0 subregion named `Cavity`, then 
+
+    + the objective quantities `S_FluxMon` and `UT_Cavity` make perfect sense
+
+    + the quantity `UT_FluxMon` is defined and will be computed by `meep_adjoint` without complaint, but is probably not physically meaningful
+
+    + the quantity `S_Cavity` is undefined and will trigger an error if you ask `meep_adjoint` to compute it.
+
+
+====================================================================================
+3. Expansion bases: Built-in and user-defined function spaces for material designs
+====================================================================================
+
+The ultimate goal of a design optimization is a function 
+:math:`\epsilon^\text{des}(\mathbf{x}), \mathbf{x} \in \mathcal{V}^\text{des},`
+specifying the permittivity throughout the design region.
+This is a continuous entity with infinitely many degrees of freedom.
+On the other hand, the output of a numerical optimizer is a
+discrete entity---specifically,
+a finite set of numbers :math:`\{\beta_1, \dots, \beta_D\}`,
+which are conveniently written as the components of a 
+:math:`D`-dimensional vector
+:math:`\boldsymbol\beta\in \mathbb{R}^D`.
+The bridge between continuous and discrete is furnished by
+choosing a *basis* of expansion functions,
+:math:`\{b_1(\mathbf{x}), \cdots, b_D(\mathbf{x})\}`,
+where each :math:`b_d(\mathbf{x}), 1\le d \le D`
+is a real-valued scalar function defined for
+:math:`\mathbf{x}\in \mathcal{V}^\text{des}`.
+We approximate the design function we seek as
+a finite expansion in this basis, i.e.
+
+.. math::
+
+    \epsilon^\text{des}(\mathbf x)\approx
+    \sum_{d=1}^D \beta_d b_d(\mathbf{x}),
+
+and then ask the optimizer to determine the best
+values for the $\{\beta\}$ coefficients.
+
+To state the obvious, the efficiency and practical
+efficacy of such a discretization scheme is highly
+dependent on the choice of basis functions, and
+the optimal choice of basis for a given problem
+is problem-dependent. For this reason, `meep_adjoint`
+doesn't presume to enforce any one basis as the
+canonical choice for all problems; instead, we
+envision that some performance-conscious users will 
+want to define
+their own specialized high-performance basis
+sets for specific problems, and one goal of the
+`meep_adjoint` API is to allow this full freedom
+of basis-set design to any user who wants to exploit it.
+
+On the other hand, we simultaneously expect many *other* users
+to be uninterested in delving into such nitty-gritty
+details---and willing to sacrifice some efficiency
+in exchange for not having to take the time to
+construct a basis set and write a python class 
+describing it to `meep_adjoint`---whereupon a
+second API desideratum is to shield time-constrained
+users who *don't* want to define their own basis set 
+from the hassle of needing to do so.
+
+The strategy we adopt to reconcile these imperatives is as follows:
+
+    + As a template for all user-supplied basis sets, we define
+      an abstract base class :class:`Basis<meep_adjoint.Basis>`,
+      which simply abstracts the essential data and methods
+      common to all expansion bases independent of geometric
+      or implementation details. This allows performance-seeking
+      users the freedom to implement their own
+      derived subclasses for custom-designed basis sets 
+      of arbitrary specialization and complexity.
+      
+    + Meanwhile, for users hoping to avoid worrying
+      about basis sets, `meep_adjoint`
+      ships with a built-in pre-implemented subclass of
+      :class:`Basis<meep_adjoint.Basis>` called
+      :class:`FiniteElementBasis<meep_adjoint.FiniteElementBasis>`,
+      which uses the open-source `FENICS finite-element package`_
+      to offer a wide range of general-purpose basis functions.
+      Using a :class:`FiniteElementBasis<meep_adjoint.FiniteElementBasis>`
+      basis in a `meep_adjoint` problem is as easy
+      as specifying the bounding box of the design region 
+      and (optionally!) configuring a couple of 
+      :ref:`configuration options <customization/index>`
+      to choose the type of finite-element function and
+      the discretization lengthscale.
+
+
+.. _FENICS finite-element package: https://fenicsproject.org/
+
+----------------------------------------------------------------------------------------------------------
+3a. The :class:`Basis <meep_adjoint:Basis>` abstract base class
+----------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------
+3b. :class:`FiniteElementBasis <meep_adjoint:Basis>`: A built-in basis for general-purpose use
+----------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------
+3c.  Subclassing :class:`Basis <meep_adjoint:Basis>` to define your own customized basis
+----------------------------------------------------------------------------------------------------------
+
+
+====================================================================================
+4. Ways to specify functions
+====================================================================================
+
+A number of functions and API methods in `meep_adjoint` accept an input parameter
+describing a spatially-varying scalar function :math:`g(\mathbf{x})` in some domain
+of the computational cell. Examples include the `design` parameter to
+`OptimizationProblem.update_design` and the `g` parameter to `Basis.project`.
+These parameters accept inputs of any the following types.
+
+    + A character string defining a mathematical expression, i.e. g=`sin(x)*cos*(y)`.
+
+    + A numerical type (integer or floating point), in which case the function 
+      is taken to be constant throughout the domain.
+
+    + A python function (i.e `callable`)
+
+    + A `float`-valued array of the appropriate dimensionality
+      and aspect ratio, whose entries are interpreted as function
+      samples at evenly-spaced grid sites throughout the domain;
+      function values at interstitial points are determined by
+      interpolation. Note that this sampling grid need not
+      coincide with :codename:`meep`'s FDTD grid; it may be
+      coarser or finer, as would be the case for an
+      array of field values output by a previous :meep:
+      calculation of the same geometry at higher or lower 
+      resolution.
+
+
 
 |thickline|
 

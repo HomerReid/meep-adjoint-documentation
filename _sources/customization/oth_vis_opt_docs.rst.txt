@@ -1,0 +1,4 @@
+.. csv-table:: Other visualization options
+   :header: "Option", "Default", "Description"
+
+   `backend`, wx, "matplotlib backend"

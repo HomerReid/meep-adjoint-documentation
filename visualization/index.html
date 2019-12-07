@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Test Suite" href="../test_suite/index.html" />
@@ -98,7 +99,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../customization/index.html">Configuration and customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">General reference</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualization Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualization Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#visualization-in-executive-mode">Visualization in executive mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization-in-expert-mode">Visualization in expert mode</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../test_suite/index.html">Test suite</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Implementation notes</span></p>
@@ -177,7 +182,55 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC&display=swap" rel="stylesheet"><div class="section" id="visualization-module">
 <h1>Visualization module<a class="headerlink" href="#visualization-module" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> package includes a</p>
+<p>The <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> package ships with a built-in visualization
+module to facilitate graphical inspection of material geometries and
+functional subregions (solver inputs) as well as EM field
+configurations and design-function gradients (solver outputs).</p>
+<p>A first goal of this module is to provide a go-to visualization facility
+for designers to have “under their fingertips”, easily remembered and
+invoked at any stage of the design process to lend visual insight
+into what’s going on at that moment. This is realized by the <code class="xref py py-obj docutils literal notranslate"><span class="pre">visualize</span></code></p>
+<p><a class="reference external" href="https://meep.readthedocs.io/en/latest/Python_User_Interface/#data-visualization">https://meep.readthedocs.io/en/latest/Python_User_Interface/#data-visualization</a></p>
+<p>More specifically,
+the visualization module knows how to produce three types of plots:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p><em>Geometry plots</em>,
+showing the material configuration throughout the computational
+cell of the problem, the PML layers, the finite-element mesh
+used to define the basis set (for problems using a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteElementBasis</span></code>),
+and significant subregions such as source regions,
+objective regions, and the design region.</p></li>
+<li><p><em>Forward field plots</em>, showing the results of forward timestepping
+calculations, particularly the spatial distribution of
+energy fluxes and energy densities used to compute the objective
+function <span class="math notranslate nohighlight">\(f^\text{obj}\)</span>.</p></li>
+<li><p><em>Adjoint derivative plots</em>, showing the results of adjoint
+timestepping calculations—specifically, the quantity
+<span class="math notranslate nohighlight">\(\frac{\partial f^\text{obj}}{\partial \epsilon(\mathbf x)}\)</span>
+as a function of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> throughout the design region.</p></li>
+</ol>
+</div></blockquote>
+<p>In generating these plots,</p>
+<blockquote>
+<div><ul>
+<li><p><em>executive mode</em>, in which the user simply invokes the
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">visualize</span></code> method of <code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationProblem</span></code>—with no
+arguments!—and the visualization module automatically
+chooses not only the best default options for the plot,
+but also <em>which</em> of the above three plots to produce,
+based on the current state of</p></li>
+<li><p><em>expert mode</em>, in which the user configures the parameters
+to <code class="xref py py-obj docutils literal notranslate"><span class="pre">visualize</span></code> to control the plot produced and its appearance.</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="visualization-in-executive-mode">
+<h2>Visualization in executive mode<a class="headerlink" href="#visualization-in-executive-mode" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="visualization-in-expert-mode">
+<h2>Visualization in expert mode<a class="headerlink" href="#visualization-in-expert-mode" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 

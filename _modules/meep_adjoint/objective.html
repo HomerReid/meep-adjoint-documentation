@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -256,7 +257,6 @@
 <span class="c1">#     def __call__(self, nf=0):</span>
 <span class="c1">#         return self.cell(self.code,mode=self.mode, nf=nf)</span>
 
-
 <div class="viewcode-block" id="ObjectiveFunction"><a class="viewcode-back" href="../../meep_adjoint/docs/API/LowLevel.html#meep_adjoint.ObjectiveFunction">[docs]</a><span class="k">class</span> <span class="nc">ObjectiveFunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Multivariate scalar-valued function defined by string expression.</span>
@@ -325,9 +325,14 @@
 <span class="sd">            would be written within `fstr` like this: &#39;Abs(q_i)**2&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fstr</span><span class="o">=</span><span class="s1">&#39;S_0&#39;</span><span class="p">,</span> <span class="n">extra_quantities</span><span class="o">=</span><span class="p">[]):</span>
+
+        <span class="k">def</span> <span class="nf">_parse_absval_bars</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;preprocess sympy input to replace &#39;|...|&#39; with &#39;Abs(...)&#39; &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[|]([^|]*)[|]&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;Abs(\1)&#39;</span><span class="p">,</span><span class="n">s</span><span class="p">)</span>
+
         <span class="c1"># try to parse the function string to yield a sympy expression</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">fexpr</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span><span class="n">fstr</span><span class="p">)</span>
+            <span class="n">fexpr</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span> <span class="n">_parse_absval_bars</span><span class="p">(</span><span class="n">fstr</span><span class="p">)</span> <span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;failed to parse function </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fstr</span><span class="p">))</span>
 

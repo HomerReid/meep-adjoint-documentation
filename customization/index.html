@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="General reference" href="../reference/index.html" />
@@ -98,17 +99,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration and customization</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#what-are-the-configurable-options-how-do-they-affect-the-behavior-of-the-package">What are the configurable options? How do they affect the behavior of the package?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-do-i-set-option-values">How do I set option values?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#api-routines-for-querying-current-values-of-configuration-options">API routines for querying current values of configuration options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#options">Options</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#general-overview">General overview</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#the-hierarchy-of-sources-for-option-settings">The hierarchy of sources for option settings</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configuration-related-api-routines">Configuration-related API routines</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#adjoint-options">Adjoint options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#trying-csv-tables">Trying csv tables…</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-do-i-fetch-current-option-settings-from-meep-adjoint-driver-scripts">How do I fetch current option settings from <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code> driver scripts?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-does-meep-adjoint-determine-settings-for-configuration-options">How does <code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code> determine settings for configuration options?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Adjoint options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Visualization options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sectioned-visualization-options">Sectioned visualization options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-visualization-options">Other visualization options</a></li>
 </ul>
 </li>
 </ul>
@@ -235,11 +231,7 @@ or the <a class="reference external" href="http://femtable.org/">periodic table 
 </dd>
 <dt class="field-even">Options governing graphical visualization</dt>
 <dd class="field-even"><ul>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">latex</span></code>:        Use <span class="math notranslate nohighlight">\(LaTeX\)</span> formatting for</dt><dd><p>graph axes and titles</p>
-</dd>
-</dl>
-</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">latex</span></code>:        Use math:<code class="xref py py-obj docutils literal notranslate"><span class="pre">LaTeX</span></code> formatting for graph axes and titles</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">linecolor</span></code>:    Color of lines and curves (default)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">src_region_linecolor</span></code>:  Color of lines and curves in plots of source regions</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">flux_region_linecolor</span></code>:  Color of lines and curves in plots of flux regions</p></li>
@@ -249,147 +241,431 @@ or the <a class="reference external" href="http://femtable.org/">periodic table 
 </dl>
 </div></blockquote>
 </div>
-<div class="section" id="how-do-i-set-option-values">
-<h2>How do I set option values?<a class="headerlink" href="#how-do-i-set-option-values" title="Permalink to this headline">¶</a></h2>
-<p>For each configuration option, <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> consults
-the following fixed sequence of</p>
-<blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">1. Package-level default settings</dt>
-<dd class="field-odd"><p>Each option is assigned a (non-<code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>)</p>
-</dd>
-</dl>
-<p>:2. Default Driver script</p>
-<blockquote>
-<div><p>The python script you write to drive your <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> study may optionally
-override
-custom defaults
-override the package-level option defaults</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">3. User-level defaults</dt>
-<dd class="field-odd"><p>Global configuration files:</p>
-</dd>
-<dt class="field-even">4. Project-level defaults</dt>
-<dd class="field-even"><p>Local configuration files:</p>
-</dd>
-<dt class="field-odd">5. Session-level settings</dt>
-<dd class="field-odd"><p>Environment variables:</p>
-</dd>
-<dt class="field-even">6. Run-level settings</dt>
-<dd class="field-even"><p>Command-line arguments:</p>
-</dd>
-<dt class="field-odd">7. Function-level settings</dt>
-<dd class="field-odd"><p>The optional <code class="docutils literal notranslate"><span class="pre">options</span></code>
-parameter in API routines</p>
-</dd>
-</dl>
-</div></blockquote>
+<div class="section" id="how-do-i-fetch-current-option-settings-from-meep-adjoint-driver-scripts">
+<h2>How do I fetch current option settings from <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> driver scripts?<a class="headerlink" href="#how-do-i-fetch-current-option-settings-from-meep-adjoint-driver-scripts" title="Permalink to this headline">¶</a></h2>
+<p>By calling <a class="reference internal" href="../API/HighLevel.html#meep_adjoint.get_adjoint_option" title="meep_adjoint.get_adjoint_option"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint.get_adjoint_option</span></code></a> or
+<a class="reference internal" href="../API/HighLevel.html#meep_adjoint.get_visualization_option" title="meep_adjoint.get_visualization_option"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint.get_visualization_option</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="k">import</span> <span class="n">get_adjoint_option</span> <span class="k">as</span> <span class="n">adj_opt</span>
+<span class="kn">from</span> <span class="nn">meep_adjoint</span> <span class="k">import</span> <span class="n">get_visualization_option</span> <span class="k">as</span> <span class="n">vis_opt</span>
+
+<span class="n">fcen</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;fcen&#39;</span><span class="p">)</span>
+
+<span class="n">src_lc</span> <span class="o">=</span> <span class="n">vis_opt</span><span class="p">(</span><span class="s1">&#39;src_region_linecolor&#39;</span><span class="p">)</span>
+
+<span class="n">foo</span> <span class="o">=</span> <span class="n">adj_opt</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">foo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Whoops! There is no option named --bar.&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="api-routines-for-querying-current-values-of-configuration-options">
-<h2>API routines for querying current values of configuration options<a class="headerlink" href="#api-routines-for-querying-current-values-of-configuration-options" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="implementation">
-<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
-<hr class="docutils" />
-<hr class="docutils" />
-<div class="section" id="general-overview">
-<h3>General overview<a class="headerlink" href="#general-overview" title="Permalink to this headline">¶</a></h3>
-<p>Internally, the module maintains two separate databases of option
-settings: one for options that specifically affect the appearance of
-visualization plots, and a second for all other options. [This is
-done both <strong>(1)</strong> to facilitate a possible future refactoring of the adjoint
-and visualization modules into separate standalone packages, and
-<strong>(2)</strong> because the visualization module handles option settings in a
-slightly more complicated way than does the adjoint module, as
-discussed below.] Both databases are instances of the simple
-class <code class="xref py py-class docutils literal notranslate"><span class="pre">OptionAlmanac</span></code>, which combines the functionality
-of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">configparser_</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse_</span></code> modules in the python standard
-library.</p>
-<div class="section" id="the-hierarchy-of-sources-for-option-settings">
-<h4>The hierarchy of sources for option settings<a class="headerlink" href="#the-hierarchy-of-sources-for-option-settings" title="Permalink to this headline">¶</a></h4>
-<p>As noted above, the module consults multiple sources—in a specific
-order—for user-specified option settings; any conflicts are adjudicated in favor
-of the later-encountered source, i.e. new option settings always overwrite
-existing settings <a class="footnote-reference brackets" href="#id2" id="id1">1</a>.</p>
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>An exception is the case in which the <em>type</em> of an option setting</p>
-</dd>
-</dl>
-<p>is incompatible with the type of the existing option value; in this case
-the new setting is ignored with a warning and the previous option value
-retained.</p>
-<p>More specifically, the value stored in the
-internal database for a given configuration option is initialized
-and then updated according to the following sequence:</p>
-<ol class="arabic">
-<li><p>The original default value hard-coded in the <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> source distribution.</p></li>
-<li><p>The updated default value specified by a call to
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint::set_adjoint_option_defaults()</span></code> from a user script.</p></li>
-<li><p>The value specified in the <a class="reference internal" href="#global-configuration-file">global configuration file</a>, if any.</p></li>
-<li><p>The value specified in the <a class="reference internal" href="#local-configuration-file">local configuration file</a>, if any.</p></li>
-<li><p>The value of the option as an environment variable, if set.</p></li>
-<li><p>The value of the option as a command-line argument, if specified.</p></li>
-</ol>
-<blockquote id="global-configuration-file">
-<div><p><a class="reference internal" href="#local-configuration-file">local configuration file</a></p>
-</div></blockquote>
-<div class="section" id="global-and-local-configuration-files">
-<span id="local-configuration-file"></span><h5>Global and local configuration files<a class="headerlink" href="#global-and-local-configuration-files" title="Permalink to this headline">¶</a></h5>
-<p>The configuration files parsed for adjoint and visualization options are as follows.</p>
+<div class="admonition-visualization-options-and-adjoint-options admonition">
+<p class="admonition-title">Visualization options and adjoint options</p>
+<p>Internally, the package distinguishes two categories
+of configuration options:</p>
 <blockquote>
 <div><ul>
-<li><p><strong>Global</strong>:    <code class="file docutils literal notranslate"><span class="pre">~/.meep_adjoint.rc</span></code>, <code class="file docutils literal notranslate"><span class="pre">~/.meep_visualization.rc</span></code></p></li>
-<li><p><strong>Local</strong>:    <code class="file docutils literal notranslate"><span class="pre">./meep_adjoint.rc</span></code>, <code class="file docutils literal notranslate"><span class="pre">./meep_visualization.rc</span></code></p></li>
+<li><p>options that control the behavior of the
+<span class="xref std std-ref">visualization module</span>,
+and</p></li>
+<li><p>everything else.</p></li>
 </ul>
 </div></blockquote>
-<p>Note that global files lie in the user’s home directory and are “dotfiles”, i.e.
-have filenames that begin with a period.
-Local files lie in the current working directory and have the same filename
-as their global counterparts, minus the leading period.</p>
+<p>We refer to these respectively as <strong>visualization options</strong>
+and <strong>adjoint options.</strong></p>
+<p>One reason for the distinction is that, for visualization options
+but not adjoint options, there is a further subdivision
+into <strong>sectioned</strong> vs. non-sectioned options, as discussed below.</p>
 </div>
 </div>
-<div class="section" id="configuration-related-api-routines">
-<h4>Configuration-related API routines<a class="headerlink" href="#configuration-related-api-routines" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="how-does-meep-adjoint-determine-settings-for-configuration-options">
+<h2>How does <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> determine settings for configuration options?<a class="headerlink" href="#how-does-meep-adjoint-determine-settings-for-configuration-options" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> begins by setting each option to the
+hard-coded default value provided as part of the option’s
+definition (see below), then looks for updates in each of
+the following places, in the following sequence, with
+each update overriding the previous setting.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">2. Script-level defaults</dt>
+<dd class="field-odd"><p>The python script you write to drive <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> may call <a class="reference internal" href="../API/HighLevel.html#meep_adjoint.set_option_defaults" title="meep_adjoint.set_option_defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint.set_option_defaults</span></code></a>
+to specify problem-specific default values for certain options.</p>
+</dd>
+<dt class="field-even">3. User-level defaults: Global configuration files</dt>
+<dd class="field-even"><p>The global configuration files are
+<code class="file docutils literal notranslate"><span class="pre">~/.meep_adjoint.rc</span></code>, <code class="file docutils literal notranslate"><span class="pre">~/.meep_visualization.rc</span></code>.
+Typically this would be for options on which you have a personal
+preference that differs from the <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> default
+and which you want to configure once and for all and have it
+be generally  active in all your <a class="reference internal" href="../meep_adjoint/docs/index.html#module-meep_adjoint" title="meep_adjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meep_adjoint</span></code></a> sessions,
+except where overruled by a setting from a higher-priority
+source like command-line. Example: If you love chartreuse and
+hate cyan, you will want to change the default colors used
+by the <span class="xref std std-ref">visualization module</span>
+to draw Poynting-flux monitors, and you’ll want this change
+to be generally in effect in all your sessions unless
+specifically overridden.</p>
+</dd>
+<dt class="field-odd">4. Project-level defaults: Local configuration files</dt>
+<dd class="field-odd"><p>The local configuration files are
+<code class="file docutils literal notranslate"><span class="pre">meep_adjoint.rc</span></code>, <code class="file docutils literal notranslate"><span class="pre">meep_visualization.rc</span></code>
+in the current working directory. These are
+for updates that you want to be in effect for
+all work on a particular project.</p>
+</dd>
+<dt class="field-even">5. Session-level settings: Environment variables</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">6. Run-level settings: Command-line arguments</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">7. Console-level / function-call level settings</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</div></blockquote>
 </div>
-</div>
-<div class="section" id="adjoint-options">
-<h3>Adjoint options<a class="headerlink" href="#adjoint-options" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="trying-csv-tables">
-<h3>Trying csv tables…<a class="headerlink" href="#trying-csv-tables" title="Permalink to this headline">¶</a></h3>
-<table class="colwidths-given docutils align-default" id="id3">
-<caption><span class="caption-text">Frozen Delights!</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<div class="section" id="id1">
+<h2>Adjoint options<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">Options affecting FDTD geometries/computation</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col style="width: 27%" />
-<col style="width: 18%" />
-<col style="width: 55%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Treat</p></th>
-<th class="head"><p>Quantity</p></th>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Albatross</p></td>
-<td><p>2.99</p></td>
-<td><p>On a stick!</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">res</span></code></p></td>
+<td><p>20.0</p></td>
+<td><p>Yee grid resolution</p></td>
 </tr>
-<tr class="row-odd"><td><p>Popcorn</p></td>
-<td><p>1.99</p></td>
-<td><p>Straight from the oven</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fcen</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>source center frequency</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">df</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>source frequency width</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_component</span></code></p></td>
+<td><p>Ez</p></td>
+<td><p>forward source component (str)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_mode</span></code></p></td>
+<td><p>1</p></td>
+<td><p>forward source eigenmode index</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nfreq</span></code></p></td>
+<td><p>1</p></td>
+<td><p>number of DFT frequencies</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dpml</span></code></p></td>
+<td><p>-1.0</p></td>
+<td><p>PML width (-1 –&gt; auto-select)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dair</span></code></p></td>
+<td><p>-1.0</p></td>
+<td><p>gap width between material bodies and PMLs (-1 –&gt; auto-select)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">eps_design</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>function of (x,y,z) giving initial design permittivity</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dft_reltol</span></code></p></td>
+<td><p>1e-06</p></td>
+<td><p>convergence tolerance for terminating timestepping</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dft_timeout</span></code></p></td>
+<td><p>10.0</p></td>
+<td><p>max runtime in units of last_source_time</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dft_interval</span></code></p></td>
+<td><p>0.25</p></td>
+<td><p>meep time between DFT convergence checks in units of last_source_time</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">complex_fields</span></code></p></td>
+<td><p>False</p></td>
+<td><p>use complex fields in forward calculation</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">reuse_simulation</span></code></p></td>
+<td><p>False</p></td>
+<td><p>reuse (do not reallocate) simulation data structure</p></td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This is really a very painful process.</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">Options affecting basis-set expansions</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">beta_min</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>lower bound on basis expansion coefficient</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">beta_max</span></code></p></td>
+<td><p>inf</p></td>
+<td><p>upper bound on basis expansion coefficient</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">element_type</span></code></p></td>
+<td><p>CG 1</p></td>
+<td><p>finite-element family and degree</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">element_length</span></code></p></td>
+<td><p>0.0</p></td>
+<td><p>finite-element discretization length</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text">Options affecting gradient-duhscent optimizer</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>initial value of alpha (update relaxation parameter)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">alpha_min</span></code></p></td>
+<td><p>0.001</p></td>
+<td><p>minimum value of alpha</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">alpha_max</span></code></p></td>
+<td><p>10.0</p></td>
+<td><p>maximum value of alpha</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">boldness</span></code></p></td>
+<td><p>1.25</p></td>
+<td><p>sometimes you just gotta live a little (explain me)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">timidity</span></code></p></td>
+<td><p>0.75</p></td>
+<td><p>can’t be too cautious in this dangerous world (explain me)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_iters</span></code></p></td>
+<td><p>100</p></td>
+<td><p>max number of optimization iterations</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-text">Options affecting console/file/GUI output</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filebase</span></code></p></td>
+<td></td>
+<td><p>base name of output files</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">silence_meep</span></code></p></td>
+<td><p>True</p></td>
+<td><p>suppress MEEP console messages when timestepping</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">loglevel</span></code></p></td>
+<td><p>info</p></td>
+<td><p>[‘info’|’debug’]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">visualization</span></code></p></td>
+<td><p>auto</p></td>
+<td><p>[‘on’|’off’|’auto’] to enable/disable/automate graphical visualization</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">termcolors</span></code></p></td>
+<td><p>True</p></td>
+<td><p>output colorized terminal text</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard</span></code></p></td>
+<td><p>auto</p></td>
+<td><p>[‘on’|’off’|’auto’] to enable/disable/automate GUI dashboard</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_size</span></code></p></td>
+<td><p>0.5</p></td>
+<td><p>GUI dashboard size relative to screen size</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_position</span></code></p></td>
+<td><p>top right</p></td>
+<td><p>GUI dashboard position</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_font_family</span></code></p></td>
+<td><p>Fantasque Sans Mono</p></td>
+<td><p>GUI dashboard font family</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_font_scale</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>GUI dashboard font scale factor</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_on_top</span></code></p></td>
+<td><p>True</p></td>
+<td><p>GUI dashboard stays on top of other windows</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_cpu_interval</span></code></p></td>
+<td><p>2000</p></td>
+<td><p>GUI dashboard CPU usage update interval (ms)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_host</span></code></p></td>
+<td><p>localhost</p></td>
+<td><p>GUI dashboard server hostname</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_port</span></code></p></td>
+<td><p>37673</p></td>
+<td><p>GUI dashboard server port</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dashboard_loglevel</span></code></p></td>
+<td><p>info</p></td>
+<td><p>‘info’ | ‘debug’</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="section" id="id2">
+<h2>Visualization options<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sectioned-visualization-options">
+<h3>Sectioned visualization options<a class="headerlink" href="#sectioned-visualization-options" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-text">Sectioned visualization options</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmap</span></code></p></td>
+<td><p>plasma</p></td>
+<td><p>default colormap</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
+<td><p>1.0</p></td>
+<td><p>default transparency</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fontsize</span></code></p></td>
+<td><p>25</p></td>
+<td><p>font size for labels and titles</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">shading</span></code></p></td>
+<td><p>gouraud</p></td>
+<td><p>shading style</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">interp</span></code></p></td>
+<td><p>gaussian</p></td>
+<td><p>interpolation method</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">method</span></code></p></td>
+<td><p>contourf</p></td>
+<td><p>contourf | imshow <a href="#id3"><span class="problematic" id="id4">|</span></a>pcolormesh</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">contours</span></code></p></td>
+<td><p>100</p></td>
+<td><p>number of contours</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">linecolor</span></code></p></td>
+<td><p>#ff0000</p></td>
+<td><p>default line color</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">linewidth</span></code></p></td>
+<td><p>4.0</p></td>
+<td><p>default line width</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">linestyle</span></code></p></td>
+<td><ul>
+<li></li>
+</ul>
+</td>
+<td><p>default line style</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fillcolor</span></code></p></td>
+<td><p>#ffffff</p></td>
+<td><p>default fill color</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmin</span></code></p></td>
+<td><p>-inf</p></td>
+<td><p>colormap minimum</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmax</span></code></p></td>
+<td><p>inf</p></td>
+<td><p>colormap maximum</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zmin</span></code></p></td>
+<td><p>0.6</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zmax</span></code></p></td>
+<td><p>0.8</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cb_pad</span></code></p></td>
+<td><p>0.04</p></td>
+<td><p>colorbar padding</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cb_shrink</span></code></p></td>
+<td><p>0.6</p></td>
+<td><p>colorbar shrink factor</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">latex</span></code></p></td>
+<td><p>True</p></td>
+<td><p>LaTeX text formatting</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></p></td>
+<td><p>True</p></td>
+<td><p>display plots on screen</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="other-visualization-options">
+<h3>Other visualization options<a class="headerlink" href="#other-visualization-options" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-text">Other visualization options</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">backend</span></code></p></td>
+<td><p>wx</p></td>
+<td><p>matplotlib backend</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
